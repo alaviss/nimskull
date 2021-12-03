@@ -42,7 +42,7 @@ steps:
       - |
         cd /drone/step/$DRONE_STEP_NAME \
         && PATH=$PWD/bin:$PATH ./koch.py tests --batch:1_2 all \
-        || bin/nim r tools/ci_testresults
+        || { bin/nim r tools/ci_testresults && exit 1 }
     depends_on:
       - build
 
