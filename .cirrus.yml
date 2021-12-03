@@ -1,0 +1,79 @@
+env:
+  CIRRUS_CLONE_DEPTH: 1
+
+arm_container:
+  image: ghcr.io/alaviss/nimskull-builder:main
+
+task:
+  name: Build the compiler
+  alias: build
+
+  compile_script: ./koch.py boot -d:release
+  package_script:
+    - bash -c "readarray -d '' diff < <(git ls-files -zmo) && tar cf build/compiler.tar.zst --zstd \"${diff[@]}\""
+
+  compiler_artifacts:
+    path: build/compiler.tar.zst
+
+unpack_template: &UNPACK_TEMPLATE
+  unpack_script: |
+    curl -L https://api.cirrus-ci.com/v1/artifact/build/${CIRRUS_BUILD_ID}/build/compiler/build/compiler.tar.zst \
+    | tar xf - --zstd
+
+task:
+  name: Test (batch ${NIM_BATCH}/${NIM_BATCH_TOTAL})
+
+  depends_on:
+    - build
+
+  env:
+    matrix:
+      - NIM_BATCH: 0
+      - NIM_BATCH: 1
+    NIM_BATCH_TOTAL: 2
+
+  arm_container:
+    image: ghcr.io/alaviss/nimskull-tester:main
+
+  << : *UNPACK_TEMPLATE
+
+  test_script:
+    - PATH="$PWD/bin:$PATH" ./koch.py tests --batch:${NIM_BATCH}_${NIM_BATCH_TOTAL} all
+
+  on_failure:
+    print_failure_script: bin/nim r tools/ci_testresults
+
+task:
+  name: Bootstrap compiler with ORC
+
+  depends_on:
+    - build
+
+  << : *UNPACK_TEMPLATE
+
+  compile_script: ./koch.py --nim:bin/nim boot -d:release --gc:orc
+
+task:
+  name: Build tooling and test them
+
+  depends_on:
+    - build
+
+  << : *UNPACK_TEMPLATE
+
+  compile_script: ./koch.py tools -d:release
+  test_script: "PATH=$PWD/bin:$PATH" ./koch.py testTools
+
+task:
+  name: Build documentation
+
+  depends_on:
+    - build
+
+  << : *UNPACK_TEMPLATE
+
+  doc_script: |
+    ./koch.py doc \
+      --git.url:"https://github.com/${CIRRUS_REPO_FULL_NAME}" \
+      --git.commit:"${CIRRUS_CHANGE_IN_REPO}"
+      --git.devel:"${CIRRUS_BRANCH}"
