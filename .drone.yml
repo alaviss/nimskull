@@ -26,8 +26,8 @@ steps:
     image: ghcr.io/alaviss/nimskull-tester:main
     commands:
       # Clone the workspace and enter the clone
-      - cp -r $PWD /drone/step/$DRONE_STEP_NAME && cd /drone/step/$DRONE_STEP_NAME
-      - PATH=$PWD/bin:$PATH ./koch.py tests all
+      - mkdir -p /drone/step && cp -r $PWD /drone/step/$DRONE_STEP_NAME
+      - cd /drone/step/$DRONE_STEP_NAME && PATH=$PWD/bin:$PATH ./koch.py tests all
     depends_on:
       - build
 
@@ -35,8 +35,8 @@ steps:
     image: ghcr.io/alaviss/nimskull-builder:main
     commands:
       # Clone the workspace and enter the clone
-      - cp -r $PWD /drone/step/$DRONE_STEP_NAME && cd /drone/step/$DRONE_STEP_NAME
-      - ./koch.py --nim:bin/nim boot -d:release --gc:orc
+      - mkdir -p /drone/step && cp -r $PWD /drone/step/$DRONE_STEP_NAME
+      - cd /drone/step/$DRONE_STEP_NAME && ./koch.py --nim:bin/nim boot -d:release --gc:orc
     depends_on:
       - build
 
@@ -44,8 +44,8 @@ steps:
     image: ghcr.io/alaviss/nimskull-builder:main
     commands:
       # Clone the workspace and enter the clone
-      - cp -r $PWD /drone/step/$DRONE_STEP_NAME && cd /drone/step/$DRONE_STEP_NAME
-      - ./koch.py tools -d:release
+      - mkdir -p /drone/step && cp -r $PWD /drone/step/$DRONE_STEP_NAME
+      - cd /drone/step/$DRONE_STEP_NAME && ./koch.py tools -d:release
       - PATH=$PWD/bin:$PATH ./koch.py testTools
     depends_on:
       - build
@@ -54,8 +54,9 @@ steps:
     image: ghcr.io/alaviss/nimskull-builder:main
     commands:
       # Clone the workspace and enter the clone
-      - cp -r $PWD /drone/step/$DRONE_STEP_NAME && cd /drone/step/$DRONE_STEP_NAME
+      - mkdir -p /drone/step && cp -r $PWD /drone/step/$DRONE_STEP_NAME
       - |
+        cd /drone/step/$DRONE_STEP_NAME && \
         ./koch.py doc \
           --git.url:"https://github.com/${DRONE_REPO}" \
           --git.commit:"${DRONE_COMMIT_SHA}" \
