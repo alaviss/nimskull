@@ -96,35 +96,14 @@ jobs:
 
     name: 'Test the compiler and stdlib (batch #${{ matrix.batch }})'
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/alaviss/nimskull-tester:main
 
     steps:
       - uses: actions/checkout@v2.4.0
 
       - uses: ./.github/actions/download-compiler
-
-      - name: Install NodeJS
-        uses: actions/setup-node@v2.5.0
-        with:
-          node-version: '16'
-
-      - name: Install dependencies
-        run: |
-          deps=(
-            # Needed by boehm gc tests
-            libgc-dev
-
-            # Required by Nim in Action tests
-            libsdl1.2-dev
-            libsfml-dev
-
-            # Required by ARC/ORC memory leak tests (only enabled on linux x64)
-            libc6-dbg
-            valgrind
-          )
-
-          sudo apt-get update
-          sudo apt-get install "${deps[@]}"
 
       - name: Run tester
         run: |

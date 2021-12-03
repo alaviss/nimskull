@@ -9,12 +9,17 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Get temporary folder
+      id: temp
+      run: echo "::set-output name=dir::$RUNNER_TEMP"
+      shell: bash
+
     - uses: actions/download-artifact@v2.0.10
       with:
         name: compiler ${{ runner.os }}
-        path: '${{ runner.temp }}'
+        path: '${{ steps.temp.outputs.dir }}'
 
     - name: Unpack the workspace
-      run: tar xf '${{ runner.temp }}/compiler.tar'
+      run: tar xf '${{ steps.temp.outputs.dir }}/compiler.tar'
       shell: bash
       working-directory: '${{ inputs.workspace }}'
