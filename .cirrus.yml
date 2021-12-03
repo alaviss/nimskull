@@ -62,7 +62,8 @@ task:
   << : *UNPACK_TEMPLATE
 
   compile_script: ./koch.py tools -d:release
-  test_script: "PATH=$PWD/bin:$PATH" ./koch.py testTools
+  test_script:
+    - PATH="$PWD/bin:$PATH" ./koch.py testTools
 
 task:
   name: Build documentation
