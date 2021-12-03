@@ -52,3 +52,5 @@ steps:
           --git.url:"https://github.com/${DRONE_REPO}" \
           --git.commit:"${DRONE_COMMIT_SHA}" \
           --git.devel:"${DRONE_BRANCH}"
+    depends_on:
+      - build
