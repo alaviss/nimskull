@@ -22,12 +22,27 @@ steps:
     commands:
       - ./koch.py boot -d:release
 
-  - name: test
+  - name: test_0
     image: ghcr.io/alaviss/nimskull-tester:main
     commands:
       # Clone the workspace and enter the clone
       - mkdir -p /drone/step && cp -r $PWD /drone/step/$DRONE_STEP_NAME
-      - cd /drone/step/$DRONE_STEP_NAME && PATH=$PWD/bin:$PATH ./koch.py tests all
+      - |
+        cd /drone/step/$DRONE_STEP_NAME \
+        && PATH=$PWD/bin:$PATH ./koch.py tests --batch:0_2 all \
+        || bin/nim r tools/ci_testresults
+    depends_on:
+      - build
+
+  - name: test_1
+    image: ghcr.io/alaviss/nimskull-tester:main
+    commands:
+      # Clone the workspace and enter the clone
+      - mkdir -p /drone/step && cp -r $PWD /drone/step/$DRONE_STEP_NAME
+      - |
+        cd /drone/step/$DRONE_STEP_NAME \
+        && PATH=$PWD/bin:$PATH ./koch.py tests --batch:1_2 all \
+        || bin/nim r tools/ci_testresults
     depends_on:
       - build
 
