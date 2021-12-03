@@ -121,7 +121,9 @@ jobs:
     name: Test build compiler with ORC
     needs: [bootstrap]
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/alaviss/nimskull-builder:main
 
     steps:
       - uses: actions/checkout@v2.4.0
@@ -138,7 +140,9 @@ jobs:
     name: Build and test tooling
     needs: [bootstrap]
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/alaviss/nimskull-builder:main
 
     steps:
       - uses: actions/checkout@v2.4.0
@@ -154,7 +158,7 @@ jobs:
       - name: Test tooling
         run: |
           # The tester requires `bin` to be in `PATH`
-          nim_bin_dir=$(python -c 'import os; print(os.path.abspath("bin"))')
+          nim_bin_dir=$(python3 -c 'import os; print(os.path.abspath("bin"))')
           export PATH=$nim_bin_dir:$PATH
 
           ./koch.py testTools
@@ -163,7 +167,9 @@ jobs:
     name: Build HTML documentation
     needs: [bootstrap]
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/alaviss/nimskull-builder:main
 
     steps:
       - uses: actions/checkout@v2.4.0
