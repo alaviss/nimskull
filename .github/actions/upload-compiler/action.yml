@@ -16,7 +16,7 @@ runs:
         while IFS= read -r -d '' file; do
           diff+=("$file")
         done < <(git ls-files -zmo)
-        tar cf '${{ runner.temp }}/compiler.tar' "${diff[@]}"
+        tar cf "$RUNNER_TEMP/compiler.tar" "${diff[@]}"
       shell: bash
       working-directory: '${{ inputs.source }}'
 
