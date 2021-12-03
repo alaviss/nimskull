@@ -1,0 +1,54 @@
+kind: pipeline
+type: docker
+name: Build and test
+
+clone:
+  depth: 1
+
+platform:
+  os: linux
+  arch: arm64
+
+trigger:
+  branch:
+    exclude:
+      - staging.tmp
+      - trying.tmp
+      - staging-squash-merge.tmp
+
+steps:
+  - name: build
+    image: ghcr.io/alaviss/nimskull-builder:main
+    commands:
+      - ./koch.py boot -d:release
+
+  - name: test
+    image: ghcr.io/alaviss/nimskull-tester:main
+    commands:
+      - PATH=$PWD/bin:$PATH ./koch.py tests all
+    depends_on:
+      - build
+
+  - name: orc-bootstrap
+    image: ghcr.io/alaviss/nimskull-builder:main
+    commands:
+      - ./koch.py --nim:bin/nim boot -d:release --gc:orc
+    depends_on:
+      - build
+
+  - name: tooling
+    image: ghcr.io/alaviss/nimskull-builder:main
+    commands:
+      - ./koch.py tools -d:release
+      - PATH=$PWD/bin:$PATH ./koch.py testTools
+    depends_on:
+      - build
+
+  - name: docs
+    image: ghcr.io/alaviss/nimskull-builder:main
+    commands:
+      - |
+        ./koch.py doc \
+          --git.url:"https://github.com/${DRONE_REPO}" \
+          --git.commit:"${DRONE_COMMIT_SHA}" \
+          --git.devel:"${DRONE_BRANCH}"
