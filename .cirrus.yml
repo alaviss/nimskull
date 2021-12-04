@@ -9,8 +9,7 @@ task:
   alias: build
 
   compile_script: ./koch.py boot -d:release
-  package_script:
-    - bash -c "readarray -d '' diff < <(git ls-files -zmo) && tar cf build/compiler.tar.zst --zstd \"${diff[@]}\""
+  package_script: ci/pack-diff.sh
 
   compiler_artifacts:
     path: build/compiler.tar.zst
