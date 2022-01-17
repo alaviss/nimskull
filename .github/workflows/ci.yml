@@ -68,14 +68,18 @@ jobs:
           #     name: String,  ## The name of the target being tested
           #     runner: String ## The runner to use of this target
           #     publish_docs?: Bool ## Whether to publish documentation created by this target
+          #     builder_img?: String ## The container image used to run compiler builds
+          #     tester_img?: Sring ## The container image used to test compiler
           #   }
           # ]
           cat << "EOF" > matrix.json
           [
             {
               "name": "Linux",
-              "runner": "ubuntu-20.04",
-              "publish_docs": true
+              "runner": "ubuntu-latest",
+              "publish_docs": true,
+              "builder_img": "ghcr.io/alaviss/nimskull-builder:0.1.1",
+              "tester_img": "ghcr.io/alaviss/nimskull-tester:0.1.1"
             },
             {
               "name": "macOS",
@@ -99,6 +103,7 @@ jobs:
 
     name: Bootstrap the compiler (${{ matrix.target.name }})
     runs-on: ${{ matrix.target.runner }}
+    container: ${{ matrix.target.builder_img }}
 
     steps:
       - uses: actions/checkout@v2.4.0
@@ -134,6 +139,7 @@ jobs:
 
     name: 'Test the compiler and stdlib (${{ matrix.target.name }}, batch #${{ matrix.batch }})'
     runs-on: ${{ matrix.target.runner }}
+    container: ${{ matrix.target.tester_img }}
 
     steps:
       - uses: actions/checkout@v2.4.0
@@ -142,29 +148,11 @@ jobs:
 
       - uses: ./.github/actions/download-compiler
 
-      - name: Install NodeJS
+      - name: Install NodeJS (macOS)
+        if: runner.os == 'macOS'
         uses: actions/setup-node@v2.5.1
         with:
           node-version: '16'
-
-      - name: Install dependencies (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          deps=(
-            # Needed by boehm gc tests
-            libgc-dev
-
-            # Required by Nim in Action tests
-            libsdl1.2-dev
-            libsfml-dev
-
-            # Required by ARC/ORC memory leak tests (only enabled on linux x64)
-            libc6-dbg
-            valgrind
-          )
-
-          sudo apt-get update
-          sudo apt-get install "${deps[@]}"
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
@@ -199,6 +187,7 @@ jobs:
 
     name: Test build compiler with ORC (${{ matrix.target.name }})
     runs-on: ${{ matrix.target.runner }}
+    container: ${{ matrix.target.builder_img }}
 
     steps:
       - uses: actions/checkout@v2.4.0
@@ -224,6 +213,7 @@ jobs:
 
     name: Build and test tooling (${{ matrix.target.name }})
     runs-on: ${{ matrix.target.runner }}
+    container: ${{ matrix.target.builder_img }}
 
     steps:
       - uses: actions/checkout@v2.4.0
@@ -252,6 +242,7 @@ jobs:
 
     name: Build HTML documentation (${{ matrix.target.name }})
     runs-on: ${{ matrix.target.runner }}
+    container: ${{ matrix.target.builder_img }}
 
     steps:
       - uses: actions/checkout@v2.4.0
