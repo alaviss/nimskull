@@ -164,7 +164,7 @@ proc getSourceMetadata(): tuple[hash, date, versionSuffix: string] =
       if hashCall.exitCode == 0:
         hash = hashCall.output.strip()
 
-      let dateCall = execCmdEx("git -C " & quoteShell(nimSource) & " log -1 --format=%cs HEAD")
+      let dateCall = execCmdEx("git -C " & quoteShell(nimSource) & " log -1 --format=%cd --date=short HEAD")
       if dateCall.exitCode == 0:
         date = dateCall.output.strip()
 
