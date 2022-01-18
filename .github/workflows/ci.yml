@@ -91,7 +91,7 @@ jobs:
           # Use jq to compact the matrix into one line to be used as the result
           echo "::set-output name=result::$(jq -c . matrix.json)"
 
-  bootstrap:
+  binrelease:
     needs: [pre_run]
     if: needs.pre_run.outputs.skip != 'true'
 
@@ -101,7 +101,7 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
 
-    name: Bootstrap the compiler (${{ matrix.target.name }})
+    name: Build binary release for ${{ matrix.target.name }}
     runs-on: ${{ matrix.target.runner }}
     container: ${{ matrix.target.builder_img }}
 
@@ -113,14 +113,47 @@ jobs:
       - name: Enable annotations
         run: echo "::add-matcher::.github/nim-problem-matcher.json"
 
-      - name: Build compiler
-        run: ./koch.py boot -d:release
+      - id: build
+        name: Build binary release
+        run: |
+          ./koch.py unixrelease
 
-      - name: Upload compiler to artifacts
+          # This is the part where we... guess what the generated archive was
+          # so it could be uploaded.
+          #
+          # It is not ideal, but there aren't any better ideas at the time of
+          # writing.
+
+          # Make sure that the list come up empty if nothing is found
+          shopt -s nullglob
+          # Use a glob to capture the archive name
+          archive=( build/*.tar* )
+
+          # The binary release command should build exactly one archive
+          if [[ ${#archive[@]} -gt 1 ]]; then
+            echo "Error: more than one file matched the archive glob"
+            echo "Info: resulting file list: ${archive[@]}"
+            exit 1
+          elif [[ ${#archive[@]} -lt 1 ]]; then
+            echo "Error: no file matched the archive glob"
+            exit 1
+          fi
+
+          # Set the archive as the output of this step
+          echo "::set-output name=result::${archive[0]}"
+
+      - name: Upload binary release to artifacts
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: binary ${{ matrix.target.name }}
+          path: ${{ steps.build.outputs.result }}
+          if-no-files-found: error
+
+      - name: Upload workspace to artifacts
         uses: ./.github/actions/upload-compiler
 
   test:
-    needs: [pre_run, bootstrap]
+    needs: [pre_run, binrelease]
 
     strategy:
       fail-fast: false
@@ -177,7 +210,7 @@ jobs:
         run: bin/nim r tools/ci_testresults
 
   orc:
-    needs: [pre_run, bootstrap]
+    needs: [pre_run, binrelease]
 
     strategy:
       fail-fast: false
@@ -203,7 +236,7 @@ jobs:
         run: ./koch.py --nim:bin/nim boot -d:release --gc:orc
 
   tooling:
-    needs: [pre_run, bootstrap]
+    needs: [pre_run, binrelease]
 
     strategy:
       fail-fast: false
@@ -211,7 +244,7 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
 
-    name: Build and test tooling (${{ matrix.target.name }})
+    name: Test tooling (${{ matrix.target.name }})
     runs-on: ${{ matrix.target.runner }}
     container: ${{ matrix.target.builder_img }}
 
@@ -225,14 +258,11 @@ jobs:
       - name: Enable annotations
         run: echo "::add-matcher::.github/nim-problem-matcher.json"
 
-      - name: Build tooling
-        run: ./koch.py tools -d:release
-
       - name: Test tooling
         run: ./koch.py testTools
 
   doc:
-    needs: [pre_run, bootstrap]
+    needs: [pre_run, binrelease]
 
     strategy:
       fail-fast: false
@@ -277,7 +307,7 @@ jobs:
 
   passed:
     name: All check passed
-    needs: [bootstrap, test, tooling, doc, orc]
+    needs: [binrelease, test, tooling, doc, orc]
     if: always()
     runs-on: ubuntu-latest
 
