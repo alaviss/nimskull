@@ -118,29 +118,10 @@ jobs:
         run: |
           ./koch.py unixrelease
 
-          # This is the part where we... guess what the generated archive was
-          # so it could be uploaded.
-          #
-          # It is not ideal, but there aren't any better ideas at the time of
-          # writing.
-
-          # Make sure that the list come up empty if nothing is found
-          shopt -s nullglob
-          # Use a glob to capture the archive name
-          archive=( build/*.tar* )
-
-          # The binary release command should build exactly one archive
-          if [[ ${#archive[@]} -gt 1 ]]; then
-            echo "Error: more than one file matched the archive glob"
-            echo "Info: resulting file list: ${archive[@]}"
-            exit 1
-          elif [[ ${#archive[@]} -lt 1 ]]; then
-            echo "Error: no file matched the archive glob"
-            exit 1
-          fi
+          archive=build/$(jq .name build/archive.json)
 
           # Set the archive as the output of this step
-          echo "::set-output name=result::${archive[0]}"
+          echo "::set-output name=result::$archive"
 
       - name: Upload binary release to artifacts
         uses: actions/upload-artifact@v2.3.1
