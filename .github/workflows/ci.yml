@@ -34,6 +34,9 @@ jobs:
     outputs:
       skip: ${{ steps.skip_result.outputs.result }}
       target_matrix: ${{ steps.matrix.outputs.result }}
+      # The builder used to build shared artifacts. This is extracted from
+      # target matrix.
+      shared_builder: ${{ steps.matrix.outputs.shared }}
 
     steps:
       - id: run_cond
@@ -70,7 +73,8 @@ jobs:
           #   {
           #     name: String,  ## The name of the target being tested
           #     runner: String ## The runner to use of this target
-          #     publish_docs?: Bool ## Whether to publish documentation created by this target
+          #     publish_shared?: Bool ## Publish artifact shared between platforms.
+          #                           ## Only one target should have this attribute.
           #   }
           # ]
           cat << "EOF" > matrix.json
@@ -78,7 +82,7 @@ jobs:
             {
               "name": "Linux",
               "runner": "ubuntu-20.04",
-              "publish_docs": true
+              "publish_shared": true
             },
             {
               "name": "macOS",
@@ -89,6 +93,7 @@ jobs:
 
           # Use jq to compact the matrix into one line to be used as the result
           echo "::set-output name=result::$(jq -c . matrix.json)"
+          echo "::set-output name=shared::$(jq -c '.[] | select(.publish_shared)' matrix.json)"
 
   bootstrap:
     needs: [pre_run]
@@ -111,8 +116,8 @@ jobs:
       - name: Enable annotations
         run: echo "::add-matcher::.github/nim-problem-matcher.json"
 
-      - name: Build compiler
-        run: ./koch.py boot -d:release
+      - name: Build release binaries
+        run: ./koch.py all
 
       - name: Upload compiler to artifacts
         uses: ./.github/actions/upload-compiler
@@ -238,23 +243,14 @@ jobs:
       - name: Enable annotations
         run: echo "::add-matcher::.github/nim-problem-matcher.json"
 
-      - name: Build tooling
-        run: ./koch.py tools -d:release
-
       - name: Test tooling
         run: ./koch.py testTools
 
-  doc:
+  source:
     needs: [pre_run, bootstrap]
 
-    strategy:
-      fail-fast: false
-
-      matrix:
-        target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
-
-    name: Build HTML documentation (${{ matrix.target.name }})
-    runs-on: ${{ matrix.target.runner }}
+    name: Build source archive
+    runs-on: ${{ fromJSON(needs.pre_run.outputs.shared_builder).runner }}
 
     steps:
       - uses: actions/checkout@v2.4.0
@@ -266,6 +262,79 @@ jobs:
       - name: Enable annotations
         run: echo "::add-matcher::.github/nim-problem-matcher.json"
 
+      - name: Generate csources
+        run: ./koch.py csource -d:danger
+
+      - id: source
+        name: Build source archive
+        run: |
+          ./koch.py archive
+
+          archive=build/$(jq -r .name build/archive.json)
+          metadata=build/source.json
+
+          # Rename the archive manifest to avoid collision on upload to artifacts
+          mv build/archive.json "$metadata"
+
+          # Let the uploader know what to upload
+          echo "::set-output name=archive::$archive"
+          echo "::set-output name=metadata::$metadata"
+
+      - name: Publish source archive to artifacts
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: release source
+          path: |
+            ${{ steps.source.outputs.archive }}
+            ${{ steps.source.outputs.metadata }}
+          if-no-files-found: error
+
+  release:
+    needs: [pre_run, source, bootstrap]
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
+        special:
+          - name: from source archive
+            fromSrcArchive: true
+          - name: regular build
+
+    name: Build documentation and release artifacts (${{ matrix.special.name }}, ${{ matrix.target.name }})
+    runs-on: ${{ matrix.target.runner }}
+
+    steps:
+      - uses: actions/checkout@v2.4.0
+        if: >
+          !matrix.special.fromSrcArchive
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/download-compiler
+        if: >
+          !matrix.special.fromSrcArchive
+
+      - name: Download source archive
+        if: >
+          matrix.special.fromSrcArchive
+        uses: actions/download-artifact@v2.1.0
+        with:
+          name: release source
+          path: source-archive
+
+      - name: Unpack source archive
+        if: matrix.special.fromSrcArchive
+        run: |
+          archive=source-archive/$(jq -r .name source-archive/source.json)
+          # Pipe from zstd to tar because macOS' tar does not support unpacking zstd
+          zstd -c -d "$archive" | tar -xf - --strip-components 1
+
+      - name: Bootstrap the compiler (source archive build)
+        if: matrix.special.fromSrcArchive
+        run: ./koch.py boot -d:danger
+
       - name: Build docs
         run: |
           ./koch.py doc \
@@ -276,8 +345,26 @@ jobs:
           # Remove leftover nimcache
           rm -rf doc/html/nimcache
 
-      - name: Publish to artifacts
-        if: matrix.target.publish_docs
+      - id: package
+        name: Build release binary archive
+        run: |
+          ./koch.py unixrelease
+
+          archive=build/$(jq -r .name build/archive.json)
+          os=$(jq -r .os build/archive.json)
+          cpu=$(jq -r .cpu build/archive.json)
+          metadata=build/${os}_${cpu}.json
+
+          # Rename the archive manifest to avoid collision on upload to artifacts
+          mv build/archive.json "$metadata"
+
+          # Let the uploader know what to upload
+          echo "::set-output name=archive::$archive"
+          echo "::set-output name=metadata::$metadata"
+
+      - name: Publish docs to artifacts
+        if: >
+          matrix.target.publish_shared && !matrix.special.fromSrcArchive
         uses: actions/upload-artifact@v2.3.1
         with:
           # If this name is updated, tweak publisher.yml
@@ -285,9 +372,37 @@ jobs:
           path: doc/html/
           if-no-files-found: error
 
+      - name: Publish release binary archive to artifacts
+        if: >
+          !matrix.special.fromSrcArchive
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          # This will be an artifact pool shared by every instances of this
+          # job. It is crucial that we do not generate duplicates since
+          # duplicates will silently replace other files.
+          name: release
+          path: |
+            ${{ steps.package.outputs.archive }}
+            ${{ steps.package.outputs.metadata }}
+          if-no-files-found: error
+
+      - name: Publish binary archive built from source archive to artifacts
+        if: >
+          matrix.special.fromSrcArchive
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          # This will be an artifact pool shared by every instances of this
+          # job. It is crucial that we do not generate duplicates since
+          # duplicates will silently replace other files.
+          name: test binaries from source archive
+          path: |
+            ${{ steps.package.outputs.archive }}
+            ${{ steps.package.outputs.metadata }}
+          if-no-files-found: error
+
   passed:
     name: All check passed
-    needs: [bootstrap, test, tooling, doc, orc]
+    needs: [bootstrap, test, tooling, source, release, orc]
     if: always()
     runs-on: ubuntu-latest
 
