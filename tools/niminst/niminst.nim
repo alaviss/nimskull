@@ -829,6 +829,9 @@ proc archiveDist(c: var ConfigData) =
     if not dirExists(destDir): createDir(destDir)
     copyFileWithPermissions(src, dest)
 
+  # Remove the folder to be archived to avoid artifacts from previous runs
+  removeDir(tmpDir / proj)
+
   if c.binCat == {}:
     if not fileExists("build" / buildBatFile):
       quit("No C sources found in ./build/, please build by running " &
