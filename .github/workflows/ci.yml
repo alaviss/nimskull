@@ -401,7 +401,7 @@ jobs:
           if-no-files-found: error
 
   release_test:
-    needs: [pre_run, release, bootstrap]
+    needs: [pre_run, source, release, bootstrap]
 
     name: Test release artifacts
     runs-on: ${{ fromJSON(needs.pre_run.outputs.shared_builder).runner }}
@@ -424,6 +424,12 @@ jobs:
         with:
           name: test binaries from source archive
           path: binary-from-source
+
+      - name: Download the source archive
+        uses: actions/download-artifact@v2.1.0
+        with:
+          name: release source
+          path: source-archive
 
       - name: Install tools
         run: |
@@ -460,7 +466,7 @@ jobs:
           # for the full bundle.
           bin/nim c tools/release_manifest.nim
           cd release-binary
-          ../tools/release_manifest add *.json
+          ../tools/release_manifest add ../source-archive/*.json *.json
 
           # Print the resulting manifest
           echo "Manifest: "
