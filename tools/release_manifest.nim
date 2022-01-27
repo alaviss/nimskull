@@ -24,6 +24,12 @@ type
     name: string ## The file name of the artifact
     sha256: string ## The SHA256 checksum of the artifact
 
+  BinaryArtifactDataV0 = object
+    ## Data about a binary artifact in the manifest
+    target: string ## The target of the artifact
+    name: string ## The file name of the artifact
+    sha256: string ## The SHA256 checksum of the artifact
+
   ReleaseManifestV0 = object
     ## The manifest attached to a release. It is optimized for tools to quickly
     ## discover the artifact they need for their target.
@@ -33,8 +39,8 @@ type
     manifestVersion: int ## The version of the manifest
     version: string ## The version being released
     source: ArtifactDataV0 ## The source archive for this release
-    binaries: Table[string, ArtifactDataV0] ## The mapping of triplet -> artifact.
-                                            ## The triplets are unique.
+    binaries: seq[BinaryArtifactDataV0] ## A list of binary artifacts each have
+                                        ## an unique target
 
   ReleaseManifest = ReleaseManifestV0
     ## The release manifest in use.
@@ -115,10 +121,12 @@ func serialize(d: Database): JsonNode =
         sha256: d.sha256[i]
       )
     else:
-      manifest.binaries[d.triplet[i]] = ArtifactDataV0(
-        name: d.file[i],
-        sha256: d.sha256[i]
-      )
+      manifest.binaries.add:
+        BinaryArtifactDataV0(
+          target: d.triplet[i],
+          name: d.file[i],
+          sha256: d.sha256[i]
+        )
 
   result = %manifest
 
@@ -140,9 +148,9 @@ func deserialize(j: JsonNode): Database =
     )
 
   # Add all artifacts
-  for triplet, artifact in manifest.binaries.pairs:
+  for artifact in manifest.binaries.items:
     result.addArtifact(
-      artifact.name, artifact.sha256, manifest.version, triplet
+      artifact.name, artifact.sha256, manifest.version, artifact.target
     )
 
 func toTriplet(os, cpu: string): string =
