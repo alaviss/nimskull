@@ -400,9 +400,82 @@ jobs:
             ${{ steps.package.outputs.metadata }}
           if-no-files-found: error
 
+  release_test:
+    needs: [pre_run, release, bootstrap]
+
+    name: Test release artifacts
+    runs-on: ${{ fromJSON(needs.pre_run.outputs.shared_builder).runner }}
+
+    steps:
+      - uses: actions/checkout@v2.4.0
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/download-compiler
+
+      - name: Download release binaries
+        uses: actions/download-artifact@v2.1.0
+        with:
+          name: release
+          path: release-binary
+
+      - name: Download binaries built from source archive
+        uses: actions/download-artifact@v2.1.0
+        with:
+          name: test binaries from source archive
+          path: binary-from-source
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          # This will be used to test the binaries
+          sudo apt-get install -yqq --no-install-recommends diffoscope
+
+      - id: diff
+        name: Verify that binaries built from git and source archive are the same
+        run: |
+          output_html=$RUNNER_TEMP/diffoscope.html
+          run_diff() {
+            diffoscope \
+              --html="$output_html" \
+              --exclude-directory-metadata=yes \
+              release-binary/ binary-from-source/
+          }
+          if ! run_diff; then
+            echo "::error::There are differences when building from source archive compared to building from git, check the output uploaded to artifacts for more details"
+            echo "::set-output name=result::$output_html"
+            exit 1
+          fi
+
+      - name: Upload diffoscope output
+        if: failure() && steps.diff.outputs.result != ''
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: differences between binary from source archive and git
+          path: ${{ steps.diff.outputs.result }}
+
+      - name: Verify the release manifests
+        run: |
+          # Verify them by using the manifest builder tool to create a manifest
+          # for the full bundle.
+          bin/nim c tools/release_manifest.nim
+          cd release-binary
+          ../tools/release_manifest add *.json
+
+          # Print the resulting manifest
+          echo "Manifest: "
+          jq . manifest.json
+
+      # Upload the tool for the publisher
+      - name: Upload release manifest tool
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: release manifest tool
+          path: tools/release_manifest
+
   passed:
     name: All check passed
-    needs: [bootstrap, test, tooling, source, release, orc]
+    needs: [bootstrap, test, tooling, source, release, release_test, orc]
     if: always()
     runs-on: ubuntu-latest
 
