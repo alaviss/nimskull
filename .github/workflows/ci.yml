@@ -5,6 +5,7 @@ on:
     branches-ignore:
       # Everything would have passed bors before going into devel
       - devel
+      - bin-publish
       # Bors temporary branches
       - staging.tmp
       - trying.tmp
