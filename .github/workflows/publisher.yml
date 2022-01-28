@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - devel
+      - bin-staging
 
 # Run every script actions in bash
 defaults:
