@@ -76,6 +76,9 @@ jobs:
       - id: release-files
         name: Create release manifest
         run: |
+          # Github Artifacts strip executable permissions so it has to be set again
+          chmod 755 release_manifest
+
           ./release_manifest add *.json
           toUpload=$(./release_manifest files-to-upload --format:github-actions)
           echo "::set-output name=result::$toUpload"
