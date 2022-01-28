@@ -95,7 +95,7 @@ jobs:
           echo "::set-output name=result::$(jq -c . matrix.json)"
           echo "::set-output name=shared::$(jq -c '.[] | select(.publish_shared)' matrix.json)"
 
-  bootstrap:
+  build:
     needs: [pre_run]
     if: needs.pre_run.outputs.skip != 'true'
 
@@ -105,7 +105,7 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
 
-    name: Bootstrap the compiler (${{ matrix.target.name }})
+    name: Build the compiler and tools (${{ matrix.target.name }})
     runs-on: ${{ matrix.target.runner }}
 
     steps:
@@ -119,11 +119,11 @@ jobs:
       - name: Build release binaries
         run: ./koch.py all
 
-      - name: Upload compiler to artifacts
+      - name: Upload workspace to artifacts
         uses: ./.github/actions/upload-compiler
 
   test:
-    needs: [pre_run, bootstrap]
+    needs: [pre_run, build]
 
     strategy:
       fail-fast: false
@@ -197,7 +197,7 @@ jobs:
         run: bin/nim r tools/ci_testresults
 
   orc:
-    needs: [pre_run, bootstrap]
+    needs: [pre_run, build]
 
     strategy:
       fail-fast: false
@@ -218,11 +218,11 @@ jobs:
       - name: Enable annotations
         run: echo "::add-matcher::.github/nim-problem-matcher.json"
 
-      - name: Test ORC bootstrap
+      - name: Test ORC build
         run: ./koch.py --nim:bin/nim boot -d:release --gc:orc
 
   tooling:
-    needs: [pre_run, bootstrap]
+    needs: [pre_run, build]
 
     strategy:
       fail-fast: false
@@ -230,7 +230,7 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
 
-    name: Build and test tooling (${{ matrix.target.name }})
+    name: Test tooling (${{ matrix.target.name }})
     runs-on: ${{ matrix.target.runner }}
 
     steps:
@@ -247,7 +247,7 @@ jobs:
         run: ./koch.py testTools
 
   source:
-    needs: [pre_run, bootstrap]
+    needs: [pre_run, build]
 
     name: Build source archive
     runs-on: ${{ fromJSON(needs.pre_run.outputs.shared_builder).runner }}
@@ -280,6 +280,9 @@ jobs:
           echo "::set-output name=archive::$archive"
           echo "::set-output name=metadata::$metadata"
 
+      # NOTE: Even though we use a separate artifact for this to simplify
+      # CI pipeline, this will be merged by the publisher later on, so it is
+      # crucial that none of the files in here collide with "release" artifact.
       - name: Publish source archive to artifacts
         uses: actions/upload-artifact@v2.3.1
         with:
@@ -290,7 +293,7 @@ jobs:
           if-no-files-found: error
 
   release:
-    needs: [pre_run, source, bootstrap]
+    needs: [pre_run, source, build]
 
     strategy:
       fail-fast: false
@@ -307,18 +310,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2.4.0
-        if: >
-          !matrix.special.fromSrcArchive
+        if: '!matrix.special.fromSrcArchive'
         with:
           fetch-depth: 0
 
       - uses: ./.github/actions/download-compiler
-        if: >
-          !matrix.special.fromSrcArchive
+        if: '!matrix.special.fromSrcArchive'
 
       - name: Download source archive
-        if: >
-          matrix.special.fromSrcArchive
+        if: matrix.special.fromSrcArchive
         uses: actions/download-artifact@v2.1.0
         with:
           name: release source
@@ -363,8 +363,7 @@ jobs:
           echo "::set-output name=metadata::$metadata"
 
       - name: Publish docs to artifacts
-        if: >
-          matrix.target.publish_shared && !matrix.special.fromSrcArchive
+        if: matrix.target.publish_shared && !matrix.special.fromSrcArchive
         uses: actions/upload-artifact@v2.3.1
         with:
           # If this name is updated, tweak publisher.yml
@@ -373,8 +372,7 @@ jobs:
           if-no-files-found: error
 
       - name: Publish release binary archive to artifacts
-        if: >
-          !matrix.special.fromSrcArchive
+        if: '!matrix.special.fromSrcArchive'
         uses: actions/upload-artifact@v2.3.1
         with:
           # This will be an artifact pool shared by every instances of this
@@ -387,8 +385,7 @@ jobs:
           if-no-files-found: error
 
       - name: Publish binary archive built from source archive to artifacts
-        if: >
-          matrix.special.fromSrcArchive
+        if: matrix.special.fromSrcArchive
         uses: actions/upload-artifact@v2.3.1
         with:
           # This will be an artifact pool shared by every instances of this
@@ -401,7 +398,7 @@ jobs:
           if-no-files-found: error
 
   release_test:
-    needs: [pre_run, source, release, bootstrap]
+    needs: [pre_run, source, release, build]
 
     name: Test release artifacts
     runs-on: ${{ fromJSON(needs.pre_run.outputs.shared_builder).runner }}
@@ -481,7 +478,7 @@ jobs:
 
   passed:
     name: All check passed
-    needs: [bootstrap, test, tooling, source, release, release_test, orc]
+    needs: [build, test, tooling, source, release, release_test, orc]
     if: always()
     runs-on: ubuntu-latest
 

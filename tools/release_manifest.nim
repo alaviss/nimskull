@@ -9,7 +9,7 @@
 ##
 ## Designed for use in CI, thus not having many interactive components.
 
-import std/[json, os, parseopt, strutils, tables]
+import std/[json, options, os, parseopt, strutils, tables]
 
 type
   Database = object
@@ -212,6 +212,12 @@ func addArtifact(d: var Database, manifest: JsonNode) =
 
 # -- CLI actions start here
 
+type
+  OutputFormat {.pure.} = enum
+    ## Output format for files-to-upload
+    Text = "text"
+    GithubActions = "github-actions"
+
 proc addCommand(manifest: string, archiveData: varargs[string]) =
   ## Implementation for the `add` subcommand.
   ##
@@ -237,23 +243,55 @@ proc addCommand(manifest: string, archiveData: varargs[string]) =
   # Serialize a new manifest
   writeFile(manifest, $database.serialize())
 
-proc filesToUploadCommand(manifest: string) =
+func escapeDataForGithubActions(s: string): string =
+  ## Escape the string `s` so that it can be used as data for workflow commands.
+  # The list is obtained from here:
+  # https://github.com/actions/toolkit/blob/e2eeb0a784f4067a75f0c6cd2cc9703f3cbc7744/packages/core/src/command.ts#L80-L85
+  s.multiReplace {
+    "%": "%25",
+    "\r": "%0D",
+    "\n": "%0A"
+  }
+
+proc filesToUploadCommand(manifest: string, format = Text) =
   ## Implementation for the `files-to-upload` subcommand.
   ##
   ## :manifest:
   ##   The filename of the release manifest to obtain data from.
+  ##
+  ## :format:
+  ##   The format of the output data.
   # Deserialize the manifest back to database
   let database = json.parseFile(manifest).deserialize()
+
+  var output: string
 
   let
     manifestAbsolute = manifest.expandFileName()
     storageFolder = manifestAbsolute.parentDir()
-  # Print the full path of the manifest itself
-  stdout.writeLine(manifestAbsolute)
+  # Output the full path of the manifest itself
+  output.add(manifestAbsolute)
 
-  # Print all artifacts in the database, made absolute using the storage folder
+  # Output all artifacts in the database, made absolute using the storage folder
   for file in database.file.items:
-    stdout.writeLine(storageFolder / file)
+    output.add('\n')
+    output.add(storageFolder / file)
+
+  case format
+  of Text:
+    stdout.writeLine(output)
+  of GithubActions:
+    stdout.write:
+      escapeDataForGithubActions(output)
+
+proc versionCommand(manifest: string) =
+  ## Implementation for the `version` subcommand.
+  ##
+  ## :manifest:
+  ##   The filename of the release manifest to obtain data from.
+  let database = json.parseFile(manifest).deserialize()
+
+  stdout.writeLine(database.version)
 
 # -- CLI dispatching stuff starts here
 
@@ -264,12 +302,14 @@ type
     Help = "help"
     Add = "add"
     FilesToUpload = "files-to-upload"
+    Version = "version"
 
   Flag {.pure.} = enum
     ## Flags passed via CLI
     Error ## Not a valid flag. This is used to store invalid flag from command line.
-    Help ## -h, --help
-    File ## -f, --file
+    Help = "help" ## -h, --help
+    File = "file" ## -f, --file
+    Format = "format" ## --format
 
   CliErrorKind {.pure.} = enum
     ## Errors during CLI parsing
@@ -284,6 +324,12 @@ type
       ## A flag that requires a value was passed without one, flags[Error]
       ## contain the flag
 
+  CliInterpErrorKind {.pure.} = enum
+    ## Errors during CLI interpretation. This is a format string storage for
+    ## the most part.
+    FlagInvalidValue = "`$1' is not a valid value for flag `$2'"
+      ## An invalid value was passed to a flag.
+
   Cli = object
     flags: Table[Flag, string] ## Table of flags passed and their value
     args: seq[string] ## The non-flag arguments
@@ -293,9 +339,10 @@ type
 const
   GlobalOptHelp = """
 Global options:
-  -h, --help          Print help for any subcommand
-  -f=<file.json>,     Specify the manifest to be used.
-  --file=<file.json>  Defaults to manifest.json in the current directory.
+  -h, --help                      Print help for any subcommand
+  -f=<file.json>,                 Specify the manifest to be used.
+  --file=<file.json>              Defaults to manifest.json in the
+                                  current directory.
 """
 
   MainHelp = """
@@ -304,6 +351,7 @@ Usage: $app <command> [args]...
 Commands:
   add              Add artifacts to the manifest
   files-to-upload  List the files to be uploaded
+  version          Print the release version
   help             Display help for any subcommand
 
 $globalOpt
@@ -325,6 +373,14 @@ Usage: $app files-to-upload [options]
 Print out files to be uploaded to a Github Release, separated by a newline each.
 An error will be raised if no release manifest is found.
 
+Options:
+  --format:<text|github-actions>  Specify the output format to be used.
+                                  The text format print files separated by
+                                  newline.
+                                  The github-actions format encodes the text
+                                  format such that it can be used in workflow
+                                  commands (ie. set-output) without losing data.
+
 $globalOpt
 """
 
@@ -333,6 +389,15 @@ Usage: $app help [options] [subcommand]
 
 Print help text for the given subcommand, or the main help if no command nor
 options were given.
+
+$globalOpt
+"""
+
+  VersionHelp = """
+Usage: $app version [options]
+
+Print the release version in the release manifest. An error will be raised if
+no release manifest is found.
 
 $globalOpt
 """
@@ -355,6 +420,8 @@ proc printHelp(action: Action) =
     stdout.write(AddHelp % defaultHelpFormat)
   of FilesToUpload:
     stdout.write(FilesToUploadHelp % defaultHelpFormat)
+  of Version:
+    stdout.write(VersionHelp % defaultHelpFormat)
 
 proc dispatch(cli: Cli): int =
   ## Dispatches based on `cli`. Returns the exitcode.
@@ -406,8 +473,28 @@ proc dispatch(cli: Cli): int =
           printHelp(cli.action)
           result = 1
       of FilesToUpload:
+        let
+          manifest = cli.flags.getOrDefault(Flag.File, DefaultManifestFile)
+          format =
+            try:
+              if Flag.Format in cli.flags:
+                some parseEnum[OutputFormat](cli.flags[Flag.Format])
+              else:
+                some Text
+            except ValueError:
+              none OutputFormat
+
+        # If the format is invalid
+        if format.isNone:
+          # Print error message and help then set failure
+          stderr.writeLine("error: ", $FlagInvalidValue % [cli.flags[Flag.Format], $Flag.Format])
+          printHelp(FilesToUpload)
+          result = 1
+        else:
+          filesToUploadCommand(manifest, format.get)
+      of Version:
         let manifest = cli.flags.getOrDefault(Flag.File, DefaultManifestFile)
-        filesToUploadCommand(manifest)
+        versionCommand(manifest)
 
 proc main() =
   ## The CLI entrypoint and parser
@@ -447,6 +534,18 @@ proc main() =
           break
 
         cli.flags[Flag.File] = val
+      of "format":
+        if cli.action notin {FilesToUpload}:
+          cli.error = InvalidFlag
+          cli.flags[Flag.Error] = key
+          break
+
+        if val.len == 0:
+          cli.error = FlagNeedValue
+          cli.flags[Flag.Error] = key
+          break
+
+        cli.flags[Flag.Format] = val
       of "":
         if cli.action == Unknown:
           cli.error = TerminatorBeforeCommand
