@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - devel
-      - bin-staging
+      - bin-publish
 
 # Run every script actions in bash
 defaults:
@@ -31,7 +31,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2.16.0
         with:
           workflow: ci.yml
-          workflow_conclusion: completed
+          workflow_conclusion: success
           commit: ${{ github.event.after }}
           # Keep up-to-date with ci.yml
           name: Generated docs
@@ -41,7 +41,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2.16.0
         with:
           workflow: ci.yml
-          workflow_conclusion: completed
+          workflow_conclusion: success
           commit: ${{ github.event.after }}
           # Keep up-to-date with ci.yml
           name: release manifest tool
@@ -51,7 +51,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2.16.0
         with:
           workflow: ci.yml
-          workflow_conclusion: completed
+          workflow_conclusion: success
           commit: ${{ github.event.after }}
           # Keep up-to-date with ci.yml
           name: release source
@@ -61,7 +61,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2.16.0
         with:
           workflow: ci.yml
-          workflow_conclusion: completed
+          workflow_conclusion: success
           commit: ${{ github.event.after }}
           # Keep up-to-date with ci.yml
           name: release
