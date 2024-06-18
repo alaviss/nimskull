@@ -4,6 +4,16 @@ on:
     branches:
       - devel
 
+  workflow_call:
+    inputs:
+      run-id:
+        required: true
+        type: string
+
+      commit:
+        required: true
+        type: string
+
 # Run every script actions in bash
 defaults:
   run:
@@ -24,6 +34,9 @@ jobs:
       name: release
       url: ${{ steps.release.outputs.url }}
 
+    env:
+      COMMIT: ${{ inputs.commit || github.event.after }}
+
     steps:
       # Publish action needs a checkout
       - uses: actions/checkout@v4
@@ -31,20 +44,28 @@ jobs:
       - name: Obtain latest successful run id
         id: finder
         run: |
-          run_id=$(gh run list \
-            -c "$COMMIT" \
-            -w "$WORKFLOW" \
-            -s "$CONCLUSION" \
-            --limit 1 \
-            --json databaseId \
-            --jq '.[].databaseId')
+          get_id() {
+            if [[ -n $INPUTS_RUNID ]]; then
+              echo "$INPUTS_RUNID"
+            else
+              gh run list \
+                -c "$COMMIT" \
+                -w "$WORKFLOW" \
+                -s "$CONCLUSION" \
+                --limit 1 \
+                --json databaseId \
+                --jq '.[].databaseId'
+            fi
+          }
+
+          run_id=$(get_id)
           if [[ -z $run_id ]]; then
             echo "::error::Could not found any CI run for commit $COMMIT"
             exit 1
           fi
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
         env:
-          COMMIT: ${{ github.event.after }}
+          INPUTS_RUNID: ${{ inputs.run-id }}
           WORKFLOW: ci.yml
           CONCLUSION: success
           GH_TOKEN: ${{ github.token }}
@@ -112,13 +133,13 @@ jobs:
         working-directory: release-staging
 
       - id: release
-        name: Create pre-release
+        name: Create release
         uses: softprops/action-gh-release@v2.0.5
         with:
-          prerelease: true
+          prerelease: ${{ contains(steps.release-files.outputs.version, '-') }}
           files: ${{ steps.release-files.outputs.result }}
           tag_name: ${{ steps.release-files.outputs.version }}
           fail_on_unmatched_files: true
-          target_commitish: ${{ github.event.after }}
+          target_commitish: ${{ env.COMMIT }}
           body: |
-            Continuous delivery for commit ${{ github.event.after }}
+            Continuous delivery for commit ${{ env.COMMIT }}

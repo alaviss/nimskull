@@ -11,6 +11,8 @@ on:
   pull_request:
   merge_group:
 
+  workflow_call:
+
 jobs:
   reprotest:
     # This job is meant for testing whether the compiler can be built

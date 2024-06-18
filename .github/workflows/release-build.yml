@@ -1,0 +1,21 @@
+name: Build and publish release
+on:
+  push:
+    tags:
+      - "*.*.*" # Run on release tags
+      - "!*-*" # But not on pre-release tags
+
+jobs:
+  build:
+    uses: ./.github/workflows/ci.yml
+  reproducible:
+    uses: ./.github/workflows/reproducible.yml
+  publish:
+    needs: [build, reproducible]
+    uses: ./.github/workflows/publisher.yml
+    with:
+      commit: ${{ github.sha }}
+      run-id: ${{ github.run_id }}
+    permissions:
+      actions: read
+      contents: write
