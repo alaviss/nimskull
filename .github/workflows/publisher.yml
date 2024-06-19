@@ -108,11 +108,13 @@ jobs:
           path: release-staging
           github-token: ${{ github.token }}
 
-      - name: Publish docs
-        uses: JamesIves/github-pages-deploy-action@v4.6.1
+      - name: Upload docs as artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages
-          folder: doc/html
+          path: doc/html
+
+      - name: Deploy docs
+        uses: actions/deploy-pages@v4
 
       - id: release-files
         name: Create release manifest
