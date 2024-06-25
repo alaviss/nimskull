@@ -29,8 +29,6 @@ jobs:
     permissions:
       actions: read
       contents: write
-      id-token: write
-      pages: write
 
     environment:
       name: release
@@ -138,9 +136,6 @@ jobs:
         with:
           path: ${{ steps.docs.outputs.folder }}
 
-      - name: Deploy docs
-        uses: actions/deploy-pages@v4
-
       - id: release
         name: Create release
         uses: softprops/action-gh-release@v2.0.5
@@ -152,3 +147,20 @@ jobs:
           target_commitish: ${{ env.COMMIT }}
           body: |
             Continuous delivery for commit ${{ env.COMMIT }}
+
+  docs-deploy:
+    needs: [publisher]
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - id: deploy
+        name: Deploy docs
+        uses: actions/deploy-pages@v4
