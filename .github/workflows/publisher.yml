@@ -73,15 +73,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
       # Download the latest instance of artifacts from a build done previously
-      - name: Download generated docs
-        uses: actions/download-artifact@v4
-        with:
-          run-id: ${{ steps.finder.outputs.run_id }}
-          # Keep up-to-date with ci.yml
-          name: Generated docs
-          path: doc/html
-          github-token: ${{ github.token }}
-
       - name: Download generated source archive
         uses: actions/download-artifact@v4
         with:
@@ -110,14 +101,6 @@ jobs:
           path: release-staging
           github-token: ${{ github.token }}
 
-      - name: Upload docs as artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: doc/html
-
-      - name: Deploy docs
-        uses: actions/deploy-pages@v4
-
       - id: release-files
         name: Create release manifest
         run: |
@@ -134,7 +117,29 @@ jobs:
           $delimiter
           EOF
           echo "version=$(./release_manifest version)" >> $GITHUB_OUTPUT
+          echo "doc-artifact=$(./release_manifest get "$DOC_TARGET")" >> $GITHUB_OUTPUT
+        env:
+          DOC_TARGET: x86_64-linux-gnu
         working-directory: release-staging
+
+      - id: docs
+        name: Extract docs from artifact
+        run: |
+          mkdir -p "$RUNNER_TEMP/docs"
+          cd "$RUNNER_TEMP/docs"
+          tar -xf "$DOC_ARTIFACT" nim-$VERSION/doc/html --strip-components=3
+          echo "folder=$PWD" >> $GITHUB_OUTPUT
+        env:
+          DOC_ARTIFACT: ${{ steps.release-files.outputs.doc-artifact }}
+          VERSION: ${{ steps.release-files.outputs.version }}
+
+      - name: Upload docs as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ steps.docs.outputs.folder }}
+
+      - name: Deploy docs
+        uses: actions/deploy-pages@v4
 
       - id: release
         name: Create release
