@@ -263,17 +263,14 @@ proc getCommand(manifest, target: string): int =
   ##
   ## :target:
   ##   The triplet of interest.
-  let
-    database = json.parseFile(manifest).deserialize()
-    manifestAbsolute = manifest.expandFileName()
-    storageFolder = manifestAbsolute.parentDir()
+  let database = json.parseFile(manifest).deserialize()
 
   let idx = database.triplet.find(target)
   if idx < 0:
     stderr.writeLine("error: target $1 could not be found in database")
     return 1
 
-  stdout.writeLine(storageFolder / database.file[idx])
+  stdout.writeLine(database.file[idx])
 
 func escapeDataForGithubActions(s: string): string =
   ## Escape the string `s` so that it can be used as data for workflow commands.

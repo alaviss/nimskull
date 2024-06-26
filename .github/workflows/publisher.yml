@@ -37,6 +37,9 @@ jobs:
     env:
       COMMIT: ${{ inputs.commit || github.event.after }}
 
+    outputs:
+      build-run-id: ${{ steps.finder.outputs.run_id }}
+
     steps:
       # Publish action needs a checkout
       - uses: actions/checkout@v4
@@ -115,26 +118,7 @@ jobs:
           $delimiter
           EOF
           echo "version=$(./release_manifest version)" >> $GITHUB_OUTPUT
-          echo "doc-artifact=$(./release_manifest get "$DOC_TARGET")" >> $GITHUB_OUTPUT
-        env:
-          DOC_TARGET: x86_64-linux-gnu
         working-directory: release-staging
-
-      - id: docs
-        name: Extract docs from artifact
-        run: |
-          mkdir -p "$RUNNER_TEMP/docs"
-          cd "$RUNNER_TEMP/docs"
-          tar -xf "$DOC_ARTIFACT" nim-$VERSION/doc/html --strip-components=3
-          echo "folder=$PWD" >> $GITHUB_OUTPUT
-        env:
-          DOC_ARTIFACT: ${{ steps.release-files.outputs.doc-artifact }}
-          VERSION: ${{ steps.release-files.outputs.version }}
-
-      - name: Upload docs as artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ${{ steps.docs.outputs.folder }}
 
       - id: release
         name: Create release
@@ -153,6 +137,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
+      actions: read
       pages: write
       id-token: write
 
@@ -160,7 +145,101 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
 
+    env:
+      GH_REPO: ${{ format('{0}/{1}', github.server_url, github.repository) }}
+      DOC_TARGET: x86_64-linux-gnu
+
     steps:
+      - name: Download release manifest tool
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ needs.publisher.outputs.build-run-id }}
+          # Keep up-to-date with ci.yml
+          name: release manifest tool
+          github-token: ${{ github.token }}
+
+      - name: Restore executable permission for release manifest tool
+        run: chmod 755 ./release_manifest
+
+      - id: doc-versions
+        name: Obtain documentation versions
+        run: |
+          # Stolen from asdf-nimskull
+          sort_versions() {
+            sed 'h; s/[+-]/./g; s/$/.z/; G; s/\n/ /' |
+              LC_ALL=C sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4 -k 5,5n | awk '{print $2}'
+          }
+
+          tags=$(gh release list --json tagName --jq '.[] | .tagName' | sort_versions)
+          devel=$(tail -n 1 <<<"$tags")
+          # Filter out versions with `-` (ie. pre-releases)
+          (grep -v - <<<"$tags" || true) > stable-docs-versions.txt
+
+          echo "Latest devel: $devel"
+          echo "devel=$devel" >> "$GITHUB_OUTPUT"
+
+          echo "Stable versions:"
+          cat stable-docs-versions.txt
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - id: cache-stable-docs
+        name: Restore stable documentation cache
+        uses: actions/cache@v4
+        with:
+          path: stable-docs
+          key: docs-stable-${{ hashFiles('stable-docs-versions.txt') }}
+          restore-keys: docs-stable-
+
+      - if: steps.cache-stable-docs.outputs.cache-hit != 'true'
+        name: Build stable documentation
+        run: |
+          mkdir -p stable-docs
+          cp stable-docs-versions.txt stable-docs/versions.txt
+
+          cd stable-docs
+          readarray -t stable_vers <versions.txt
+          for version in "${stable_vers[@]}"; do
+            tmpdir=$RUNNER_TEMP/$version-temp
+            mkdir -p "$tmpdir"
+            echo "Adding $version to stable docs"
+            if [[ ! -d "$version" ]]; then
+              echo "Downloading from GitHub Releases"
+              archive=$(gh release download "$version" -p manifest.json -O - | ../release_manifest get -f "/dev/stdin" "$DOC_TARGET")
+              echo "Binary archive: $archive"
+              gh release download "$version" -p "$archive" -O "$tmpdir/$archive"
+              tar -C "$tmpdir" -xf "$tmpdir/$archive" --strip-components=1
+              cp -rT "$tmpdir/doc/html" "$version"
+            else
+              echo "$version is already built"
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Add devel documentation
+        run: |
+          cp -r stable-docs built-docs
+          cd built-docs
+
+          tmpdir=$RUNNER_TEMP/devel-temp
+          echo "Downloading $DEVEL from GitHub Releases"
+          archive=$(gh release download "$DEVEL" -p manifest.json -O - | ../release_manifest get -f "/dev/stdin" "$DOC_TARGET")
+
+          mkdir -p "$tmpdir"
+          gh release download "$DEVEL" -p "$archive" -O "$tmpdir/$archive"
+          tar -C "$tmpdir" -xf "$tmpdir/$archive" --strip-components=1
+          cp -rT "$tmpdir/doc/html" devel
+          find devel -mindepth 1 -maxdepth 1 -exec ln -s '{}' ';'
+        env:
+          DEVEL: ${{ steps.doc-versions.outputs.devel }}
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Upload docs as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: built-docs
+
       - id: deploy
         name: Deploy docs
         uses: actions/deploy-pages@v4
