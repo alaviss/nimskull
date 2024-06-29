@@ -1,0 +1,37 @@
+ReportTypes	ast/reports.html#ReportTypes	reports: ReportTypes	
+Report	ast/reports.html#Report	reports: Report	
+reportEmpty	ast/reports.html#reportEmpty	reports: reportEmpty	
+eachCategory	ast/reports.html#eachCategory.t,Report,untyped	reports: eachCategory(report: Report; field: untyped): untyped	
+kind	ast/reports.html#kind,Report	reports: kind(report: Report): ReportKind	
+location	ast/reports.html#location,Report	reports: location(report: Report): Option[TLineInfo]	
+reportInst	ast/reports.html#reportInst,Report	reports: reportInst(report: Report): ReportLineInfo	
+reportFrom	ast/reports.html#reportFrom,Report	reports: reportFrom(report: Report): ReportLineInfo	
+context	ast/reports.html#context,Report	reports: context(report: Report): seq[ReportContext]	
+context=	ast/reports.html#context=,Report,seq[ReportContext]	reports: context=(report: var Report; context: seq[ReportContext])	
+reportFrom=	ast/reports.html#reportFrom=,Report,ReportLineInfo	reports: reportFrom=(report: var Report; loc: ReportLineInfo)	
+category	ast/reports.html#category,ReportKind	reports: category(kind: ReportKind): ReportCategory	
+severity	ast/reports.html#severity,ReportTypes,ReportKinds,ReportKinds	reports: severity(report: ReportTypes; asError: ReportKinds;\n         asWarning: ReportKinds = default(ReportKinds)): ReportSeverity	
+severity	ast/reports.html#severity,Report,ReportKinds,ReportKinds	reports: severity(report: Report; asError: ReportKinds = default(ReportKinds);\n         asWarning: ReportKinds = default(ReportKinds)): ReportSeverity	
+toReportLineInfo	ast/reports.html#toReportLineInfo,InstantiationInfo	reports: toReportLineInfo(iinfo: InstantiationInfo): ReportLineInfo	
+calledFromInfo	ast/reports.html#calledFromInfo.t	reports: calledFromInfo(): ReportLineInfo	
+isValid	ast/reports.html#isValid,ReportLineInfo	reports: isValid(point: ReportLineInfo): bool	
+reportHere	ast/reports.html#reportHere.t,R	reports: reportHere[R: ReportTypes](report: R): R	
+wrap	ast/reports.html#wrap,sinkLexerReport	reports: wrap(rep: sink LexerReport): Report	
+wrap	ast/reports.html#wrap,sinkParserReport	reports: wrap(rep: sink ParserReport): Report	
+wrap	ast/reports.html#wrap,sinkVMReport	reports: wrap(rep: sink VMReport): Report	
+wrap	ast/reports.html#wrap,sinkSemReport	reports: wrap(rep: sink SemReport): Report	
+wrap	ast/reports.html#wrap,sinkBackendReport	reports: wrap(rep: sink BackendReport): Report	
+wrap	ast/reports.html#wrap,sinkCmdReport	reports: wrap(rep: sink CmdReport): Report	
+wrap	ast/reports.html#wrap,sinkDebugReport	reports: wrap(rep: sink DebugReport): Report	
+wrap	ast/reports.html#wrap,sinkInternalReport	reports: wrap(rep: sink InternalReport): Report	
+wrap	ast/reports.html#wrap,sinkExternalReport	reports: wrap(rep: sink ExternalReport): Report	
+wrap	ast/reports.html#wrap,sinkR,InstantiationInfo	reports: wrap[R: ReportTypes](rep: sink R; iinfo: InstantiationInfo): Report	
+wrap	ast/reports.html#wrap,sinkR,ReportLineInfo,TLineInfo	reports: wrap[R: ReportTypes](rep: sink R; iinfo: ReportLineInfo; point: TLineInfo): Report	
+wrap	ast/reports.html#wrap,sinkR,InstantiationInfo,TLineInfo	reports: wrap[R: ReportTypes](rep: sink R; iinfo: InstantiationInfo; point: TLineInfo): Report	
+wrap	ast/reports.html#wrap,InstantiationInfo,sinkR	reports: wrap[R: ReportTypes](iinfo: InstantiationInfo; rep: sink R): Report	
+wrap	ast/reports.html#wrap.t,ReportTypes	reports: wrap(rep: ReportTypes): Report	
+`$`	ast/reports.html#$,ReportLineInfo	reports: `$`(point: ReportLineInfo): string	
+actualType	ast/reports.html#actualType,SemReport	reports: actualType(r: SemReport): PType	
+formalType	ast/reports.html#formalType,SemReport	reports: formalType(r: SemReport): PType	
+formalTypeKind	ast/reports.html#formalTypeKind,SemReport	reports: formalTypeKind(r: SemReport): set[TTypeKind]	
+symstr	ast/reports.html#symstr	reports: symstr(r: SemReport | VMReport): string	

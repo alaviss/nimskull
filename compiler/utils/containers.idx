@@ -1,0 +1,37 @@
+SeqMap	utils/containers.html#SeqMap	containers: SeqMap	
+Store	utils/containers.html#Store	containers: Store	
+PartialStore	utils/containers.html#PartialStore	containers: PartialStore	
+Checkpoint	utils/containers.html#Checkpoint	containers: Checkpoint	
+OrdinalSeq	utils/containers.html#OrdinalSeq	containers: OrdinalSeq	
+contains	utils/containers.html#contains,SeqMap[K,V],K	containers: contains[K, V](m: SeqMap[K, V]; key: K): bool	
+`[]`	utils/containers.html#[],SeqMap[K,V],K	containers: `[]`[K, V](m: SeqMap[K, V]; key: K): lent V	
+`[]`	utils/containers.html#[],SeqMap[K,V],K_2	containers: `[]`[K, V](m: var SeqMap[K, V]; key: K): var V	
+`[]=`	utils/containers.html#[]=,SeqMap[K,V],K,sinkV	containers: `[]=`[K, V](m: var SeqMap[K, V]; key: K; val: sink V)	
+values	utils/containers.html#values.i,SeqMap[K,V]	containers: values[K, V](m: SeqMap[K, V]): lent V	
+pairs	utils/containers.html#pairs.i,SeqMap[K,V]	containers: pairs[K, V](m: SeqMap[K, V]): (K, lent V)	
+mpairs	utils/containers.html#mpairs.i,SeqMap[K,V]	containers: mpairs[K, V](m: var SeqMap[K, V]): (K, var V)	
+`==`	utils/containers.html#==,Checkpoint,Checkpoint	containers: `==`(a, b: Checkpoint): bool	
+`[]`	utils/containers.html#[].t,Store[I,T],I	containers: `[]`[I; T](x: Store[I, T]; i: I): untyped	
+`[]=`	utils/containers.html#[]=.t,Store[I,T],I,T	containers: `[]=`[I; T](x: var Store[I, T]; i: I; it: T): untyped	
+items	utils/containers.html#items.i,Store[I,T]	containers: items[I, T](x: Store[I, T]): lent T	
+pairs	utils/containers.html#pairs.i,Store[I,T]	containers: pairs[I, T](x: Store[I, T]): (I, lent T)	
+since	utils/containers.html#since.i,Store[I,T],Checkpoint	containers: since[I; T](s: Store[I, T]; p: Checkpoint): (I, lent T)	
+nextId	utils/containers.html#nextId,Store[I,T]	containers: nextId[I; T](x: Store[I, T]): I	
+checkpoint	utils/containers.html#checkpoint,Store	containers: checkpoint(s: Store): Checkpoint	
+add	utils/containers.html#add,Store[I,T],sinkT	containers: add[I; T](x: var Store[I, T]; it: sink T): I	
+mitems	utils/containers.html#mitems.i,Store[I,T]	containers: mitems[I; T](x: var Store[I, T]): var T	
+merge	utils/containers.html#merge,Store[I,T],sinkStore[I,T]	containers: merge[I; T](dst: var Store[I, T]; src: sink Store[I, T]): Option[I]	
+rewind	utils/containers.html#rewind,Store,Checkpoint	containers: rewind(s: var Store; p: Checkpoint)	
+fork	utils/containers.html#fork,Store[I,T]	containers: fork[I; T](s: Store[I, T]): PartialStore[I, T]	
+add	utils/containers.html#add,PartialStore[I,T],sinkT	containers: add[I; T](s: var PartialStore[I, T]; item: sink T): I	
+`[]`	utils/containers.html#[],PartialStore[I,T],I	containers: `[]`[I; T](s: PartialStore[I, T]; id: I): lent T	
+join	utils/containers.html#join,Store[I,T],sinkPartialStore[I,T]	containers: join[I; T](s: var Store[I, T]; other: sink PartialStore[I, T])	
+base	utils/containers.html#base.t,OrdinalSeq[I,T]	containers: base[I; T](x: OrdinalSeq[I, T]): seq[T]	
+len	utils/containers.html#len.t,OrdinalSeq[I,T]	containers: len[I; T](x: OrdinalSeq[I, T]): int	
+`[]`	utils/containers.html#[].t,OrdinalSeq[I,T],I	containers: `[]`[I; T](x: OrdinalSeq[I, T]; i: I): untyped	
+`[]=`	utils/containers.html#[]=.t,OrdinalSeq[I,T],I,T	containers: `[]=`[I; T](x: OrdinalSeq[I, T]; i: I; item: T): untyped	
+add	utils/containers.html#add,OrdinalSeq[I,T],sinkT	containers: add[I; T](x: var OrdinalSeq[I, T]; item: sink T): I	
+newSeq	utils/containers.html#newSeq,OrdinalSeq[I,T],int	containers: newSeq[I; T](x: var OrdinalSeq[I, T]; len: int)	
+setLen	utils/containers.html#setLen,OrdinalSeq[I,T],int	containers: setLen[I; T](x: var OrdinalSeq[I, T]; len: int)	
+synchronize	utils/containers.html#synchronize,OrdinalSeq[I,A],Store[I,B]	containers: synchronize[I; A; B](x: var OrdinalSeq[I, A]; s: Store[I, B])	
+pairs	utils/containers.html#pairs.i,OrdinalSeq[I,T]	containers: pairs[I; T](x: OrdinalSeq[I, T]): (I, lent T)	

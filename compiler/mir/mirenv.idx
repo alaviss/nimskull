@@ -1,0 +1,28 @@
+SymbolTable	mir/mirenv.html#SymbolTable	mirenv: SymbolTable	
+MirEnv	mir/mirenv.html#MirEnv	mirenv: MirEnv	
+EnvCheckpoint	mir/mirenv.html#EnvCheckpoint	mirenv: EnvCheckpoint	
+`[]`	mir/mirenv.html#[],SymbolTable[I,T],PSym	mirenv: `[]`[I; T](tab: SymbolTable[I, T]; s: PSym): I	
+`[]`	mir/mirenv.html#[],SymbolTable[I,T],I	mirenv: `[]`[I; T](tab: SymbolTable[I, T]; id: I): lent T	
+contains	mir/mirenv.html#contains,SymbolTable[I,T],PSym	mirenv: contains[I, T](tab: SymbolTable[I, T]; s: PSym): bool	
+add	mir/mirenv.html#add,SymbolTable[I,T],PSym	mirenv: add[I; T](tab: var SymbolTable[I, T]; s: PSym): I	
+len	mir/mirenv.html#len,SymbolTable[I,T]	mirenv: len[I, T](tab: SymbolTable[I, T]): int	
+checkpoint	mir/mirenv.html#checkpoint,SymbolTable[I,T]	mirenv: checkpoint[I, T](tab: SymbolTable[I, T]): Checkpoint	
+initMirEnv	mir/mirenv.html#initMirEnv,ModuleGraph	mirenv: initMirEnv(g: ModuleGraph): MirEnv	
+`[]`	mir/mirenv.html#[],MirEnv,ConstId	mirenv: `[]`(env: MirEnv; id: ConstId): lent PSym	
+`[]`	mir/mirenv.html#[],MirEnv,GlobalId	mirenv: `[]`(env: MirEnv; id: GlobalId): lent PSym	
+`[]`	mir/mirenv.html#[],MirEnv,ProcedureId	mirenv: `[]`(env: MirEnv; id: ProcedureId): lent PSym	
+`[]`	mir/mirenv.html#[],MirEnv,DataId	mirenv: `[]`(env: MirEnv; id: DataId): lent ConstrTree	
+getInt	mir/mirenv.html#getInt,MirEnv,NumberId	mirenv: getInt(env: MirEnv; id: NumberId): BiggestInt	
+getUInt	mir/mirenv.html#getUInt,MirEnv,NumberId	mirenv: getUInt(env: MirEnv; id: NumberId): BiggestUInt	
+getFloat	mir/mirenv.html#getFloat,MirEnv,NumberId	mirenv: getFloat(env: MirEnv; id: NumberId): BiggestFloat	
+`[]`	mir/mirenv.html#[],MirEnv,StringId	mirenv: `[]`(env: MirEnv; id: StringId): lent string	
+`[]`	mir/mirenv.html#[],MirEnv,AstId	mirenv: `[]`(env: MirEnv; id: AstId): lent PNode	
+getOrIncl	mir/mirenv.html#getOrIncl,MirEnv,	mirenv: getOrIncl(env: var MirEnv; v: BiggestInt | BiggestUInt | BiggestFloat): NumberId	
+getOrIncl	mir/mirenv.html#getOrIncl,MirEnv,string	mirenv: getOrIncl(env: var MirEnv; str: string): StringId	
+`[]`	mir/mirenv.html#[].t,MirEnv,TypeId	mirenv: `[]`(env: MirEnv; id: TypeId): PType	
+setData	mir/mirenv.html#setData,MirEnv,ConstId,DataId	mirenv: setData(env: var MirEnv; id: ConstId; data: DataId)	
+dataFor	mir/mirenv.html#dataFor,MirEnv,ConstId	mirenv: dataFor(env: MirEnv; id: ConstId): DataId	
+checkpoint	mir/mirenv.html#checkpoint,MirEnv	mirenv: checkpoint(env: MirEnv): EnvCheckpoint	
+rewind	mir/mirenv.html#rewind,MirEnv,EnvCheckpoint	mirenv: rewind(env: var MirEnv; to: EnvCheckpoint)	
+items	mir/mirenv.html#items.i,SymbolTable[I,T]	mirenv: items[I, T](tab: SymbolTable[I, T]): (I, lent T)	
+since	mir/mirenv.html#since.i,SymbolTable[I,T],Checkpoint	mirenv: since[I; T](tab: SymbolTable[I, T]; p: Checkpoint): (I, lent T)	

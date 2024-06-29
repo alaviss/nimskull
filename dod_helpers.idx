@@ -1,0 +1,33 @@
+opt	dod_helpers.html#opt.t,typedesc[T]	dod_helpers: opt[T](t: typedesc[T]): untyped	
+`==`	dod_helpers.html#==.t,OptIndex[T],OptIndex[T]	dod_helpers: `==`[T](a, b: OptIndex[T]): bool	
+isSome	dod_helpers.html#isSome,OptIndex[T]	dod_helpers: isSome[T](i: OptIndex[T]): bool	
+isNone	dod_helpers.html#isNone,OptIndex[T]	dod_helpers: isNone[T](i: OptIndex[T]): bool	
+`[]`	dod_helpers.html#[],OptIndex[T]	dod_helpers: `[]`[T](i: OptIndex[T]): T	
+noneOpt	dod_helpers.html#noneOpt.t,typedesc[T]	dod_helpers: noneOpt[T](t: typedesc[T]): untyped	
+someOpt	dod_helpers.html#someOpt,T	dod_helpers: someOpt[T](i: T): auto	
+declareIdType	dod_helpers.html#declareIdType.t,untyped,static[bool],typed	dod_helpers: declareIdType(Name: untyped; addHash: static[bool] = false;\n              BaseType: typed = uint64): untyped	
+declareHighMasking	dod_helpers.html#declareHighMasking.t,untyped,static[range[]],typed	dod_helpers: declareHighMasking(Name: untyped; highMaskRange: static[range[0 .. 64]] = 0;\n                   BaseType: typed = uint64): untyped	
+declareStoreType	dod_helpers.html#declareStoreType.t,untyped	dod_helpers: declareStoreType(Name: untyped): untyped	
+declareStoreField	dod_helpers.html#declareStoreField.t,untyped,untyped,untyped	dod_helpers: declareStoreField(Type, field, Name: untyped): untyped	
+declareStoredTableField	dod_helpers.html#declareStoredTableField.m,untyped,untyped,untyped,untyped	dod_helpers: declareStoredTableField(Db, field, Name, Typ: untyped): untyped	
+declareStoredTableSeqField	dod_helpers.html#declareStoredTableSeqField.m,untyped,untyped,untyped,untyped	dod_helpers: declareStoredTableSeqField(Db, field, Name, Typ: untyped): untyped	
+ValueId	dod_helpers.html#ValueId	dod_helpers: ValueId	
+EmptyValueId	dod_helpers.html#EmptyValueId	dod_helpers: EmptyValueId	
+`==`	dod_helpers.html#==,ValueId,ValueId	dod_helpers: `==`(i1, i2: ValueId): bool	
+isNil	dod_helpers.html#isNil,ValueId	dod_helpers: isNil(i: ValueId): bool	
+`$`	dod_helpers.html#$,ValueId	dod_helpers: `$`(id: ValueId): string	
+toIndex	dod_helpers.html#toIndex,ValueId	dod_helpers: toIndex(id: ValueId): int	
+toValueId	dod_helpers.html#toValueId,int	dod_helpers: toValueId(idx: int): ValueId	
+ValueStore	dod_helpers.html#ValueStore	dod_helpers: ValueStore	
+len	dod_helpers.html#len,ValueStore	dod_helpers: len(store: ValueStore): int	
+add	dod_helpers.html#add,ValueStore,Value	dod_helpers: add(store: var ValueStore; item: Value): ValueId	
+`[]`	dod_helpers.html#[].t,ValueStore,ValueId	dod_helpers: `[]`(store: var ValueStore; index: ValueId): Value	
+items	dod_helpers.html#items.i,ValueStore	dod_helpers: items(store: ValueStore): Value	
+mitems	dod_helpers.html#mitems.i,ValueStore	dod_helpers: mitems(store: var ValueStore): var Value	
+pairs	dod_helpers.html#pairs.i,ValueStore	dod_helpers: pairs(store: ValueStore): (ValueId, Value)	
+mpairs	dod_helpers.html#mpairs.i,ValueStore	dod_helpers: mpairs(store: var ValueStore): (ValueId, var Value)	
+ValueIdMask	dod_helpers.html#ValueIdMask	dod_helpers: ValueIdMask	
+`==`	dod_helpers.html#==,ValueIdMask,ValueIdMask	dod_helpers: `==`(m1`gensym14, m2`gensym14: ValueIdMask): bool	
+getMask	dod_helpers.html#getMask,ValueId	dod_helpers: getMask(id`gensym14: ValueId): ValueIdMask	
+popMask	dod_helpers.html#popMask,ValueId	dod_helpers: popMask(id`gensym14: ValueId): ValueId	
+setMask	dod_helpers.html#setMask,ValueId,ValueIdMask	dod_helpers: setMask(id`gensym14: var ValueId; mask`gensym14: ValueIdMask)	

@@ -1,0 +1,15 @@
+setResult	vm/vmhooks.html#setResult,VmArgs,BiggestInt	vmhooks: setResult(a: VmArgs; v: BiggestInt)	
+setResult	vm/vmhooks.html#setResult,VmArgs,BiggestFloat	vmhooks: setResult(a: VmArgs; v: BiggestFloat)	
+setResult	vm/vmhooks.html#setResult,VmArgs,bool	vmhooks: setResult(a: VmArgs; v: bool)	
+setResult	vm/vmhooks.html#setResult,VmArgs,openArray[char]	vmhooks: setResult(a: VmArgs; v: openArray[char])	
+setResult	vm/vmhooks.html#setResult,VmArgs,AbsoluteDir	vmhooks: setResult(a: VmArgs; v: AbsoluteDir)	
+setResult	vm/vmhooks.html#setResult,VmArgs,PNode	vmhooks: setResult(a: VmArgs; v: PNode)	
+getResultHandle	vm/vmhooks.html#getResultHandle,VmArgs	vmhooks: getResultHandle(a: VmArgs): LocHandle	
+numArgs	vm/vmhooks.html#numArgs,VmArgs	vmhooks: numArgs(a: VmArgs): int	
+getInt	vm/vmhooks.html#getInt,VmArgs,Natural	vmhooks: getInt(a: VmArgs; i: Natural): BiggestInt	
+getBool	vm/vmhooks.html#getBool,VmArgs,Natural	vmhooks: getBool(a: VmArgs; i: Natural): bool	
+getFloat	vm/vmhooks.html#getFloat,VmArgs,Natural	vmhooks: getFloat(a: VmArgs; i: Natural): BiggestFloat	
+getNode	vm/vmhooks.html#getNode,VmArgs,Natural	vmhooks: getNode(a: VmArgs; i: Natural): PNode	
+getString	vm/vmhooks.html#getString,VmArgs,Natural	vmhooks: getString(a: VmArgs; i: Natural): string	
+getHandle	vm/vmhooks.html#getHandle,VmArgs,Natural	vmhooks: getHandle(a: VmArgs; i: Natural): LocHandle	
+getVar	vm/vmhooks.html#getVar,VmArgs,Natural	vmhooks: getVar(a: VmArgs; i: Natural): LocHandle	

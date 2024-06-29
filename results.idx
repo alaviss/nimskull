@@ -1,0 +1,37 @@
+ResultError	results.html#ResultError	results: ResultError	
+ResultErrorRef	results.html#ResultErrorRef	results: ResultErrorRef	
+Result	results.html#Result	results: Result	
+error	results.html#error,Result[T,E]	results: error[T, E](self: Result[T, E]): lent E	
+unsafeGet	results.html#unsafeGet,Result[T,E]	results: unsafeGet[T, E](self: var Result[T, E]): var T	
+unsafeGet	results.html#unsafeGet,Result[T,E]_2	results: unsafeGet[T, E](self: Result[T, E]): lent T	
+unsafeGet	results.html#unsafeGet,Result[void,E]	results: unsafeGet[E](self: Result[void, E])	
+toException	results.html#toException.t,E	results: toException[E](err: E): ResultErrorRef[E]	
+ok	results.html#ok,typedesc[Result[void,E]]	results: ok[E](R: typedesc[Result[void, E]]): Result[void, E]	
+initSuccess	results.html#initSuccess,Result[void,E]	results: initSuccess[E](self: var Result[void, E])	
+ok	results.html#ok,typedesc[Result[T,E]],sinkT	results: ok[T, E](R: typedesc[Result[T, E]]; v: sink T): Result[T, E]	
+initSuccess	results.html#initSuccess,Result[T,E],sinkT	results: initSuccess[T, E](self: var Result[T, E]; v: sink T)	
+err	results.html#err,typedesc[Result[T,E]],sinkE	results: err[T, E](R: typedesc[Result[T, E]]; e: sink E): Result[T, E]	
+initFailure	results.html#initFailure,Result[T,E],sinkE	results: initFailure[T, E](self: var Result[T, E]; e: sink E)	
+isOk	results.html#isOk,Result	results: isOk(self: Result): bool	
+isErr	results.html#isErr,Result	results: isErr(self: Result): bool	
+`==`	results.html#==,Result,Result	results: `==`(a, b: Result): bool	
+get	results.html#get.t,Result[T,E]	results: get[T: not void; E](self: Result[T, E]): untyped	
+get	results.html#get.t,Result[T,E],T	results: get[T, E](self: Result[T, E]; otherwise: T): untyped	
+get	results.html#get.t,Result[T,E]_2	results: get[T, E](self: var Result[T, E]): untyped	
+get	results.html#get.t,Result[void,E]	results: get[E](self: Result[void, E])	
+`$`	results.html#$,Result[T,E]	results: `$`[T: not void; E](self: Result[T, E]): string	
+`$`	results.html#$,Result[void,E]	results: `$`[E](self: Result[void, E]): string	
+value	results.html#value.t,Result[T,E]	results: value[T, E](self: Result[T, E]): T	
+value	results.html#value.t,Result[T,E]_2	results: value[T, E](self: var Result[T, E]): var T	
+value	results.html#value.t,Result[void,E]	results: value[E](self: Result[void, E])	
+value	results.html#value.t,Result[void,E]_2	results: value[E](self: var Result[void, E])	
+valueOr	results.html#valueOr.t,Result[T,E],T	results: valueOr[T, E](self: Result[T, E]; def: T): T	
+map	results.html#map,Result[T,E],proc(T)	results: map[T: not void; E, R](r: Result[T, E]; callback: proc (v: T): R): Result[R, E]	
+mapErr	results.html#mapErr,Result[T,E],proc(E)	results: mapErr[T: not void; E, R](r: Result[T, E]; callback: proc (e: E): R): Result[T,\n    R]	
+flatMap	results.html#flatMap,Result[T,E],proc(T)	results: flatMap[T: not void; E, R](r: Result[T, E]; callback: proc (v: T): Result[R, E]): Result[\n    R, E]	
+flatMapErr	results.html#flatMapErr,Result[T,E],proc(E)	results: flatMapErr[T: not void; E, R](r: Result[T, E];\n                              callback: proc (e: E): Result[T, R]): Result[T, R]	
+filter	results.html#filter,Result[T,E],proc(T)	results: filter[T: not void; E](r: Result[T, E]; callback: proc (v: T): bool): Option[T]	
+filterErr	results.html#filterErr,Result[T,E],proc(E)	results: filterErr[T, E](r: Result[T, E]; callback: proc (e: E): bool): Option[E]	
+take	results.html#take,sinkResult[T,E]	results: take[T: not void; E](r: sink Result[T, E]): T	
+takeErr	results.html#takeErr,sinkResult[T,E]	results: takeErr[T, E](r: sink Result[T, E]): E	
+Exception translation	results.html#exception-translation	 Exception translation	

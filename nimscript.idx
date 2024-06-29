@@ -1,0 +1,36 @@
+getCurrentDir	nimscript.html#getCurrentDir	nimscript: getCurrentDir(): string	
+paramStr	nimscript.html#paramStr,int	nimscript: paramStr(i: int): string	
+paramCount	nimscript.html#paramCount	nimscript: paramCount(): int	
+cmpic	nimscript.html#cmpic,string,string	nimscript: cmpic(a, b: string): int	
+getEnv	nimscript.html#getEnv,string,string	nimscript: getEnv(key: string; default = &quot;&quot;): string	
+existsEnv	nimscript.html#existsEnv,string	nimscript: existsEnv(key: string): bool	
+putEnv	nimscript.html#putEnv,string,string	nimscript: putEnv(key, val: string)	
+delEnv	nimscript.html#delEnv,string	nimscript: delEnv(key: string)	
+fileExists	nimscript.html#fileExists,string	nimscript: fileExists(filename: string): bool	
+dirExists	nimscript.html#dirExists,string	nimscript: dirExists(dir: string): bool	
+selfExe	nimscript.html#selfExe	nimscript: selfExe(): string	
+toExe	nimscript.html#toExe,string	nimscript: toExe(filename: string): string	
+toDll	nimscript.html#toDll,string	nimscript: toDll(filename: string): string	
+ScriptMode	nimscript.html#ScriptMode	nimscript: ScriptMode	
+mode	nimscript.html#mode	nimscript: mode	
+listDirs	nimscript.html#listDirs,string	nimscript: listDirs(dir: string): seq[string]	
+listFiles	nimscript.html#listFiles,string	nimscript: listFiles(dir: string): seq[string]	
+rmDir	nimscript.html#rmDir,string	nimscript: rmDir(dir: string; checkDir = false)	
+rmFile	nimscript.html#rmFile,string	nimscript: rmFile(file: string)	
+mkDir	nimscript.html#mkDir,string	nimscript: mkDir(dir: string)	
+mvFile	nimscript.html#mvFile,string,string	nimscript: mvFile(from, to: string)	
+mvDir	nimscript.html#mvDir,string,string	nimscript: mvDir(from, to: string)	
+cpFile	nimscript.html#cpFile,string,string	nimscript: cpFile(from, to: string)	
+cpDir	nimscript.html#cpDir,string,string	nimscript: cpDir(from, to: string)	
+exec	nimscript.html#exec,string	nimscript: exec(command: string)	
+exec	nimscript.html#exec,string,string,string	nimscript: exec(command: string; input: string; cache = &quot;&quot;): string	
+selfExec	nimscript.html#selfExec,string	nimscript: selfExec(command: string)	
+get	nimscript.html#get,string	nimscript: get(key: string): string	
+exists	nimscript.html#exists,string	nimscript: exists(key: string): bool	
+nimcacheDir	nimscript.html#nimcacheDir	nimscript: nimcacheDir(): string	
+thisDir	nimscript.html#thisDir	nimscript: thisDir(): string	
+cd	nimscript.html#cd,string	nimscript: cd(dir: string)	
+findExe	nimscript.html#findExe,string	nimscript: findExe(bin: string): string	
+withDir	nimscript.html#withDir.t,string,untyped	nimscript: withDir(dir: string; body: untyped): untyped	
+readLineFromStdin	nimscript.html#readLineFromStdin	nimscript: readLineFromStdin(): string	
+readAllFromStdin	nimscript.html#readAllFromStdin	nimscript: readAllFromStdin(): string	

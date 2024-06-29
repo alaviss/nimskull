@@ -1,0 +1,23 @@
+VmThread	vm/vm.html#VmThread	vm: VmThread	
+yrkDone	vm/vm.html#yrkDone	YieldReasonKind.yrkDone	
+yrkError	vm/vm.html#yrkError	YieldReasonKind.yrkError	
+yrkQuit	vm/vm.html#yrkQuit	YieldReasonKind.yrkQuit	
+yrkMissingProcedure	vm/vm.html#yrkMissingProcedure	YieldReasonKind.yrkMissingProcedure	
+yrkEcho	vm/vm.html#yrkEcho	YieldReasonKind.yrkEcho	
+YieldReasonKind	vm/vm.html#YieldReasonKind	vm: YieldReasonKind	
+YieldReason	vm/vm.html#YieldReason	vm: YieldReason	
+createStackTrace	vm/vm.html#createStackTrace,TCtx,VmThread,int	vm: createStackTrace(c: TCtx; thread: VmThread; recursionLimit: int = 100): VmStackTrace	
+ensureKind	vm/vm.html#ensureKind,TFullReg,TRegisterKind,VmMemoryManager	vm: ensureKind(n: var TFullReg; k: TRegisterKind; mm: var VmMemoryManager)	
+initLocReg	vm/vm.html#initLocReg,TFullReg,PVmType,VmMemoryManager	vm: initLocReg(r: var TFullReg; typ: PVmType; mm: var VmMemoryManager)	
+regToNode	vm/vm.html#regToNode,TCtx,TFullReg,PType,TLineInfo	vm: regToNode(c: TCtx; x: TFullReg; typ: PType; info: TLineInfo): PNode	
+strVal	vm/vm.html#strVal.t,TFullReg	vm: strVal(r: TFullReg): untyped	
+strVal=	vm/vm.html#strVal=.t,TFullReg,VmString	vm: strVal=(r: TFullReg; s: VmString)	
+strVal=	vm/vm.html#strVal=.t,TFullReg,string	vm: strVal=(r: TFullReg; s: string)	
+loadEmptyReg	vm/vm.html#loadEmptyReg,TFullReg,PVmType,TLineInfo,VmMemoryManager	vm: loadEmptyReg(r: var TFullReg; typ: PVmType; info: TLineInfo;\n             mm: var VmMemoryManager): bool	
+`=copy`	vm/vm.html#=copy,VmThread,VmThread	vm: `=copy`(x: var VmThread; y: VmThread)	
+initVmThread	vm/vm.html#initVmThread,TCtx,PrgCtr,int,PSym	vm: initVmThread(c: var TCtx; pc: PrgCtr; numRegisters: int; sym: PSym): VmThread	
+dispose	vm/vm.html#dispose,TCtx,sinkVmThread	vm: dispose(c: var TCtx; t: sink VmThread)	
+execute	vm/vm.html#execute,TCtx,VmThread	vm: execute(c: var TCtx; thread: var VmThread): YieldReason	
+source	vm/vm.html#source.t,TCtx,VmThread	vm: source(c: TCtx; t: VmThread): TLineInfo	
+`[]`	vm/vm.html#[].t,VmThread,Natural	vm: `[]`(t: VmThread; i: Natural): TStackFrame	
+vmEventToAstDiagVmError	vm/vm.html#vmEventToAstDiagVmError,VmEvent	vm: vmEventToAstDiagVmError(evt: VmEvent): AstDiagVmError	

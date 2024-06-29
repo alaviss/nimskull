@@ -1,0 +1,6 @@
+TypeTable	mir/typemaps.html#TypeTable	typemaps: TypeTable	
+`==`	mir/typemaps.html#==,Type,Type	typemaps: `==`(a, b: Type): bool	
+hash	mir/typemaps.html#hash,Type	typemaps: hash(x: Type): Hash	
+`[]`	mir/typemaps.html#[],TypeTable[T],PType	typemaps: `[]`[T](t: TypeTable[T]; key: PType): lent T	
+`[]=`	mir/typemaps.html#[]=,TypeTable[T],PType,sinkT	typemaps: `[]=`[T](t: var TypeTable[T]; key: PType; val: sink T)	
+mgetOrPut	mir/typemaps.html#mgetOrPut,TypeTable,PType,T	typemaps: mgetOrPut[T](t: var TypeTable; key: PType; val: T): var T	

@@ -1,0 +1,1 @@
+generateIR	backend/cgirgen.html#generateIR,ModuleGraph,IdGenerator,MirEnv,PSym,sinkMirBody	cgirgen: generateIR(graph: ModuleGraph; idgen: IdGenerator; env: var MirEnv; owner: PSym;\n           body: sink MirBody): Body	

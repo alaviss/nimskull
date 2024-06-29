@@ -1,0 +1,5 @@
+skipConversions	mir/analysis.html#skipConversions,MirTree,OpValue	analysis: skipConversions(tree: MirTree; val: OpValue): OpValue	
+isAlive	mir/analysis.html#isAlive,MirTree,DataFlowGraph,Subgraph,Path,InstrPos	analysis: isAlive(tree: MirTree; cfg: DataFlowGraph; span: Subgraph; loc: Path;\n        start: InstrPos): bool	
+isLastRead	mir/analysis.html#isLastRead,MirTree,DataFlowGraph,Subgraph,Path,InstrPos	analysis: isLastRead(tree: MirTree; cfg: DataFlowGraph; span: Subgraph; loc: Path;\n           start: InstrPos): bool	
+isLastWrite	mir/analysis.html#isLastWrite,MirTree,DataFlowGraph,Subgraph,Path,InstrPos	analysis: isLastWrite(tree: MirTree; cfg: DataFlowGraph; span: Subgraph; loc: Path;\n            start: InstrPos): bool	
+doesGlobalEscape	mir/analysis.html#doesGlobalEscape,MirTree,Subgraph,InstrPos,GlobalId	analysis: doesGlobalEscape(tree: MirTree; scope: Subgraph; start: InstrPos; s: GlobalId): bool	

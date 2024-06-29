@@ -1,0 +1,21 @@
+bkBlock	mir/mirgen_blocks.html#bkBlock	BlockKind.bkBlock	
+bkScope	mir/mirgen_blocks.html#bkScope	BlockKind.bkScope	
+bkTryExcept	mir/mirgen_blocks.html#bkTryExcept	BlockKind.bkTryExcept	
+bkTryFinally	mir/mirgen_blocks.html#bkTryFinally	BlockKind.bkTryFinally	
+bkFinally	mir/mirgen_blocks.html#bkFinally	BlockKind.bkFinally	
+bkExcept	mir/mirgen_blocks.html#bkExcept	BlockKind.bkExcept	
+BlockKind	mir/mirgen_blocks.html#BlockKind	mirgen_blocks: BlockKind	
+Block	mir/mirgen_blocks.html#Block	mirgen_blocks: Block	
+BlockCtx	mir/mirgen_blocks.html#BlockCtx	mirgen_blocks: BlockCtx	
+labelNode	mir/mirgen_blocks.html#labelNode,LabelId	mirgen_blocks: labelNode(label: LabelId): MirNode	
+add	mir/mirgen_blocks.html#add.t,BlockCtx,Block	mirgen_blocks: add(c: var BlockCtx; b: Block)	
+pop	mir/mirgen_blocks.html#pop.t,BlockCtx	mirgen_blocks: pop(c: var BlockCtx): Block	
+closest	mir/mirgen_blocks.html#closest,BlockCtx	mirgen_blocks: closest(c: BlockCtx): int	
+findBlock	mir/mirgen_blocks.html#findBlock,BlockCtx,PSym	mirgen_blocks: findBlock(c: BlockCtx; label: PSym): int	
+blockExit	mir/mirgen_blocks.html#blockExit,,,int	mirgen_blocks: blockExit(c; bu; targetBlock: int)	
+raiseExit	mir/mirgen_blocks.html#raiseExit,,	mirgen_blocks: raiseExit(c; bu)	
+closeBlock	mir/mirgen_blocks.html#closeBlock,,	mirgen_blocks: closeBlock(c; bu): bool	
+register	mir/mirgen_blocks.html#register,,Value	mirgen_blocks: register(c; loc: Value)	
+startScope	mir/mirgen_blocks.html#startScope	mirgen_blocks: startScope(c): int	
+earlyExit	mir/mirgen_blocks.html#earlyExit,,	mirgen_blocks: earlyExit(c; bu)	
+closeScope	mir/mirgen_blocks.html#closeScope,,,int,bool	mirgen_blocks: closeScope(c; bu; nextScope: int; hasStructuredExit: bool)	

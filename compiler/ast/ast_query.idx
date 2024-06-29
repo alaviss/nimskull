@@ -1,0 +1,143 @@
+OverloadableSyms	ast/ast_query.html#OverloadableSyms	ast_query: OverloadableSyms	
+skipForDiscardable	ast/ast_query.html#skipForDiscardable	ast_query: skipForDiscardable	
+GenericTypes	ast/ast_query.html#GenericTypes	ast_query: GenericTypes	
+StructuralEquivTypes	ast/ast_query.html#StructuralEquivTypes	ast_query: StructuralEquivTypes	
+ConcreteTypes	ast/ast_query.html#ConcreteTypes	ast_query: ConcreteTypes	
+IntegralTypes	ast/ast_query.html#IntegralTypes	ast_query: IntegralTypes	
+ConstantDataTypes	ast/ast_query.html#ConstantDataTypes	ast_query: ConstantDataTypes	
+NilableTypes	ast/ast_query.html#NilableTypes	ast_query: NilableTypes	
+PtrLikeKinds	ast/ast_query.html#PtrLikeKinds	ast_query: PtrLikeKinds	
+PersistentNodeFlags	ast/ast_query.html#PersistentNodeFlags	ast_query: PersistentNodeFlags	
+namePos	ast/ast_query.html#namePos	ast_query: namePos	
+patternPos	ast/ast_query.html#patternPos	ast_query: patternPos	
+genericParamsPos	ast/ast_query.html#genericParamsPos	ast_query: genericParamsPos	
+paramsPos	ast/ast_query.html#paramsPos	ast_query: paramsPos	
+pragmasPos	ast/ast_query.html#pragmasPos	ast_query: pragmasPos	
+miscPos	ast/ast_query.html#miscPos	ast_query: miscPos	
+bodyPos	ast/ast_query.html#bodyPos	ast_query: bodyPos	
+resultPos	ast/ast_query.html#resultPos	ast_query: resultPos	
+dispatcherPos	ast/ast_query.html#dispatcherPos	ast_query: dispatcherPos	
+wrongNodePos	ast/ast_query.html#wrongNodePos	ast_query: wrongNodePos	
+errorKindPos	ast/ast_query.html#errorKindPos	ast_query: errorKindPos	
+compilerInfoPos	ast/ast_query.html#compilerInfoPos	ast_query: compilerInfoPos	
+firstArgPos	ast/ast_query.html#firstArgPos	ast_query: firstArgPos	
+nkCallKinds	ast/ast_query.html#nkCallKinds	ast_query: nkCallKinds	
+nkIdentKinds	ast/ast_query.html#nkIdentKinds	ast_query: nkIdentKinds	
+nkPragmaCallKinds	ast/ast_query.html#nkPragmaCallKinds	ast_query: nkPragmaCallKinds	
+nkLambdaKinds	ast/ast_query.html#nkLambdaKinds	ast_query: nkLambdaKinds	
+declarativeDefs	ast/ast_query.html#declarativeDefs	ast_query: declarativeDefs	
+routineDefs	ast/ast_query.html#routineDefs	ast_query: routineDefs	
+procDefs	ast/ast_query.html#procDefs	ast_query: procDefs	
+callableDefs	ast/ast_query.html#callableDefs	ast_query: callableDefs	
+entityDefs	ast/ast_query.html#entityDefs	ast_query: entityDefs	
+nkSymChoices	ast/ast_query.html#nkSymChoices	ast_query: nkSymChoices	
+nkTypeExprs	ast/ast_query.html#nkTypeExprs	ast_query: nkTypeExprs	
+nkIntKinds	ast/ast_query.html#nkIntKinds	ast_query: nkIntKinds	
+nkFloatKinds	ast/ast_query.html#nkFloatKinds	ast_query: nkFloatKinds	
+nkStrKinds	ast/ast_query.html#nkStrKinds	ast_query: nkStrKinds	
+nkAllNodeKinds	ast/ast_query.html#nkAllNodeKinds	ast_query: nkAllNodeKinds	
+skLocalVars	ast/ast_query.html#skLocalVars	ast_query: skLocalVars	
+skProcKinds	ast/ast_query.html#skProcKinds	ast_query: skProcKinds	
+defaultSize	ast/ast_query.html#defaultSize	ast_query: defaultSize	
+defaultAlignment	ast/ast_query.html#defaultAlignment	ast_query: defaultAlignment	
+defaultOffset	ast/ast_query.html#defaultOffset	ast_query: defaultOffset	
+FakeVarParams	ast/ast_query.html#FakeVarParams	ast_query: FakeVarParams	
+getPIdent	ast/ast_query.html#getPIdent,PNode	ast_query: getPIdent(a: PNode): PIdent	
+getIdentLineInfo	ast/ast_query.html#getIdentLineInfo,PNode	ast_query: getIdentLineInfo(n: PNode): TLineInfo	
+getnimblePkg	ast/ast_query.html#getnimblePkg,PSym	ast_query: getnimblePkg(a: PSym): PSym	
+id	ast/ast_query.html#id.t,PIdObj	ast_query: id(a: PIdObj): int	
+UnspecifiedLockLevel	ast/ast_query.html#UnspecifiedLockLevel	ast_query: UnspecifiedLockLevel	
+MaxLockLevel	ast/ast_query.html#MaxLockLevel	ast_query: MaxLockLevel	
+UnknownLockLevel	ast/ast_query.html#UnknownLockLevel	ast_query: UnknownLockLevel	
+AttachedOpToStr	ast/ast_query.html#AttachedOpToStr	ast_query: AttachedOpToStr	
+AttachedOpToMagic	ast/ast_query.html#AttachedOpToMagic	ast_query: AttachedOpToMagic	
+`$`	ast/ast_query.html#$,TLockLevel	ast_query: `$`(x: TLockLevel): string	
+`$`	ast/ast_query.html#$,PSym	ast_query: `$`(s: PSym): string	
+getnimblePkgId	ast/ast_query.html#getnimblePkgId,PSym	ast_query: getnimblePkgId(a: PSym): int	
+isCallExpr	ast/ast_query.html#isCallExpr,PNode	ast_query: isCallExpr(n: PNode): bool	
+safeLen	ast/ast_query.html#safeLen,PNode	ast_query: safeLen(n: PNode): int	
+getDeclPragma	ast/ast_query.html#getDeclPragma,PNode	ast_query: getDeclPragma(n: PNode): PNode	
+previouslyInferred	ast/ast_query.html#previouslyInferred.t,PType	ast_query: previouslyInferred(t: PType): PType	
+astdef	ast/ast_query.html#astdef,PSym	ast_query: astdef(s: PSym): PNode	
+isMetaType	ast/ast_query.html#isMetaType,PType	ast_query: isMetaType(t: PType): bool	
+isUnresolvedStatic	ast/ast_query.html#isUnresolvedStatic,PType	ast_query: isUnresolvedStatic(t: PType): bool	
+isUnresolvedSym	ast/ast_query.html#isUnresolvedSym,PSym	ast_query: isUnresolvedSym(s: PSym): bool	
+fileIdx	ast/ast_query.html#fileIdx.t,PSym	ast_query: fileIdx(c: PSym): FileIndex	
+filename	ast/ast_query.html#filename.t,PSym	ast_query: filename(c: PSym): string	
+lastSon	ast/ast_query.html#lastSon,Indexable	ast_query: lastSon(n: Indexable): Indexable	
+skipTypes	ast/ast_query.html#skipTypes,PType,TTypeKinds	ast_query: skipTypes(t: PType; kinds: TTypeKinds): PType	
+skipDistincts	ast/ast_query.html#skipDistincts,PType	ast_query: skipDistincts(t: PType): PType	
+skipTypes	ast/ast_query.html#skipTypes,PType,TTypeKinds,int	ast_query: skipTypes(t: PType; kinds: TTypeKinds; maxIters: int): PType	
+skipTypesOrNil	ast/ast_query.html#skipTypesOrNil,PType,TTypeKinds	ast_query: skipTypesOrNil(t: PType; kinds: TTypeKinds): PType	
+hasSonWith	ast/ast_query.html#hasSonWith,PNode,TNodeKind	ast_query: hasSonWith(n: PNode; kind: TNodeKind): bool	
+hasNilSon	ast/ast_query.html#hasNilSon,PNode	ast_query: hasNilSon(n: PNode): bool	
+containsNode	ast/ast_query.html#containsNode,PNode,TNodeKinds	ast_query: containsNode(n: PNode; kinds: TNodeKinds): bool	
+hasSubnodeWith	ast/ast_query.html#hasSubnodeWith,PNode,TNodeKind	ast_query: hasSubnodeWith(n: PNode; kind: TNodeKind): bool	
+getInt	ast/ast_query.html#getInt,PNode	ast_query: getInt(a: PNode): Int128	
+getInt64	ast/ast_query.html#getInt64,PNode	ast_query: getInt64(a: PNode): int64	
+getFloat	ast/ast_query.html#getFloat,PNode	ast_query: getFloat(a: PNode): BiggestFloat	
+getStr	ast/ast_query.html#getStr,PNode	ast_query: getStr(a: PNode): string	
+getStrOrChar	ast/ast_query.html#getStrOrChar,PNode	ast_query: getStrOrChar(a: PNode): string	
+isGenericParams	ast/ast_query.html#isGenericParams,PNode	ast_query: isGenericParams(n: PNode): bool	
+isGenericRoutine	ast/ast_query.html#isGenericRoutine,PNode	ast_query: isGenericRoutine(n: PNode): bool	
+isError	ast/ast_query.html#isError,PNode	ast_query: isError(n: PNode): bool	
+isError	ast/ast_query.html#isError,PSym	ast_query: isError(s: PSym): bool	
+isError	ast/ast_query.html#isError,PType	ast_query: isError(t: PType): bool	
+isErrorLike	ast/ast_query.html#isErrorLike,PType	ast_query: isErrorLike(t: PType): bool	
+isErrorLike	ast/ast_query.html#isErrorLike,PSym	ast_query: isErrorLike(s: PSym): bool	
+isErrorLike	ast/ast_query.html#isErrorLike,PNode	ast_query: isErrorLike(n: PNode): bool	
+isGenericRoutineStrict	ast/ast_query.html#isGenericRoutineStrict,PSym	ast_query: isGenericRoutineStrict(s: PSym): bool	
+isGenericRoutine	ast/ast_query.html#isGenericRoutine,PSym	ast_query: isGenericRoutine(s: PSym): bool	
+skipGenericOwner	ast/ast_query.html#skipGenericOwner,PSym	ast_query: skipGenericOwner(s: PSym): PSym	
+isOwnedBy	ast/ast_query.html#isOwnedBy,PSym,PSym	ast_query: isOwnedBy(a, b: PSym): bool	
+originatingModule	ast/ast_query.html#originatingModule,PSym	ast_query: originatingModule(s: PSym): PSym	
+isRoutine	ast/ast_query.html#isRoutine,PSym	ast_query: isRoutine(s: PSym): bool	
+isCompileTimeProc	ast/ast_query.html#isCompileTimeProc,PSym	ast_query: isCompileTimeProc(s: PSym): bool	
+isRunnableExamples	ast/ast_query.html#isRunnableExamples,PNode	ast_query: isRunnableExamples(n: PNode): bool	
+requiredParams	ast/ast_query.html#requiredParams,PSym	ast_query: requiredParams(s: PSym): int	
+requiredGenericParams	ast/ast_query.html#requiredGenericParams,PSym	ast_query: requiredGenericParams(s: PSym): int	
+hasPattern	ast/ast_query.html#hasPattern,PSym	ast_query: hasPattern(s: PSym): bool	
+items	ast/ast_query.html#items.i,PNode	ast_query: items(n: PNode): PNode	
+pairs	ast/ast_query.html#pairs.i,PNode	ast_query: pairs(n: PNode): tuple[i: int, n: PNode]	
+isAtom	ast/ast_query.html#isAtom,PNode	ast_query: isAtom(n: PNode): bool	
+isEmptyType	ast/ast_query.html#isEmptyType,PType	ast_query: isEmptyType(t: PType): bool	
+skipStmtList	ast/ast_query.html#skipStmtList,PNode	ast_query: skipStmtList(n: PNode): PNode	
+isInfixAs	ast/ast_query.html#isInfixAs,PNode	ast_query: isInfixAs(n: PNode): bool	
+skipColon	ast/ast_query.html#skipColon,PNode	ast_query: skipColon(n: PNode): PNode	
+findUnresolvedStatic	ast/ast_query.html#findUnresolvedStatic,PNode	ast_query: findUnresolvedStatic(n: PNode): PNode	
+hasDestructor	ast/ast_query.html#hasDestructor,PType	ast_query: hasDestructor(t: PType): bool	
+incompleteType	ast/ast_query.html#incompleteType.t,PType	ast_query: incompleteType(t: PType): bool	
+typeCompleted	ast/ast_query.html#typeCompleted.t,PSym	ast_query: typeCompleted(s: PSym)	
+detailedInfo	ast/ast_query.html#detailedInfo.t,PSym	ast_query: detailedInfo(sym: PSym): string	
+isInlineIterator	ast/ast_query.html#isInlineIterator,PType	ast_query: isInlineIterator(typ: PType): bool	
+isClosureIterator	ast/ast_query.html#isClosureIterator,PType	ast_query: isClosureIterator(typ: PType): bool	
+isClosure	ast/ast_query.html#isClosure,PType	ast_query: isClosure(typ: PType): bool	
+isSinkParam	ast/ast_query.html#isSinkParam,PSym	ast_query: isSinkParam(s: PSym): bool	
+isSinkType	ast/ast_query.html#isSinkType,PType	ast_query: isSinkType(t: PType): bool	
+magicsThatCanRaise	ast/ast_query.html#magicsThatCanRaise	ast_query: magicsThatCanRaise	
+canRaiseConservative	ast/ast_query.html#canRaiseConservative,PNode	ast_query: canRaiseConservative(fn: PNode): bool	
+canRaise	ast/ast_query.html#canRaise,bool,PNode	ast_query: canRaise(panicsEnabled: bool; n: PNode): bool	
+skipAddr	ast/ast_query.html#skipAddr,PNode	ast_query: skipAddr(n: PNode): PNode	
+genericParamsInMacroCall	ast/ast_query.html#genericParamsInMacroCall.i,PSym,PNode	ast_query: genericParamsInMacroCall(macroSym: PSym; call: PNode): (PSym, PNode)	
+PosLastIdent	ast/ast_query.html#PosLastIdent	NodePosName.PosLastIdent	
+PosType	ast/ast_query.html#PosType	NodePosName.PosType	
+PosInit	ast/ast_query.html#PosInit	NodePosName.PosInit	
+PosProcBody	ast/ast_query.html#PosProcBody	NodePosName.PosProcBody	
+PosProcReturn	ast/ast_query.html#PosProcReturn	NodePosName.PosProcReturn	
+PosProcArgs	ast/ast_query.html#PosProcArgs	NodePosName.PosProcArgs	
+PosTypeBody	ast/ast_query.html#PosTypeBody	NodePosName.PosTypeBody	
+PosName	ast/ast_query.html#PosName	NodePosName.PosName	
+PosBody	ast/ast_query.html#PosBody	NodePosName.PosBody	
+PosPragma	ast/ast_query.html#PosPragma	NodePosName.PosPragma	
+NodePosName	ast/ast_query.html#NodePosName	ast_query: NodePosName	
+SliceAllIdents	ast/ast_query.html#SliceAllIdents	NodeSliceName.SliceAllIdents	
+SliceAllArguments	ast/ast_query.html#SliceAllArguments	NodeSliceName.SliceAllArguments	
+SliceAllBranches	ast/ast_query.html#SliceAllBranches	NodeSliceName.SliceAllBranches	
+SliceBranchExpressions	ast/ast_query.html#SliceBranchExpressions	NodeSliceName.SliceBranchExpressions	
+NodeSliceName	ast/ast_query.html#NodeSliceName	ast_query: NodeSliceName	
+`[]`	ast/ast_query.html#[],PNode,NodePosName	ast_query: `[]`(node: PNode; pos: NodePosName): PNode	
+`[]`	ast/ast_query.html#[],PNode,NodeSliceName	ast_query: `[]`(node: PNode; slice: NodeSliceName): seq[PNode]	
+branches	ast/ast_query.html#branches.i,PNode	ast_query: branches(node: PNode): tuple[position: int, n: PNode]	
+branchLabels	ast/ast_query.html#branchLabels.i,PNode	ast_query: branchLabels(node: PNode): (int, PNode)	
+names	ast/ast_query.html#names.i,PNode	ast_query: names(node: PNode): PNode	
+forLoopDefs	ast/ast_query.html#forLoopDefs.i,PNode	ast_query: forLoopDefs(forStmt: PNode): PNode	

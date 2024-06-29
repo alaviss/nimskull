@@ -1,0 +1,63 @@
+readUInt	vm/vmobjects.html#readUInt,VmMemoryRegion	vmobjects: readUInt(r: VmMemoryRegion): BiggestInt	
+writeUInt	vm/vmobjects.html#writeUInt,VmMemoryRegion,BiggestInt	vmobjects: writeUInt(r: var VmMemoryRegion; val: BiggestInt)	
+writeUInt	vm/vmobjects.html#writeUInt,LocHandle,BiggestInt	vmobjects: writeUInt(h: LocHandle; val: BiggestInt)	
+writeInt	vm/vmobjects.html#writeInt,VmMemoryRegion,BiggestInt	vmobjects: writeInt(r: var VmMemoryRegion; val: BiggestInt)	
+readIntBits	vm/vmobjects.html#readIntBits,VmMemoryRegion	vmobjects: readIntBits(r: VmMemoryRegion): BiggestInt	
+readFloat32	vm/vmobjects.html#readFloat32,VmMemoryRegion	vmobjects: readFloat32(m: VmMemoryRegion): BiggestFloat	
+readFloat64	vm/vmobjects.html#readFloat64,VmMemoryRegion	vmobjects: readFloat64(m: VmMemoryRegion): BiggestFloat	
+readFloat	vm/vmobjects.html#readFloat,VmMemoryRegion	vmobjects: readFloat(m: VmMemoryRegion): BiggestFloat	
+writeFloat64	vm/vmobjects.html#writeFloat64,VmMemPointer,float64	vmobjects: writeFloat64(h: VmMemPointer; f: float64)	
+writeFloat64	vm/vmobjects.html#writeFloat64,LocHandle,float64	vmobjects: writeFloat64(h: LocHandle; f: float64)	
+writeFloat32	vm/vmobjects.html#writeFloat32,VmMemPointer,float32	vmobjects: writeFloat32(h: VmMemPointer; f: float32)	
+writeFloat32	vm/vmobjects.html#writeFloat32,LocHandle,float32	vmobjects: writeFloat32(h: LocHandle; f: float32)	
+writeFloat	vm/vmobjects.html#writeFloat,LocHandle,BiggestFloat	vmobjects: writeFloat(h: LocHandle; f: BiggestFloat)	
+unpackDiscr	vm/vmobjects.html#unpackDiscr,BiggestInt,Natural	vmobjects: unpackDiscr(v: BiggestInt; numBits: Natural): tuple[value: int, index: int]	
+packDiscr	vm/vmobjects.html#packDiscr,Natural,Natural,Natural	vmobjects: packDiscr(value, index, numBits: Natural): int	
+readDiscriminant	vm/vmobjects.html#readDiscriminant,VmMemoryRegion,Natural	vmobjects: readDiscriminant(h: VmMemoryRegion; numBits: Natural): BiggestInt	
+readDiscriminant	vm/vmobjects.html#readDiscriminant,LocHandle	vmobjects: readDiscriminant(h: LocHandle): BiggestInt	
+readDiscrBranch	vm/vmobjects.html#readDiscrBranch,LocHandle,PVmType,FieldIndex	vmobjects: readDiscrBranch(loc: LocHandle; owner: PVmType; idx: FieldIndex): int	
+writeDiscrField	vm/vmobjects.html#writeDiscrField,LocHandle,PVmType,FieldIndex,Natural,Natural	vmobjects: writeDiscrField(loc: LocHandle; owner: PVmType; idx: FieldIndex;\n                value, index: Natural)	
+bitSet	vm/vmobjects.html#bitSet.t,LocHandle	vmobjects: bitSet(handle: LocHandle): untyped	
+mbitSet	vm/vmobjects.html#mbitSet.t,LocHandle	vmobjects: mbitSet(handle: LocHandle): untyped	
+VariantFieldIterCtx	vm/vmobjects.html#VariantFieldIterCtx	vmobjects: VariantFieldIterCtx	
+setup	vm/vmobjects.html#setup,VariantFieldIterCtx,PVmType,uint32	vmobjects: setup(ctx: var VariantFieldIterCtx; typ: PVmType; branch: uint32)	
+get	vm/vmobjects.html#get,VariantFieldIterCtx	vmobjects: get(ctx: VariantFieldIterCtx): tuple[valid: bool, idx: FieldIndex]	
+next	vm/vmobjects.html#next,VariantFieldIterCtx,VmMemoryRegion,PVmType	vmobjects: next(ctx: var VariantFieldIterCtx; src: VmMemoryRegion; typ: PVmType)	
+variantFieldIndices	vm/vmobjects.html#variantFieldIndices.i,VmMemoryRegion,PVmType,uint32	vmobjects: variantFieldIndices(src: VmMemoryRegion; typ: PVmType; branch: uint32 = 0&apos;u32): FieldIndex	
+variantFields	vm/vmobjects.html#variantFields.i,VmMemoryRegion,PVmType,uint32	vmobjects: variantFields(src: VmMemoryRegion; typ: PVmType; branch: uint32 = 0&apos;u32): (int,\n    PVmType)	
+arrayLen	vm/vmobjects.html#arrayLen,LocHandle	vmobjects: arrayLen(loc: LocHandle): int	
+`==`	vm/vmobjects.html#==,VmString,VmString	vmobjects: `==`(a, b: VmString): bool	
+`==`	vm/vmobjects.html#==.t,VmFunctionPtr,VmFunctionPtr	vmobjects: `==`(a, b: VmFunctionPtr): bool	
+signExtended	vm/vmobjects.html#signExtended.t,BiggestInt,BiggestInt	vmobjects: signExtended(val, size: BiggestInt): untyped	
+`$`	vm/vmobjects.html#$,VmString	vmobjects: `$`(s: VmString): string	
+asCString	vm/vmobjects.html#asCString,VmString	vmobjects: asCString(s: VmString): cstring	
+asgnVmString	vm/vmobjects.html#asgnVmString,VmString,VmString,VmAllocator	vmobjects: asgnVmString(dest: var VmString; src: VmString; a: var VmAllocator)	
+cmp	vm/vmobjects.html#cmp,VmString,VmString	vmobjects: cmp(a, b: VmString): int	
+`&lt;=`	vm/vmobjects.html#<=,VmString,VmString	vmobjects: `&lt;=`(a, b: VmString): bool	
+`&lt;`	vm/vmobjects.html#<,VmString,VmString	vmobjects: `&lt;`(a, b: VmString): bool	
+`&gt;`	vm/vmobjects.html#>,VmString,VmString	vmobjects: `&gt;`(a, b: VmString): bool	
+`&gt;=`	vm/vmobjects.html#>=,VmString,VmString	vmobjects: `&gt;=`(a, b: VmString): bool	
+`==`	vm/vmobjects.html#==,VmString,openArray[char]	vmobjects: `==`(a: VmString; b: openArray[char]): bool	
+`[]`	vm/vmobjects.html#[],VmString,Natural	vmobjects: `[]`(s: VmString; i: Natural): char	
+`[]=`	vm/vmobjects.html#[]=,VmString,Natural,char	vmobjects: `[]=`(s: var VmString; i: Natural; c: char)	
+setLen	vm/vmobjects.html#setLen,VmString,Natural,VmAllocator	vmobjects: setLen(s: var VmString; newLen: Natural; a: var VmAllocator)	
+add	vm/vmobjects.html#add,VmString,char,VmAllocator	vmobjects: add(s: var VmString; c: char; mm: var VmAllocator)	
+add	vm/vmobjects.html#add,VmString,openArray[char],VmAllocator	vmobjects: add(s: var VmString; chars: openArray[char]; mm: var VmAllocator)	
+add	vm/vmobjects.html#add,VmString,VmString,VmAllocator	vmobjects: add(s: var VmString; str: VmString; mm: var VmAllocator)	
+add	vm/vmobjects.html#add,string,VmString	vmobjects: add(s: var string; str: VmString)	
+getItemHandle	vm/vmobjects.html#getItemHandle,LocHandle,Natural,VmAllocator	vmobjects: getItemHandle(loc: LocHandle; index: Natural; a: VmAllocator): LocHandle	
+`[]`	vm/vmobjects.html#[],VmSlice,Natural	vmobjects: `[]`(s: VmSlice; i: Natural): LocHandle	
+toSlice	vm/vmobjects.html#toSlice,LocHandle	vmobjects: toSlice(loc: LocHandle): VmSlice	
+toSlice	vm/vmobjects.html#toSlice,VmSeq,PVmType,VmAllocator	vmobjects: toSlice(s: VmSeq; elemTyp: PVmType; a: VmAllocator): VmSlice	
+arrayCopy	vm/vmobjects.html#arrayCopy,VmMemoryManager,VmMemoryRegion,VmMemoryRegion,Natural,PVmType,static[bool]	vmobjects: arrayCopy(mm: var VmMemoryManager; dest: var VmMemoryRegion;\n          src: VmMemoryRegion; count: Natural; elemTyp: PVmType;\n          reset: static[bool])	
+setLenSeq	vm/vmobjects.html#setLenSeq,VmSeq,PVmType,int,VmMemoryManager	vmobjects: setLenSeq(s: var VmSeq; typ: PVmType; len: int; mm: var VmMemoryManager)	
+growBy	vm/vmobjects.html#growBy,VmSeq,PVmType,Natural,VmMemoryManager	vmobjects: growBy(s: var VmSeq; typ: PVmType; num: Natural; mm: var VmMemoryManager)	
+getItemHandle	vm/vmobjects.html#getItemHandle,VmSeq,PVmType,Natural,VmAllocator	vmobjects: getItemHandle(s: VmSeq; typ: PVmType; index: Natural; a: VmAllocator): LocHandle	
+newVmSeq	vm/vmobjects.html#newVmSeq,VmSeq,PVmType,Natural,VmMemoryManager	vmobjects: newVmSeq(s: var VmSeq; typ: PVmType; numItems: Natural; mm: var VmMemoryManager)	
+copyVmSeq	vm/vmobjects.html#copyVmSeq,VmSeq,VmSeq,PVmType,VmMemoryManager	vmobjects: copyVmSeq(dest: var VmSeq; src: VmSeq; typ: PVmType; mm: var VmMemoryManager)	
+newVmString	vm/vmobjects.html#newVmString,VmString,Natural,VmAllocator	vmobjects: newVmString(s: var VmString; numElements: Natural; a: var VmAllocator)	
+newVmString	vm/vmobjects.html#newVmString,VmString,openArray[char],VmAllocator	vmobjects: newVmString(s: var VmString; src: openArray[char]; a: var VmAllocator)	
+resetLocation	vm/vmobjects.html#resetLocation,VmMemoryManager,VmMemoryRegion,PVmType	vmobjects: resetLocation(mm: var VmMemoryManager; loc: var VmMemoryRegion; typ: PVmType)	
+asgnRef	vm/vmobjects.html#asgnRef,HeapSlotHandle,HeapSlotHandle,VmMemoryManager,static[bool]	vmobjects: asgnRef(dst: var HeapSlotHandle; src: HeapSlotHandle; mm: var VmMemoryManager;\n        reset: static[bool])	
+copyToLocation	vm/vmobjects.html#copyToLocation,VmMemoryManager,VmMemoryRegion,VmMemoryRegion,PVmType,static[bool]	vmobjects: copyToLocation(mm: var VmMemoryManager; dest: var VmMemoryRegion;\n               src: VmMemoryRegion; typ: PVmType; reset: static[bool] = true)	
+resetBranch	vm/vmobjects.html#resetBranch,VmMemoryManager,LocHandle,FieldIndex,int	vmobjects: resetBranch(mm: var VmMemoryManager; h: LocHandle; idx: FieldIndex; branch: int)	

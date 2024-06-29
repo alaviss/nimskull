@@ -1,0 +1,1 @@
+checkValid	vm/vmchecks.html#checkValid,VmAllocator,LocHandle	vmchecks: checkValid(al: VmAllocator; h: LocHandle): AccessViolationReason	

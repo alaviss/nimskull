@@ -1,0 +1,3 @@
+vmGenDiagToLegacyVmReport	vm/vmlegacy.html#vmGenDiagToLegacyVmReport,VmGenDiag	vmlegacy: vmGenDiagToLegacyVmReport(diag: VmGenDiag): VMReport	
+vmGenDiagToLegacyReport	vm/vmlegacy.html#vmGenDiagToLegacyReport,VmGenDiag	vmlegacy: vmGenDiagToLegacyReport(diag: VmGenDiag): Report	
+legacyReportsVmTracer	vm/vmlegacy.html#legacyReportsVmTracer,TCtx,VmExecTrace	vmlegacy: legacyReportsVmTracer(c: TCtx; t: VmExecTrace)	

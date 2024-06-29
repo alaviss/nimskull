@@ -1,0 +1,2 @@
+writeDepsFile	front/depfiles.html#writeDepsFile,ModuleGraph	depfiles: writeDepsFile(g: ModuleGraph)	
+writeGccDepfile	front/depfiles.html#writeGccDepfile,File,string,openArray[string]	depfiles: writeGccDepfile(depfile: File; target: string; paths: openArray[string])	

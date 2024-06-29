@@ -1,0 +1,27 @@
+opNone	sem/mirexec.html#opNone	Opcode.opNone	
+opFork	sem/mirexec.html#opFork	Opcode.opFork	
+opGoto	sem/mirexec.html#opGoto	Opcode.opGoto	
+opLoop	sem/mirexec.html#opLoop	Opcode.opLoop	
+opJoin	sem/mirexec.html#opJoin	Opcode.opJoin	
+opUse	sem/mirexec.html#opUse	Opcode.opUse	
+opDef	sem/mirexec.html#opDef	Opcode.opDef	
+opKill	sem/mirexec.html#opKill	Opcode.opKill	
+opInvalidate	sem/mirexec.html#opInvalidate	Opcode.opInvalidate	
+opMutate	sem/mirexec.html#opMutate	Opcode.opMutate	
+opConsume	sem/mirexec.html#opConsume	Opcode.opConsume	
+opDestroy	sem/mirexec.html#opDestroy	Opcode.opDestroy	
+opMutateGlobal	sem/mirexec.html#opMutateGlobal	Opcode.opMutateGlobal	
+Opcode	sem/mirexec.html#Opcode	mirexec: Opcode	
+InstrPos	sem/mirexec.html#InstrPos	mirexec: InstrPos	
+Subgraph	sem/mirexec.html#Subgraph	mirexec: Subgraph	
+DataFlowGraph	sem/mirexec.html#DataFlowGraph	mirexec: DataFlowGraph	
+TraverseState	sem/mirexec.html#TraverseState	mirexec: TraverseState	
+computeDfg	sem/mirexec.html#computeDfg,MirTree	mirexec: computeDfg(tree: MirTree): DataFlowGraph	
+subgraphFor	sem/mirexec.html#subgraphFor,DataFlowGraph,Slice[NodePosition]	mirexec: subgraphFor(dfg: DataFlowGraph; span: Slice[NodePosition]): Subgraph	
+find	sem/mirexec.html#find,DataFlowGraph,NodePosition	mirexec: find(dfg: DataFlowGraph; n: NodePosition): InstrPos	
+change	sem/mirexec.html#change,DataFlowGraph,openArray[InstrPos],Opcode	mirexec: change(dfg: var DataFlowGraph; instrs: openArray[InstrPos]; to: Opcode)	
+instructions	sem/mirexec.html#instructions.i,DataFlowGraph	mirexec: instructions(dfg: DataFlowGraph): (InstrPos, Opcode, OpValue)	
+traverse	sem/mirexec.html#traverse.i,DataFlowGraph,Subgraph,InstrPos,TraverseState	mirexec: traverse(c: DataFlowGraph; span: Subgraph; start: InstrPos;\n         state: var TraverseState): (DataFlowOpcode, OpValue)	
+traverseReverse	sem/mirexec.html#traverseReverse.i,DataFlowGraph,Subgraph,InstrPos,bool	mirexec: traverseReverse(c: DataFlowGraph; span: Subgraph; start: InstrPos;\n                exit: var bool): (DataFlowOpcode, OpValue)	
+traverseFromExits	sem/mirexec.html#traverseFromExits.i,DataFlowGraph,Subgraph,bool	mirexec: traverseFromExits(c: DataFlowGraph; span: Subgraph; exit: var bool): (\n    DataFlowOpcode, OpValue)	
+`$`	sem/mirexec.html#$,DataFlowGraph	mirexec: `$`(c: DataFlowGraph): string	

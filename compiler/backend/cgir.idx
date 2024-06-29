@@ -1,0 +1,89 @@
+cnkInvalid	backend/cgir.html#cnkInvalid	CgNodeKind.cnkInvalid	
+cnkEmpty	backend/cgir.html#cnkEmpty	CgNodeKind.cnkEmpty	
+cnkType	backend/cgir.html#cnkType	CgNodeKind.cnkType	
+cnkIntLit	backend/cgir.html#cnkIntLit	CgNodeKind.cnkIntLit	
+cnkUIntLit	backend/cgir.html#cnkUIntLit	CgNodeKind.cnkUIntLit	
+cnkFloatLit	backend/cgir.html#cnkFloatLit	CgNodeKind.cnkFloatLit	
+cnkStrLit	backend/cgir.html#cnkStrLit	CgNodeKind.cnkStrLit	
+cnkNilLit	backend/cgir.html#cnkNilLit	CgNodeKind.cnkNilLit	
+cnkAstLit	backend/cgir.html#cnkAstLit	CgNodeKind.cnkAstLit	
+cnkField	backend/cgir.html#cnkField	CgNodeKind.cnkField	
+cnkLabel	backend/cgir.html#cnkLabel	CgNodeKind.cnkLabel	
+cnkProc	backend/cgir.html#cnkProc	CgNodeKind.cnkProc	
+cnkConst	backend/cgir.html#cnkConst	CgNodeKind.cnkConst	
+cnkGlobal	backend/cgir.html#cnkGlobal	CgNodeKind.cnkGlobal	
+cnkLocal	backend/cgir.html#cnkLocal	CgNodeKind.cnkLocal	
+cnkMagic	backend/cgir.html#cnkMagic	CgNodeKind.cnkMagic	
+cnkResume	backend/cgir.html#cnkResume	CgNodeKind.cnkResume	
+cnkCall	backend/cgir.html#cnkCall	CgNodeKind.cnkCall	
+cnkCheckedCall	backend/cgir.html#cnkCheckedCall	CgNodeKind.cnkCheckedCall	
+cnkNeg	backend/cgir.html#cnkNeg	CgNodeKind.cnkNeg	
+cnkAdd	backend/cgir.html#cnkAdd	CgNodeKind.cnkAdd	
+cnkSub	backend/cgir.html#cnkSub	CgNodeKind.cnkSub	
+cnkMul	backend/cgir.html#cnkMul	CgNodeKind.cnkMul	
+cnkDiv	backend/cgir.html#cnkDiv	CgNodeKind.cnkDiv	
+cnkModI	backend/cgir.html#cnkModI	CgNodeKind.cnkModI	
+cnkTupleConstr	backend/cgir.html#cnkTupleConstr	CgNodeKind.cnkTupleConstr	
+cnkObjConstr	backend/cgir.html#cnkObjConstr	CgNodeKind.cnkObjConstr	
+cnkSetConstr	backend/cgir.html#cnkSetConstr	CgNodeKind.cnkSetConstr	
+cnkArrayConstr	backend/cgir.html#cnkArrayConstr	CgNodeKind.cnkArrayConstr	
+cnkClosureConstr	backend/cgir.html#cnkClosureConstr	CgNodeKind.cnkClosureConstr	
+cnkRange	backend/cgir.html#cnkRange	CgNodeKind.cnkRange	
+cnkBinding	backend/cgir.html#cnkBinding	CgNodeKind.cnkBinding	
+cnkFieldAccess	backend/cgir.html#cnkFieldAccess	CgNodeKind.cnkFieldAccess	
+cnkArrayAccess	backend/cgir.html#cnkArrayAccess	CgNodeKind.cnkArrayAccess	
+cnkTupleAccess	backend/cgir.html#cnkTupleAccess	CgNodeKind.cnkTupleAccess	
+cnkDeref	backend/cgir.html#cnkDeref	CgNodeKind.cnkDeref	
+cnkAddr	backend/cgir.html#cnkAddr	CgNodeKind.cnkAddr	
+cnkHiddenAddr	backend/cgir.html#cnkHiddenAddr	CgNodeKind.cnkHiddenAddr	
+cnkDerefView	backend/cgir.html#cnkDerefView	CgNodeKind.cnkDerefView	
+cnkConv	backend/cgir.html#cnkConv	CgNodeKind.cnkConv	
+cnkLvalueConv	backend/cgir.html#cnkLvalueConv	CgNodeKind.cnkLvalueConv	
+cnkHiddenConv	backend/cgir.html#cnkHiddenConv	CgNodeKind.cnkHiddenConv	
+cnkToSlice	backend/cgir.html#cnkToSlice	CgNodeKind.cnkToSlice	
+cnkObjDownConv	backend/cgir.html#cnkObjDownConv	CgNodeKind.cnkObjDownConv	
+cnkObjUpConv	backend/cgir.html#cnkObjUpConv	CgNodeKind.cnkObjUpConv	
+cnkCast	backend/cgir.html#cnkCast	CgNodeKind.cnkCast	
+cnkStmtList	backend/cgir.html#cnkStmtList	CgNodeKind.cnkStmtList	
+cnkVoidStmt	backend/cgir.html#cnkVoidStmt	CgNodeKind.cnkVoidStmt	
+cnkEmitStmt	backend/cgir.html#cnkEmitStmt	CgNodeKind.cnkEmitStmt	
+cnkAsmStmt	backend/cgir.html#cnkAsmStmt	CgNodeKind.cnkAsmStmt	
+cnkIfStmt	backend/cgir.html#cnkIfStmt	CgNodeKind.cnkIfStmt	
+cnkCaseStmt	backend/cgir.html#cnkCaseStmt	CgNodeKind.cnkCaseStmt	
+cnkBranch	backend/cgir.html#cnkBranch	CgNodeKind.cnkBranch	
+cnkGotoStmt	backend/cgir.html#cnkGotoStmt	CgNodeKind.cnkGotoStmt	
+cnkLoopStmt	backend/cgir.html#cnkLoopStmt	CgNodeKind.cnkLoopStmt	
+cnkRaiseStmt	backend/cgir.html#cnkRaiseStmt	CgNodeKind.cnkRaiseStmt	
+cnkContinueStmt	backend/cgir.html#cnkContinueStmt	CgNodeKind.cnkContinueStmt	
+cnkJoinStmt	backend/cgir.html#cnkJoinStmt	CgNodeKind.cnkJoinStmt	
+cnkLoopJoinStmt	backend/cgir.html#cnkLoopJoinStmt	CgNodeKind.cnkLoopJoinStmt	
+cnkEnd	backend/cgir.html#cnkEnd	CgNodeKind.cnkEnd	
+cnkExcept	backend/cgir.html#cnkExcept	CgNodeKind.cnkExcept	
+cnkFinally	backend/cgir.html#cnkFinally	CgNodeKind.cnkFinally	
+cnkTargetList	backend/cgir.html#cnkTargetList	CgNodeKind.cnkTargetList	
+cnkLeave	backend/cgir.html#cnkLeave	CgNodeKind.cnkLeave	
+cnkDef	backend/cgir.html#cnkDef	CgNodeKind.cnkDef	
+cnkAsgn	backend/cgir.html#cnkAsgn	CgNodeKind.cnkAsgn	
+cnkFastAsgn	backend/cgir.html#cnkFastAsgn	CgNodeKind.cnkFastAsgn	
+CgNodeKind	backend/cgir.html#CgNodeKind	cgir: CgNodeKind	
+cnkWithOperand	backend/cgir.html#cnkWithOperand	cgir: cnkWithOperand	
+cnkAtoms	backend/cgir.html#cnkAtoms	cgir: cnkAtoms	
+cnkWithItems	backend/cgir.html#cnkWithItems	cgir: cnkWithItems	
+cnkLiterals	backend/cgir.html#cnkLiterals	cgir: cnkLiterals	
+BlockId	backend/cgir.html#BlockId	cgir: BlockId	
+CgNode	backend/cgir.html#CgNode	cgir: CgNode	
+Body	backend/cgir.html#Body	cgir: Body	
+len	backend/cgir.html#len,CgNode	cgir: len(n: CgNode): int	
+`[]`	backend/cgir.html#[].t,CgNode,Natural	cgir: `[]`(n: CgNode; i: Natural): CgNode	
+`[]`	backend/cgir.html#[].t,CgNode,BackwardsIndex	cgir: `[]`(n: CgNode; i: BackwardsIndex): CgNode	
+items	backend/cgir.html#items.i,CgNode	cgir: items(n: CgNode): CgNode	
+pairs	backend/cgir.html#pairs.i,CgNode	cgir: pairs(n: CgNode): (int, CgNode)	
+sliceIt	backend/cgir.html#sliceIt.i,seq[T],Natural,Natural	cgir: sliceIt[T](x: seq[T]; lo, hi: Natural): (int, lent T)	
+`[]`	backend/cgir.html#[].t,Body,LocalId	cgir: `[]`(b: Body; id: LocalId): Local	
+newStmt	backend/cgir.html#newStmt,CgNodeKind,TLineInfo,varargs[CgNode]	cgir: newStmt(kind: CgNodeKind; info: TLineInfo; kids: varargs[CgNode]): CgNode	
+newExpr	backend/cgir.html#newExpr,CgNodeKind,TLineInfo,PType,varargs[CgNode]	cgir: newExpr(kind: CgNodeKind; info: TLineInfo; typ: PType; kids: varargs[CgNode]): CgNode	
+newNode	backend/cgir.html#newNode,CgNodeKind	cgir: newNode(kind: CgNodeKind; info = unknownLineInfo; typ = PType(nil)): CgNode	
+newOp	backend/cgir.html#newOp,CgNodeKind,TLineInfo,PType,sinkCgNode	cgir: newOp(kind: CgNodeKind; info: TLineInfo; typ: PType; opr: sink CgNode): CgNode	
+newLocalRef	backend/cgir.html#newLocalRef,LocalId,TLineInfo,PType	cgir: newLocalRef(id: LocalId; info: TLineInfo; typ: PType): CgNode	
+`==`	backend/cgir.html#==,BlockId,BlockId	cgir: `==`(x, y: BlockId): bool	
+merge	backend/cgir.html#merge,Body,Body	cgir: merge(dest: var Body; source: Body): CgNode	

@@ -1,0 +1,311 @@
+hasTinyCBackend	front/options.html#hasTinyCBackend	options: hasTinyCBackend	
+useEffectSystem	front/options.html#useEffectSystem	options: useEffectSystem	
+useWriteTracking	front/options.html#useWriteTracking	options: useWriteTracking	
+copyrightYear	front/options.html#copyrightYear	options: copyrightYear	
+nimEnableCovariance	front/options.html#nimEnableCovariance	options: nimEnableCovariance	
+harmlessOptions	front/options.html#harmlessOptions	options: harmlessOptions	
+genSubDir	front/options.html#genSubDir	options: genSubDir	
+NimExt	front/options.html#NimExt	options: NimExt	
+RodExt	front/options.html#RodExt	options: RodExt	
+HtmlExt	front/options.html#HtmlExt	options: HtmlExt	
+JsonExt	front/options.html#JsonExt	options: JsonExt	
+TagsExt	front/options.html#TagsExt	options: TagsExt	
+TexExt	front/options.html#TexExt	options: TexExt	
+IniExt	front/options.html#IniExt	options: IniExt	
+DefaultConfig	front/options.html#DefaultConfig	options: DefaultConfig	
+DefaultConfigNims	front/options.html#DefaultConfigNims	options: DefaultConfigNims	
+DocConfig	front/options.html#DocConfig	options: DocConfig	
+DocTexConfig	front/options.html#DocTexConfig	options: DocTexConfig	
+htmldocsDir	front/options.html#htmldocsDir	options: htmldocsDir	
+docRootDefault	front/options.html#docRootDefault	options: docRootDefault	
+spellSuggestSecretSauce	front/options.html#spellSuggestSecretSauce	options: spellSuggestSecretSauce	
+cmdBackends	front/options.html#cmdBackends	options: cmdBackends	
+cmdDocLike	front/options.html#cmdDocLike	options: cmdDocLike	
+ReportSet	front/options.html#ReportSet	options: ReportSet	
+MsgConfig	front/options.html#MsgConfig	options: MsgConfig	
+passCmd1	front/options.html#passCmd1	TCmdLinePass.passCmd1	
+passCmd2	front/options.html#passCmd2	TCmdLinePass.passCmd2	
+passPP	front/options.html#passPP	TCmdLinePass.passPP	
+TCmdLinePass	front/options.html#TCmdLinePass	options: TCmdLinePass	
+initMsgConfig	front/options.html#initMsgConfig	options: initMsgConfig(): MsgConfig	
+incl	front/options.html#incl,ReportSet,NodeId	options: incl(s: var ReportSet; id: NodeId)	
+contains	front/options.html#contains,ReportSet,NodeId	options: contains(s: var ReportSet; id: NodeId): bool	
+NimVer	front/options.html#NimVer	options: NimVer	
+TStringSeq	front/options.html#TStringSeq	options: TStringSeq	
+ideNone	front/options.html#ideNone	IdeCmd.ideNone	
+ideSug	front/options.html#ideSug	IdeCmd.ideSug	
+ideCon	front/options.html#ideCon	IdeCmd.ideCon	
+ideDef	front/options.html#ideDef	IdeCmd.ideDef	
+ideUse	front/options.html#ideUse	IdeCmd.ideUse	
+ideDus	front/options.html#ideDus	IdeCmd.ideDus	
+ideChk	front/options.html#ideChk	IdeCmd.ideChk	
+ideMod	front/options.html#ideMod	IdeCmd.ideMod	
+ideHighlight	front/options.html#ideHighlight	IdeCmd.ideHighlight	
+ideOutline	front/options.html#ideOutline	IdeCmd.ideOutline	
+ideKnown	front/options.html#ideKnown	IdeCmd.ideKnown	
+ideMsg	front/options.html#ideMsg	IdeCmd.ideMsg	
+ideProject	front/options.html#ideProject	IdeCmd.ideProject	
+IdeCmd	front/options.html#IdeCmd	options: IdeCmd	
+CfileFlag	front/options.html#CfileFlag	options: CfileFlag	
+Cfile	front/options.html#Cfile	options: Cfile	
+CfileList	front/options.html#CfileList	options: CfileList	
+SuggestFlag	front/options.html#SuggestFlag	options: SuggestFlag	
+Suggest	front/options.html#Suggest	options: Suggest	
+Suggestions	front/options.html#Suggestions	options: Suggestions	
+stdOrrStdout	front/options.html#stdOrrStdout	StdOrrKind.stdOrrStdout	
+stdOrrStderr	front/options.html#stdOrrStderr	StdOrrKind.stdOrrStderr	
+StdOrrKind	front/options.html#StdOrrKind	options: StdOrrKind	
+msgStdout	front/options.html#msgStdout	MsgFlag.msgStdout	
+msgNoUnitSep	front/options.html#msgNoUnitSep	MsgFlag.msgNoUnitSep	
+MsgFlag	front/options.html#MsgFlag	options: MsgFlag	
+MsgFlags	front/options.html#MsgFlags	options: MsgFlags	
+doDefault	front/options.html#doDefault	TErrorHandling.doDefault	
+doNothing	front/options.html#doNothing	TErrorHandling.doNothing	
+doAbort	front/options.html#doAbort	TErrorHandling.doAbort	
+doRaise	front/options.html#doRaise	TErrorHandling.doRaise	
+TErrorHandling	front/options.html#TErrorHandling	options: TErrorHandling	
+pimStdin	front/options.html#pimStdin	ProjectInputMode.pimStdin	
+pimCmd	front/options.html#pimCmd	ProjectInputMode.pimCmd	
+pimFile	front/options.html#pimFile	ProjectInputMode.pimFile	
+ProjectInputMode	front/options.html#ProjectInputMode	options: ProjectInputMode	
+irTransf	front/options.html#irTransf	IrName.irTransf	
+irMirIn	front/options.html#irMirIn	IrName.irMirIn	
+irMirOut	front/options.html#irMirOut	IrName.irMirOut	
+irCgir	front/options.html#irCgir	IrName.irCgir	
+irVm	front/options.html#irVm	IrName.irVm	
+IrName	front/options.html#IrName	options: IrName	
+ReportHook	front/options.html#ReportHook	options: ReportHook	
+HackController	front/options.html#HackController	options: HackController	
+ConfigRef	front/options.html#ConfigRef	options: ConfigRef	
+IdeLocCmds	front/options.html#IdeLocCmds	options: IdeLocCmds	
+`[]`	front/options.html#[].t,ConfigRef,FileIndex	options: `[]`(conf: ConfigRef; idx: FileIndex): TFileInfo	
+backend	front/options.html#backend.t,ConfigRef	options: backend(conf`gensym22: ConfigRef): TBackend	
+backend=	front/options.html#backend=.t,ConfigRef,TBackend	options: backend=(conf`gensym22: ConfigRef; val`gensym22: TBackend)	
+symbolFiles	front/options.html#symbolFiles.t,ConfigRef	options: symbolFiles(conf`gensym23: ConfigRef): SymbolFilesOption	
+symbolFiles=	front/options.html#symbolFiles=.t,ConfigRef,SymbolFilesOption	options: symbolFiles=(conf`gensym23: ConfigRef; val`gensym23: SymbolFilesOption)	
+prefixDir	front/options.html#prefixDir.t,ConfigRef	options: prefixDir(conf`gensym24: ConfigRef): AbsoluteDir	
+prefixDir=	front/options.html#prefixDir=.t,ConfigRef,AbsoluteDir	options: prefixDir=(conf`gensym24: ConfigRef; val`gensym24: AbsoluteDir)	
+libpath	front/options.html#libpath.t,ConfigRef	options: libpath(conf`gensym25: ConfigRef): AbsoluteDir	
+libpath=	front/options.html#libpath=.t,ConfigRef,AbsoluteDir	options: libpath=(conf`gensym25: ConfigRef; val`gensym25: AbsoluteDir)	
+nimcacheDir	front/options.html#nimcacheDir.t,ConfigRef	options: nimcacheDir(conf`gensym26: ConfigRef): AbsoluteDir	
+nimcacheDir=	front/options.html#nimcacheDir=.t,ConfigRef,AbsoluteDir	options: nimcacheDir=(conf`gensym26: ConfigRef; val`gensym26: AbsoluteDir)	
+target	front/options.html#target.t,ConfigRef	options: target(conf`gensym27: ConfigRef): Target	
+target=	front/options.html#target=.t,ConfigRef,Target	options: target=(conf`gensym27: ConfigRef; val`gensym27: Target)	
+cppDefines	front/options.html#cppDefines.t,ConfigRef	options: cppDefines(conf`gensym28: ConfigRef): HashSet[string]	
+cppDefines=	front/options.html#cppDefines=.t,ConfigRef,HashSet[string]	options: cppDefines=(conf`gensym28: ConfigRef; val`gensym28: HashSet[string])	
+cmd	front/options.html#cmd.t,ConfigRef	options: cmd(conf`gensym29: ConfigRef): Command	
+cmd=	front/options.html#cmd=.t,ConfigRef,Command	options: cmd=(conf`gensym29: ConfigRef; val`gensym29: Command)	
+selectedGC	front/options.html#selectedGC.t,ConfigRef	options: selectedGC(conf`gensym30: ConfigRef): TGCMode	
+selectedGC=	front/options.html#selectedGC=.t,ConfigRef,TGCMode	options: selectedGC=(conf`gensym30: ConfigRef; val`gensym30: TGCMode)	
+exc	front/options.html#exc.t,ConfigRef	options: exc(conf`gensym31: ConfigRef): ExceptionSystem	
+exc=	front/options.html#exc=.t,ConfigRef,ExceptionSystem	options: exc=(conf`gensym31: ConfigRef; val`gensym31: ExceptionSystem)	
+cCompiler	front/options.html#cCompiler.t,ConfigRef	options: cCompiler(conf`gensym32: ConfigRef): TSystemCC	
+cCompiler=	front/options.html#cCompiler=.t,ConfigRef,TSystemCC	options: cCompiler=(conf`gensym32: ConfigRef; val`gensym32: TSystemCC)	
+filenameOption	front/options.html#filenameOption.t,ConfigRef	options: filenameOption(conf`gensym33: ConfigRef): FilenameOption	
+filenameOption=	front/options.html#filenameOption=.t,ConfigRef,FilenameOption	options: filenameOption=(conf`gensym33: ConfigRef; val`gensym33: FilenameOption)	
+numberOfProcessors	front/options.html#numberOfProcessors.t,ConfigRef	options: numberOfProcessors(conf`gensym34: ConfigRef): int	
+numberOfProcessors=	front/options.html#numberOfProcessors=.t,ConfigRef,int	options: numberOfProcessors=(conf`gensym34: ConfigRef; val`gensym34: int)	
+outFile	front/options.html#outFile.t,ConfigRef	options: outFile(conf`gensym35: ConfigRef): RelativeFile	
+outFile=	front/options.html#outFile=.t,ConfigRef,RelativeFile	options: outFile=(conf`gensym35: ConfigRef; val`gensym35: RelativeFile)	
+outDir	front/options.html#outDir.t,ConfigRef	options: outDir(conf`gensym36: ConfigRef): AbsoluteDir	
+outDir=	front/options.html#outDir=.t,ConfigRef,AbsoluteDir	options: outDir=(conf`gensym36: ConfigRef; val`gensym36: AbsoluteDir)	
+depfile	front/options.html#depfile.t,ConfigRef	options: depfile(conf`gensym37: ConfigRef): AbsoluteFile	
+depfile=	front/options.html#depfile=.t,ConfigRef,AbsoluteFile	options: depfile=(conf`gensym37: ConfigRef; val`gensym37: AbsoluteFile)	
+projectPath	front/options.html#projectPath.t,ConfigRef	options: projectPath(conf`gensym38: ConfigRef): AbsoluteDir	
+projectPath=	front/options.html#projectPath=.t,ConfigRef,AbsoluteDir	options: projectPath=(conf`gensym38: ConfigRef; val`gensym38: AbsoluteDir)	
+projectName	front/options.html#projectName.t,ConfigRef	options: projectName(conf`gensym39: ConfigRef): string	
+projectName=	front/options.html#projectName=.t,ConfigRef,string	options: projectName=(conf`gensym39: ConfigRef; val`gensym39: string)	
+projectFull	front/options.html#projectFull.t,ConfigRef	options: projectFull(conf`gensym40: ConfigRef): AbsoluteFile	
+projectFull=	front/options.html#projectFull=.t,ConfigRef,AbsoluteFile	options: projectFull=(conf`gensym40: ConfigRef; val`gensym40: AbsoluteFile)	
+implicitImports	front/options.html#implicitImports.t,ConfigRef	options: implicitImports(conf`gensym42: ConfigRef): seq[string]	
+implicitImports=	front/options.html#implicitImports=.t,ConfigRef,	options: implicitImports=(conf`gensym42: ConfigRef; val`gensym42: seq[string])	
+implicitImportsAdd	front/options.html#implicitImportsAdd.t,ConfigRef,	options: implicitImportsAdd(conf`gensym41: ConfigRef;\n                   item`gensym41: string | seq[string])	
+implicitIncludes	front/options.html#implicitIncludes.t,ConfigRef	options: implicitIncludes(conf`gensym44: ConfigRef): seq[string]	
+implicitIncludes=	front/options.html#implicitIncludes=.t,ConfigRef,	options: implicitIncludes=(conf`gensym44: ConfigRef; val`gensym44: seq[string])	
+implicitIncludesAdd	front/options.html#implicitIncludesAdd.t,ConfigRef,	options: implicitIncludesAdd(conf`gensym43: ConfigRef;\n                    item`gensym43: string | seq[string])	
+cIncludes	front/options.html#cIncludes.t,ConfigRef	options: cIncludes(conf`gensym46: ConfigRef): seq[AbsoluteDir]	
+cIncludes=	front/options.html#cIncludes=.t,ConfigRef,	options: cIncludes=(conf`gensym46: ConfigRef; val`gensym46: seq[AbsoluteDir])	
+cIncludesAdd	front/options.html#cIncludesAdd.t,ConfigRef,	options: cIncludesAdd(conf`gensym45: ConfigRef;\n             item`gensym45: AbsoluteDir | seq[AbsoluteDir])	
+cLibs	front/options.html#cLibs.t,ConfigRef	options: cLibs(conf`gensym48: ConfigRef): seq[AbsoluteDir]	
+cLibs=	front/options.html#cLibs=.t,ConfigRef,	options: cLibs=(conf`gensym48: ConfigRef; val`gensym48: seq[AbsoluteDir])	
+cLibsAdd	front/options.html#cLibsAdd.t,ConfigRef,	options: cLibsAdd(conf`gensym47: ConfigRef;\n         item`gensym47: AbsoluteDir | seq[AbsoluteDir])	
+cLinkedLibs	front/options.html#cLinkedLibs.t,ConfigRef	options: cLinkedLibs(conf`gensym50: ConfigRef): seq[string]	
+cLinkedLibs=	front/options.html#cLinkedLibs=.t,ConfigRef,	options: cLinkedLibs=(conf`gensym50: ConfigRef; val`gensym50: seq[string])	
+cLinkedLibsAdd	front/options.html#cLinkedLibsAdd.t,ConfigRef,	options: cLinkedLibsAdd(conf`gensym49: ConfigRef; item`gensym49: string | seq[string])	
+linkOptionsCmd	front/options.html#linkOptionsCmd.t,ConfigRef	options: linkOptionsCmd(conf`gensym52: ConfigRef): seq[string]	
+linkOptionsCmd=	front/options.html#linkOptionsCmd=.t,ConfigRef,	options: linkOptionsCmd=(conf`gensym52: ConfigRef; val`gensym52: seq[string])	
+linkOptionsCmdAdd	front/options.html#linkOptionsCmdAdd.t,ConfigRef,	options: linkOptionsCmdAdd(conf`gensym51: ConfigRef;\n                  item`gensym51: string | seq[string])	
+compileOptionsCmd	front/options.html#compileOptionsCmd.t,ConfigRef	options: compileOptionsCmd(conf`gensym54: ConfigRef): seq[string]	
+compileOptionsCmd=	front/options.html#compileOptionsCmd=.t,ConfigRef,	options: compileOptionsCmd=(conf`gensym54: ConfigRef; val`gensym54: seq[string])	
+compileOptionsCmdAdd	front/options.html#compileOptionsCmdAdd.t,ConfigRef,	options: compileOptionsCmdAdd(conf`gensym53: ConfigRef;\n                     item`gensym53: string | seq[string])	
+nimblePaths	front/options.html#nimblePaths.t,ConfigRef	options: nimblePaths(conf`gensym56: ConfigRef): seq[AbsoluteDir]	
+nimblePaths=	front/options.html#nimblePaths=.t,ConfigRef,	options: nimblePaths=(conf`gensym56: ConfigRef; val`gensym56: seq[AbsoluteDir])	
+nimblePathsAdd	front/options.html#nimblePathsAdd.t,ConfigRef,	options: nimblePathsAdd(conf`gensym55: ConfigRef;\n               item`gensym55: AbsoluteDir | seq[AbsoluteDir])	
+searchPaths	front/options.html#searchPaths.t,ConfigRef	options: searchPaths(conf`gensym58: ConfigRef): seq[AbsoluteDir]	
+searchPaths=	front/options.html#searchPaths=.t,ConfigRef,	options: searchPaths=(conf`gensym58: ConfigRef; val`gensym58: seq[AbsoluteDir])	
+searchPathsAdd	front/options.html#searchPathsAdd.t,ConfigRef,	options: searchPathsAdd(conf`gensym57: ConfigRef;\n               item`gensym57: AbsoluteDir | seq[AbsoluteDir])	
+lazyPaths	front/options.html#lazyPaths.t,ConfigRef	options: lazyPaths(conf`gensym60: ConfigRef): seq[AbsoluteDir]	
+lazyPaths=	front/options.html#lazyPaths=.t,ConfigRef,	options: lazyPaths=(conf`gensym60: ConfigRef; val`gensym60: seq[AbsoluteDir])	
+lazyPathsAdd	front/options.html#lazyPathsAdd.t,ConfigRef,	options: lazyPathsAdd(conf`gensym59: ConfigRef;\n             item`gensym59: AbsoluteDir | seq[AbsoluteDir])	
+localOptions	front/options.html#localOptions.t,ConfigRef	options: localOptions(conf`gensym62: ConfigRef): TOptions	
+localOptions=	front/options.html#localOptions=.t,ConfigRef,TOptions	options: localOptions=(conf`gensym62: ConfigRef; val`gensym62: TOptions)	
+incl	front/options.html#incl.t,ConfigRef,	options: incl(conf`gensym61: ConfigRef; item`gensym61: TOption | TOptions)	
+excl	front/options.html#excl.t,ConfigRef,	options: excl(conf`gensym61: ConfigRef; item`gensym61: TOption | TOptions)	
+globalOptions	front/options.html#globalOptions.t,ConfigRef	options: globalOptions(conf`gensym64: ConfigRef): TGlobalOptions	
+globalOptions=	front/options.html#globalOptions=.t,ConfigRef,TGlobalOptions	options: globalOptions=(conf`gensym64: ConfigRef; val`gensym64: TGlobalOptions)	
+incl	front/options.html#incl.t,ConfigRef,_2	options: incl(conf`gensym63: ConfigRef; item`gensym63: TGlobalOption | TGlobalOptions)	
+excl	front/options.html#excl.t,ConfigRef,_2	options: excl(conf`gensym63: ConfigRef; item`gensym63: TGlobalOption | TGlobalOptions)	
+features	front/options.html#features.t,ConfigRef	options: features(conf`gensym66: ConfigRef): set[Feature]	
+features=	front/options.html#features=.t,ConfigRef,set[Feature]	options: features=(conf`gensym66: ConfigRef; val`gensym66: set[Feature])	
+incl	front/options.html#incl.t,ConfigRef,_3	options: incl(conf`gensym65: ConfigRef; item`gensym65: Feature | set[Feature])	
+excl	front/options.html#excl.t,ConfigRef,_3	options: excl(conf`gensym65: ConfigRef; item`gensym65: Feature | set[Feature])	
+dllOverrides	front/options.html#dllOverrides.t,ConfigRef	options: dllOverrides(conf`gensym68: ConfigRef): StringTableRef	
+dllOverrides=	front/options.html#dllOverrides=.t,ConfigRef,StringTableRef	options: dllOverrides=(conf`gensym68: ConfigRef; val`gensym68: StringTableRef)	
+dllOverridesSet	front/options.html#dllOverridesSet.t,ConfigRef,string,string	options: dllOverridesSet(conf`gensym67: ConfigRef; key`gensym67: string;\n                value`gensym67: string)	
+dllOverridesGet	front/options.html#dllOverridesGet.t,ConfigRef,string	options: dllOverridesGet(conf`gensym67: ConfigRef; key`gensym67: string): string	
+dllOverridesDel	front/options.html#dllOverridesDel.t,ConfigRef,string	options: dllOverridesDel(conf`gensym67: ConfigRef; key`gensym67: string)	
+configVars	front/options.html#configVars.t,ConfigRef	options: configVars(conf`gensym70: ConfigRef): StringTableRef	
+configVars=	front/options.html#configVars=.t,ConfigRef,StringTableRef	options: configVars=(conf`gensym70: ConfigRef; val`gensym70: StringTableRef)	
+configVarsSet	front/options.html#configVarsSet.t,ConfigRef,string,string	options: configVarsSet(conf`gensym69: ConfigRef; key`gensym69: string;\n              value`gensym69: string)	
+configVarsGet	front/options.html#configVarsGet.t,ConfigRef,string	options: configVarsGet(conf`gensym69: ConfigRef; key`gensym69: string): string	
+configVarsDel	front/options.html#configVarsDel.t,ConfigRef,string	options: configVarsDel(conf`gensym69: ConfigRef; key`gensym69: string)	
+symbols	front/options.html#symbols.t,ConfigRef	options: symbols(conf`gensym72: ConfigRef): StringTableRef	
+symbols=	front/options.html#symbols=.t,ConfigRef,StringTableRef	options: symbols=(conf`gensym72: ConfigRef; val`gensym72: StringTableRef)	
+symbolsSet	front/options.html#symbolsSet.t,ConfigRef,string,string	options: symbolsSet(conf`gensym71: ConfigRef; key`gensym71: string;\n           value`gensym71: string)	
+symbolsGet	front/options.html#symbolsGet.t,ConfigRef,string	options: symbolsGet(conf`gensym71: ConfigRef; key`gensym71: string): string	
+symbolsDel	front/options.html#symbolsDel.t,ConfigRef,string	options: symbolsDel(conf`gensym71: ConfigRef; key`gensym71: string)	
+macrosToExpand	front/options.html#macrosToExpand.t,ConfigRef	options: macrosToExpand(conf`gensym74: ConfigRef): StringTableRef	
+macrosToExpand=	front/options.html#macrosToExpand=.t,ConfigRef,StringTableRef	options: macrosToExpand=(conf`gensym74: ConfigRef; val`gensym74: StringTableRef)	
+macrosToExpandSet	front/options.html#macrosToExpandSet.t,ConfigRef,string,string	options: macrosToExpandSet(conf`gensym73: ConfigRef; key`gensym73: string;\n                  value`gensym73: string)	
+macrosToExpandGet	front/options.html#macrosToExpandGet.t,ConfigRef,string	options: macrosToExpandGet(conf`gensym73: ConfigRef; key`gensym73: string): string	
+macrosToExpandDel	front/options.html#macrosToExpandDel.t,ConfigRef,string	options: macrosToExpandDel(conf`gensym73: ConfigRef; key`gensym73: string)	
+arcToExpand	front/options.html#arcToExpand.t,ConfigRef	options: arcToExpand(conf`gensym76: ConfigRef): StringTableRef	
+arcToExpand=	front/options.html#arcToExpand=.t,ConfigRef,StringTableRef	options: arcToExpand=(conf`gensym76: ConfigRef; val`gensym76: StringTableRef)	
+arcToExpandSet	front/options.html#arcToExpandSet.t,ConfigRef,string,string	options: arcToExpandSet(conf`gensym75: ConfigRef; key`gensym75: string;\n               value`gensym75: string)	
+arcToExpandGet	front/options.html#arcToExpandGet.t,ConfigRef,string	options: arcToExpandGet(conf`gensym75: ConfigRef; key`gensym75: string): string	
+arcToExpandDel	front/options.html#arcToExpandDel.t,ConfigRef,string	options: arcToExpandDel(conf`gensym75: ConfigRef; key`gensym75: string)	
+getCompileOptionsStr	front/options.html#getCompileOptionsStr,ConfigRef	options: getCompileOptionsStr(conf: ConfigRef): string	
+getLinkOptionsStr	front/options.html#getLinkOptionsStr,ConfigRef	options: getLinkOptionsStr(conf: ConfigRef): string	
+defineSymbol	front/options.html#defineSymbol,ConfigRef,string,string	options: defineSymbol(conf: ConfigRef; symbol: string; value: string = &quot;true&quot;)	
+undefSymbol	front/options.html#undefSymbol,ConfigRef,string	options: undefSymbol(conf: ConfigRef; symbol: string)	
+definedSymbolNames	front/options.html#definedSymbolNames.i,ConfigRef	options: definedSymbolNames(conf: ConfigRef): string	
+countDefinedSymbols	front/options.html#countDefinedSymbols,ConfigRef	options: countDefinedSymbols(conf: ConfigRef): int	
+incl	front/options.html#incl,ConfigRef,ConfNoteSet,ReportKind	options: incl(conf: ConfigRef; nset: ConfNoteSet; note: ReportKind)	
+excl	front/options.html#excl,ConfigRef,ConfNoteSet,ReportKind	options: excl(conf: ConfigRef; nset: ConfNoteSet; note: ReportKind)	
+asgn	front/options.html#asgn,ConfigRef,ConfNoteSet,ReportKinds	options: asgn(conf: ConfigRef; nset: ConfNoteSet; notes: ReportKinds)	
+asgn	front/options.html#asgn,ConfigRef,ConfNoteSet,ConfNoteSet	options: asgn(conf: ConfigRef; sto, sfrom: ConfNoteSet)	
+flip	front/options.html#flip,ConfigRef,ConfNoteSet,ReportKind,bool	options: flip(conf: ConfigRef; nset: ConfNoteSet; note: ReportKind; state: bool)	
+options	front/options.html#options,ConfigRef	options: options(conf: ConfigRef): TOptions	
+options=	front/options.html#options=,ConfigRef,TOptions	options: options=(conf: ConfigRef; opts: TOptions)	
+modifiedyNotes	front/options.html#modifiedyNotes,ConfigRef	options: modifiedyNotes(conf: ConfigRef): ReportKinds	
+cmdlineNotes	front/options.html#cmdlineNotes,ConfigRef	options: cmdlineNotes(conf: ConfigRef): ReportKinds	
+foreignPackageNotes	front/options.html#foreignPackageNotes,ConfigRef	options: foreignPackageNotes(conf: ConfigRef): ReportKinds	
+notes	front/options.html#notes,ConfigRef	options: notes(conf: ConfigRef): ReportKinds	
+warningAsErrors	front/options.html#warningAsErrors,ConfigRef	options: warningAsErrors(conf: ConfigRef): ReportKinds	
+hintsAsErrors	front/options.html#hintsAsErrors,ConfigRef	options: hintsAsErrors(conf: ConfigRef): ReportKinds	
+mainPackageNotes	front/options.html#mainPackageNotes,ConfigRef	options: mainPackageNotes(conf: ConfigRef): ReportKinds	
+modifiedyNotes=	front/options.html#modifiedyNotes=,ConfigRef,ReportKinds	options: modifiedyNotes=(conf: ConfigRef; nset: ReportKinds)	
+cmdlineNotes=	front/options.html#cmdlineNotes=,ConfigRef,ReportKinds	options: cmdlineNotes=(conf: ConfigRef; nset: ReportKinds)	
+foreignPackageNotes=	front/options.html#foreignPackageNotes=,ConfigRef,ReportKinds	options: foreignPackageNotes=(conf: ConfigRef; nset: ReportKinds)	
+notes=	front/options.html#notes=,ConfigRef,ReportKinds	options: notes=(conf: ConfigRef; nset: ReportKinds)	
+warningAsErrors=	front/options.html#warningAsErrors=,ConfigRef,ReportKinds	options: warningAsErrors=(conf: ConfigRef; nset: ReportKinds)	
+hintsAsErrors=	front/options.html#hintsAsErrors=,ConfigRef,ReportKinds	options: hintsAsErrors=(conf: ConfigRef; nset: ReportKinds)	
+mainPackageNotes=	front/options.html#mainPackageNotes=,ConfigRef,ReportKinds	options: mainPackageNotes=(conf: ConfigRef; nset: ReportKinds)	
+writelnHook	front/options.html#writelnHook,ConfigRef,string,MsgFlags	options: writelnHook(conf: ConfigRef; msg: string; flags: MsgFlags = {})	
+writeHook	front/options.html#writeHook,ConfigRef,string,MsgFlags	options: writeHook(conf: ConfigRef; msg: string; flags: MsgFlags = {})	
+writeln	front/options.html#writeln,ConfigRef,varargs[string,]	options: writeln(conf: ConfigRef; args: varargs[string, `$`])	
+write	front/options.html#write,ConfigRef,varargs[string,]	options: write(conf: ConfigRef; args: varargs[string, `$`])	
+setReportHook	front/options.html#setReportHook,ConfigRef,ReportHook	options: setReportHook(conf: ConfigRef; hook: ReportHook)	
+getReportHook	front/options.html#getReportHook,ConfigRef	options: getReportHook(conf: ConfigRef): ReportHook	
+report	front/options.html#report,ConfigRef,Report	options: report(conf: ConfigRef; inReport: Report): TErrorHandling	
+canReport	front/options.html#canReport,ConfigRef,NodeId	options: canReport(conf: ConfigRef; id: NodeId): bool	
+canReport	front/options.html#canReport,ConfigRef,PNode	options: canReport(conf: ConfigRef; node: PNode): bool	
+report	front/options.html#report.t,ConfigRef,R	options: report[R: ReportTypes](conf: ConfigRef; inReport: R): TErrorHandling	
+report	front/options.html#report.t,ConfigRef,TLineInfo,R	options: report[R: ReportTypes](conf: ConfigRef; tinfo: TLineInfo; inReport: R): TErrorHandling	
+isCompilerFatal	front/options.html#isCompilerFatal,ConfigRef,Report	options: isCompilerFatal(conf: ConfigRef; report: Report): bool	
+severity	front/options.html#severity,ConfigRef,	options: severity(conf: ConfigRef; report: ReportTypes | Report): ReportSeverity	
+isCodeError	front/options.html#isCodeError,ConfigRef,Report	options: isCodeError(conf: ConfigRef; report: Report): bool	
+useColor	front/options.html#useColor,ConfigRef	options: useColor(conf: ConfigRef): bool	
+parseNimVersion	front/options.html#parseNimVersion,string	options: parseNimVersion(a: string): NimVer	
+assignIfDefault	front/options.html#assignIfDefault,T,T,typeof(default(T))	options: assignIfDefault[T](result: var T; val: T; def = default(T))	
+setErrorMaxHighMaybe	front/options.html#setErrorMaxHighMaybe.t,ConfigRef	options: setErrorMaxHighMaybe(conf: ConfigRef)	
+setNoteDefaults	front/options.html#setNoteDefaults,ConfigRef,ReportKind	options: setNoteDefaults(conf: ConfigRef; note: ReportKind; enabled = true)	
+setNote	front/options.html#setNote,ConfigRef,ReportKind	options: setNote(conf: ConfigRef; note: ReportKind; enabled = true)	
+hasHint	front/options.html#hasHint,ConfigRef,ReportKind	options: hasHint(conf: ConfigRef; note: ReportKind): bool	
+hasWarn	front/options.html#hasWarn,ConfigRef,ReportKind	options: hasWarn(conf: ConfigRef; note: ReportKind): bool	
+isEnabled	front/options.html#isEnabled,ConfigRef,ReportKind	options: isEnabled(conf: ConfigRef; report: ReportKind): bool	
+isEnabled	front/options.html#isEnabled,ConfigRef,Report	options: isEnabled(conf: ConfigRef; report: Report): bool	
+writeEnabled	front/options.html#writeEnabled	ReportWritabilityKind.writeEnabled	
+writeDisabled	front/options.html#writeDisabled	ReportWritabilityKind.writeDisabled	
+writeForceEnabled	front/options.html#writeForceEnabled	ReportWritabilityKind.writeForceEnabled	
+ReportWritabilityKind	front/options.html#ReportWritabilityKind	options: ReportWritabilityKind	
+writabilityKind	front/options.html#writabilityKind,ConfigRef,Report	options: writabilityKind(conf: ConfigRef; r: Report): ReportWritabilityKind	
+oldExperimentalFeatures	front/options.html#oldExperimentalFeatures	options: oldExperimentalFeatures	
+ChecksOptions	front/options.html#ChecksOptions	options: ChecksOptions	
+DefaultOptions	front/options.html#DefaultOptions	options: DefaultOptions	
+DefaultGlobalOptions	front/options.html#DefaultGlobalOptions	options: DefaultGlobalOptions	
+getDateStr	front/options.html#getDateStr	options: getDateStr(): string	
+getClockStr	front/options.html#getClockStr	options: getClockStr(): string	
+newPackageCache	front/options.html#newPackageCache.t	options: newPackageCache(): untyped	
+NotesVerbosity	front/options.html#NotesVerbosity	options: NotesVerbosity	
+newConfigRef	front/options.html#newConfigRef,ReportHook	options: newConfigRef(hook: ReportHook): ConfigRef	
+newPartialConfigRef	front/options.html#newPartialConfigRef	options: newPartialConfigRef(): ConfigRef	
+cppDefine	front/options.html#cppDefine,ConfigRef,string	options: cppDefine(c: ConfigRef; define: string)	
+getStdlibVersion	front/options.html#getStdlibVersion,ConfigRef	options: getStdlibVersion(conf: ConfigRef): NimVer	
+isDefined	front/options.html#isDefined,CurrentConf,string	options: isDefined(conf: CurrentConf; symbol: string): bool	
+isDefined	front/options.html#isDefined,ConfigRef,string	options: isDefined(conf: ConfigRef; symbol: string): bool	
+getDefined	front/options.html#getDefined,ConfigRef,string	options: getDefined(conf: ConfigRef; sym: string): string	
+quitOrRaise	front/options.html#quitOrRaise.t,ConfigRef,string	options: quitOrRaise(conf: ConfigRef; msg = &quot;&quot;)	
+importantComments	front/options.html#importantComments,ConfigRef	options: importantComments(conf: ConfigRef): bool	
+compilationCachePresent	front/options.html#compilationCachePresent.t,ConfigRef	options: compilationCachePresent(conf: ConfigRef): untyped	
+optPreserveOrigSource	front/options.html#optPreserveOrigSource.t,ConfigRef	options: optPreserveOrigSource(conf: ConfigRef): untyped	
+mainCommandArg	front/options.html#mainCommandArg,ConfigRef	options: mainCommandArg(conf: ConfigRef): string	
+existsConfigVar	front/options.html#existsConfigVar,ConfigRef,string	options: existsConfigVar(conf: ConfigRef; key: string): bool	
+getConfigVar	front/options.html#getConfigVar,ConfigRef,string,string	options: getConfigVar(conf: ConfigRef; key: string; default = &quot;&quot;): string	
+setConfigVar	front/options.html#setConfigVar,ConfigRef,string,string	options: setConfigVar(conf: ConfigRef; key, val: string)	
+getOutFile	front/options.html#getOutFile,ConfigRef,RelativeFile,string	options: getOutFile(conf: ConfigRef; filename: RelativeFile; ext: string): AbsoluteFile	
+absOutFile	front/options.html#absOutFile,ConfigRef	options: absOutFile(conf: ConfigRef): AbsoluteFile	
+prepareToWriteOutput	front/options.html#prepareToWriteOutput,ConfigRef	options: prepareToWriteOutput(conf: ConfigRef): AbsoluteFile	
+getPrefixDir	front/options.html#getPrefixDir,ConfigRef	options: getPrefixDir(conf: ConfigRef): AbsoluteDir	
+setDefaultLibpath	front/options.html#setDefaultLibpath,ConfigRef	options: setDefaultLibpath(conf: ConfigRef)	
+canonicalizePath	front/options.html#canonicalizePath,ConfigRef,AbsoluteFile	options: canonicalizePath(conf: ConfigRef; path: AbsoluteFile): AbsoluteFile	
+setFromProjectName	front/options.html#setFromProjectName,ConfigRef,string	options: setFromProjectName(conf: ConfigRef; projectName: string)	
+removeTrailingDirSep	front/options.html#removeTrailingDirSep,string	options: removeTrailingDirSep(path: string): string	
+toCChar	front/options.html#toCChar,char,string	options: toCChar(c: char; result: var string)	
+makeCString	front/options.html#makeCString,string	options: makeCString(s: string): string	
+fileInfoKnown	front/options.html#fileInfoKnown,ConfigRef,AbsoluteFile	options: fileInfoKnown(conf: ConfigRef; filename: AbsoluteFile): bool	
+fileInfoIdx	front/options.html#fileInfoIdx,ConfigRef,AbsoluteFile,bool	options: fileInfoIdx(conf: ConfigRef; filename: AbsoluteFile; isKnownFile: var bool): FileIndex	
+fileInfoIdx	front/options.html#fileInfoIdx,ConfigRef,AbsoluteFile	options: fileInfoIdx(conf: ConfigRef; filename: AbsoluteFile): FileIndex	
+newLineInfo	front/options.html#newLineInfo,ConfigRef,AbsoluteFile,int,int	options: newLineInfo(conf: ConfigRef; filename: AbsoluteFile; line, col: int): TLineInfo	
+disableNimblePath	front/options.html#disableNimblePath,ConfigRef	options: disableNimblePath(conf: ConfigRef)	
+clearNimblePath	front/options.html#clearNimblePath,ConfigRef	options: clearNimblePath(conf: ConfigRef)	
+demanglePackageName	front/options.html#demanglePackageName,string	options: demanglePackageName(path: string): string	
+withPackageName	front/options.html#withPackageName,ConfigRef,AbsoluteFile	options: withPackageName(conf: ConfigRef; path: AbsoluteFile): AbsoluteFile	
+PkgDesc	front/options.html#PkgDesc	options: PkgDesc	
+getPkgDesc	front/options.html#getPkgDesc,ConfigRef,string	options: getPkgDesc(conf: ConfigRef; modulePath: string): PkgDesc	
+getNimcacheDir	front/options.html#getNimcacheDir,CurrentConf	options: getNimcacheDir(conf: CurrentConf): AbsoluteDir	
+getNimcacheDir	front/options.html#getNimcacheDir,ConfigRef	options: getNimcacheDir(conf: ConfigRef): AbsoluteDir	
+pathSubs	front/options.html#pathSubs,ConfigRef,string,string	options: pathSubs(conf: ConfigRef; p, config: string): string	
+nimbleSubs	front/options.html#nimbleSubs.i,ConfigRef,string	options: nimbleSubs(conf: ConfigRef; p: string): string	
+toGeneratedFile	front/options.html#toGeneratedFile,,AbsoluteFile,string	options: toGeneratedFile(conf: CurrentConf | ConfigRef; path: AbsoluteFile; ext: string): AbsoluteFile	
+completeGeneratedFilePath	front/options.html#completeGeneratedFilePath,ConfigRef,AbsoluteFile,bool	options: completeGeneratedFilePath(conf: ConfigRef; f: AbsoluteFile;\n                          createSubDir: bool = true): AbsoluteFile	
+completeGeneratedExtFilePath	front/options.html#completeGeneratedExtFilePath,ConfigRef,AbsoluteFile	options: completeGeneratedExtFilePath(conf: ConfigRef; f: AbsoluteFile): AbsoluteFile	
+toRodFile	front/options.html#toRodFile,ConfigRef,AbsoluteFile	options: toRodFile(conf: ConfigRef; f: AbsoluteFile; ext = RodExt): AbsoluteFile	
+getRelativePathFromConfigPath	front/options.html#getRelativePathFromConfigPath,ConfigRef,AbsoluteFile	options: getRelativePathFromConfigPath(conf: ConfigRef; f: AbsoluteFile; isTitle = false): RelativeFile	
+findFile	front/options.html#findFile,ConfigRef,string	options: findFile(conf: ConfigRef; f: string; suppressStdlib = false): AbsoluteFile	
+findModule	front/options.html#findModule,ConfigRef,string,string	options: findModule(conf: ConfigRef; modulename, currentModule: string): AbsoluteFile	
+findProjectNimFile	front/options.html#findProjectNimFile,ConfigRef,string	options: findProjectNimFile(conf: ConfigRef; pkg: string): string	
+canonicalImportAux	front/options.html#canonicalImportAux,ConfigRef,AbsoluteFile	options: canonicalImportAux(conf: ConfigRef; file: AbsoluteFile): string	
+canonicalImport	front/options.html#canonicalImport,ConfigRef,AbsoluteFile	options: canonicalImport(conf: ConfigRef; file: AbsoluteFile): string	
+canonDynlibName	front/options.html#canonDynlibName,string	options: canonDynlibName(s: string): string	
+inclDynlibOverride	front/options.html#inclDynlibOverride,ConfigRef,string	options: inclDynlibOverride(conf: ConfigRef; lib: string)	
+isDynlibOverride	front/options.html#isDynlibOverride,ConfigRef,string	options: isDynlibOverride(conf: ConfigRef; lib: string): bool	
+parseIdeCmd	front/options.html#parseIdeCmd,string	options: parseIdeCmd(s: string): IdeCmd	
+`$`	front/options.html#$,IdeCmd	options: `$`(c: IdeCmd): string	
+floatInt64Align	front/options.html#floatInt64Align,ConfigRef	options: floatInt64Align(conf: ConfigRef): int16	
+commandLineDesc	front/options.html#commandLineDesc	options: commandLineDesc	
+toFilename	front/options.html#toFilename.t,ConfigRef,FileIndex	options: toFilename(conf: ConfigRef; fileIdx: FileIndex): string	
+toFilename	front/options.html#toFilename.t,ConfigRef,TLineInfo	options: toFilename(conf: ConfigRef; info: TLineInfo): string	
+inFile	front/options.html#inFile,ConfigRef,TLineInfo,string,Slice[int]	options: inFile(conf: ConfigRef; info: TLineInfo; file: string;\n       lrange: Slice[int] = low(int) .. high(int)): bool	
+inDebug	front/options.html#inDebug,ConfigRef	options: inDebug(conf: ConfigRef): bool	
+isDebugEnabled	front/options.html#isDebugEnabled.t,ConfigRef,IrName,string	options: isDebugEnabled(c: ConfigRef; ir: IrName; name: string): bool	

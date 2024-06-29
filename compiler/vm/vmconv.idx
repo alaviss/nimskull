@@ -1,0 +1,9 @@
+tryWriteTo	vm/vmconv.html#tryWriteTo,T,LocHandle,VmMemoryManager	vmconv: tryWriteTo[T: enum](v: T; dest: LocHandle; mm: var VmMemoryManager): bool	
+tryWriteTo	vm/vmconv.html#tryWriteTo,T,LocHandle,VmMemoryManager_2	vmconv: tryWriteTo[T: SomeSignedInt](v: T; dest: LocHandle; mm: var VmMemoryManager): bool	
+tryWriteTo	vm/vmconv.html#tryWriteTo,T,LocHandle,VmMemoryManager_3	vmconv: tryWriteTo[T: SomeUnsignedInt](v: T; dest: LocHandle; mm: var VmMemoryManager): bool	
+tryWriteTo	vm/vmconv.html#tryWriteTo,T,LocHandle,VmMemoryManager_4	vmconv: tryWriteTo[T: string](v: T; dest: LocHandle; mm: var VmMemoryManager): bool	
+tryWriteTo	vm/vmconv.html#tryWriteTo,T,LocHandle,VmMemoryManager_5	vmconv: tryWriteTo[T: seq](v: T; dest: LocHandle; mm: var VmMemoryManager): bool	
+tryWriteTo	vm/vmconv.html#tryWriteTo,T,LocHandle,VmMemoryManager_6	vmconv: tryWriteTo[T: object | tuple](v: T; dest: LocHandle; mm: var VmMemoryManager): bool	
+writeTo	vm/vmconv.html#writeTo,T,LocHandle,VmMemoryManager	vmconv: writeTo[T](v: T; dest: LocHandle; mm: var VmMemoryManager)	
+tryReadTo	vm/vmconv.html#tryReadTo,LocHandle,set[T]	vmconv: tryReadTo[T](src: LocHandle; dst: var set[T]): bool	
+readAs	vm/vmconv.html#readAs,LocHandle,typedesc[T]	vmconv: readAs[T](src: LocHandle; t: typedesc[T]): T	

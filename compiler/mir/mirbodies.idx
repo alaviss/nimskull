@@ -1,0 +1,7 @@
+Local	mir/mirbodies.html#Local	mirbodies: Local	
+Locals	mir/mirbodies.html#Locals	mirbodies: Locals	
+MirBody	mir/mirbodies.html#MirBody	mirbodies: MirBody	
+resultId	mir/mirbodies.html#resultId	mirbodies: resultId	
+`[]`	mir/mirbodies.html#[],MirBody,NodePosition	mirbodies: `[]`(body: MirBody; n: NodePosition): lent MirNode	
+sourceFor	mir/mirbodies.html#sourceFor,MirBody,NodePosition	mirbodies: sourceFor(body: MirBody; n: NodePosition): PNode	
+`[]`	mir/mirbodies.html#[],MirBody,LocalId	mirbodies: `[]`(body: MirBody; id: LocalId): lent Local	

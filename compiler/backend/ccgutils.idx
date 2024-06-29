@@ -1,0 +1,4 @@
+hashString	backend/ccgutils.html#hashString,ConfigRef,string	ccgutils: hashString(conf: ConfigRef; s: string): BiggestInt	
+getUniqueType	backend/ccgutils.html#getUniqueType.t,PType	ccgutils: getUniqueType(key: PType): PType	
+makeSingleLineCString	backend/ccgutils.html#makeSingleLineCString,string	ccgutils: makeSingleLineCString(s: string): string	
+mangle	backend/ccgutils.html#mangle,string	ccgutils: mangle(name: string): string	

@@ -1,0 +1,8 @@
+ParserError	ast/parser.html#ParserError	parser: ParserError	
+Parser	ast/parser.html#Parser	parser: Parser	
+openParser	ast/parser.html#openParser,Parser,FileIndex,PLLStream,IdentCache,ConfigRef	parser: openParser(p: var Parser; fileIdx: FileIndex; inputStream: PLLStream;\n           cache: IdentCache; config: ConfigRef)	
+openParser	ast/parser.html#openParser,Parser,AbsoluteFile,PLLStream,IdentCache,ConfigRef	parser: openParser(p: var Parser; filename: AbsoluteFile; inputStream: PLLStream;\n           cache: IdentCache; config: ConfigRef)	
+closeParser	ast/parser.html#closeParser,Parser	parser: closeParser(p: var Parser)	
+parseAll	ast/parser.html#parseAll,Parser	parser: parseAll(p: var Parser): ParsedNode	
+parseTopLevelStmt	ast/parser.html#parseTopLevelStmt,Parser	parser: parseTopLevelStmt(p: var Parser): ParsedNode	
+parseString	ast/parser.html#parseString,string,IdentCache,ConfigRef,string,int	parser: parseString(s: string; cache: IdentCache; config: ConfigRef;\n            filename: string = &quot;&quot;; line: int = 0): ParsedNode	

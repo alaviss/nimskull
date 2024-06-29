@@ -1,0 +1,6 @@
+buildVoidCall	sem/injectdestructors.html#buildVoidCall.t,MirBuilder,MirEnv,PSym,untyped	injectdestructors: buildVoidCall(bu: var MirBuilder; env: var MirEnv; p: PSym; body: untyped)	
+shouldInjectDestructorCalls	sem/injectdestructors.html#shouldInjectDestructorCalls,PSym	injectdestructors: shouldInjectDestructorCalls(owner: PSym): bool	
+lowerBranchSwitch	sem/injectdestructors.html#lowerBranchSwitch,MirTree,ModuleGraph,IdGenerator,MirEnv,Changeset	injectdestructors: lowerBranchSwitch(tree: MirTree; g: ModuleGraph; idgen: IdGenerator;\n                  env: var MirEnv; changes: var Changeset)	
+injectDestructorCalls	sem/injectdestructors.html#injectDestructorCalls,MirTree,ModuleGraph,MirEnv,Changeset	injectdestructors: injectDestructorCalls(tree: MirTree; g: ModuleGraph; env: var MirEnv;\n                      changes: var Changeset)	
+Overview	sem/injectdestructors.html#overview	 Overview	
+Ownership analysis	sem/injectdestructors.html#ownership-analysis	 Ownership analysis	

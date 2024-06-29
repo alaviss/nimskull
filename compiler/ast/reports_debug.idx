@@ -1,0 +1,2 @@
+DebugReport	ast/reports_debug.html#DebugReport	reports_debug: DebugReport	
+severity	ast/reports_debug.html#severity,DebugReport	reports_debug: severity(report: DebugReport): ReportSeverity	

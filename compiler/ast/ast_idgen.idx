@@ -1,0 +1,5 @@
+IdGenerator	ast/ast_idgen.html#IdGenerator	ast_idgen: IdGenerator	
+PackageModuleId	ast/ast_idgen.html#PackageModuleId	ast_idgen: PackageModuleId	
+idGeneratorFromModule	ast/ast_idgen.html#idGeneratorFromModule,PSym	ast_idgen: idGeneratorFromModule(m: PSym): IdGenerator	
+nextSymId	ast/ast_idgen.html#nextSymId,IdGenerator	ast_idgen: nextSymId(x: IdGenerator): ItemId	
+nextTypeId	ast/ast_idgen.html#nextTypeId,IdGenerator	ast_idgen: nextTypeId(x: IdGenerator): ItemId	

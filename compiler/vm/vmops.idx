@@ -1,0 +1,9 @@
+basicOps	vm/vmops.html#basicOps.i	vmops: basicOps(): Override	
+ioReadOps	vm/vmops.html#ioReadOps.i	vmops: ioReadOps(): Override	
+ioWriteOps	vm/vmops.html#ioWriteOps.i	vmops: ioWriteOps(): Override	
+osOps	vm/vmops.html#osOps.i	vmops: osOps(): Override	
+os2Ops	vm/vmops.html#os2Ops.i	vmops: os2Ops(): Override	
+compileTimeOps	vm/vmops.html#compileTimeOps.i	vmops: compileTimeOps(): Override	
+gorgeOps	vm/vmops.html#gorgeOps.i	vmops: gorgeOps(): Override	
+debugOps	vm/vmops.html#debugOps.i	vmops: debugOps(): Override	
+macroOps	vm/vmops.html#macroOps.i	vmops: macroOps(): Override	

@@ -1,0 +1,4 @@
+SourceMap	mir/sourcemaps.html#SourceMap	sourcemaps: SourceMap	
+`[]`	mir/sourcemaps.html#[],SourceMap,SourceId	sourcemaps: `[]`(m: SourceMap; i: SourceId): PNode	
+add	mir/sourcemaps.html#add,SourceMap,PNode	sourcemaps: add(m: var SourceMap; origin: PNode): SourceId	
+merge	mir/sourcemaps.html#merge,SourceMap,MirTree,sinkSourceMap	sourcemaps: merge(dst: var SourceMap; tree: var MirTree; src: sink SourceMap)	

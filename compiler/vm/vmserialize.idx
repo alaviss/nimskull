@@ -1,0 +1,1 @@
+initFromExpr	vm/vmserialize.html#initFromExpr,LocHandle,MirTree,MirEnv,TCtx	vmserialize: initFromExpr(dest: LocHandle; tree: MirTree; env: MirEnv; c: var TCtx)	

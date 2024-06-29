@@ -1,0 +1,176 @@
+LocalId	mir/mirtrees.html#LocalId	mirtrees: LocalId	
+GlobalId	mir/mirtrees.html#GlobalId	mirtrees: GlobalId	
+ConstId	mir/mirtrees.html#ConstId	mirtrees: ConstId	
+ProcedureId	mir/mirtrees.html#ProcedureId	mirtrees: ProcedureId	
+NumberId	mir/mirtrees.html#NumberId	mirtrees: NumberId	
+StringId	mir/mirtrees.html#StringId	mirtrees: StringId	
+AstId	mir/mirtrees.html#AstId	mirtrees: AstId	
+DataId	mir/mirtrees.html#DataId	mirtrees: DataId	
+TypeId	mir/mirtrees.html#TypeId	mirtrees: TypeId	
+SourceId	mir/mirtrees.html#SourceId	mirtrees: SourceId	
+indexLike	mir/mirtrees.html#indexLike.t,typedesc[SourceId]	mirtrees: indexLike(_: typedesc[SourceId])	
+LabelId	mir/mirtrees.html#LabelId	mirtrees: LabelId	
+mnkNone	mir/mirtrees.html#mnkNone	MirNodeKind.mnkNone	
+mnkProc	mir/mirtrees.html#mnkProc	MirNodeKind.mnkProc	
+mnkProcVal	mir/mirtrees.html#mnkProcVal	MirNodeKind.mnkProcVal	
+mnkConst	mir/mirtrees.html#mnkConst	MirNodeKind.mnkConst	
+mnkGlobal	mir/mirtrees.html#mnkGlobal	MirNodeKind.mnkGlobal	
+mnkParam	mir/mirtrees.html#mnkParam	MirNodeKind.mnkParam	
+mnkLocal	mir/mirtrees.html#mnkLocal	MirNodeKind.mnkLocal	
+mnkTemp	mir/mirtrees.html#mnkTemp	MirNodeKind.mnkTemp	
+mnkAlias	mir/mirtrees.html#mnkAlias	MirNodeKind.mnkAlias	
+mnkField	mir/mirtrees.html#mnkField	MirNodeKind.mnkField	
+mnkLabel	mir/mirtrees.html#mnkLabel	MirNodeKind.mnkLabel	
+mnkNilLit	mir/mirtrees.html#mnkNilLit	MirNodeKind.mnkNilLit	
+mnkIntLit	mir/mirtrees.html#mnkIntLit	MirNodeKind.mnkIntLit	
+mnkUIntLit	mir/mirtrees.html#mnkUIntLit	MirNodeKind.mnkUIntLit	
+mnkFloatLit	mir/mirtrees.html#mnkFloatLit	MirNodeKind.mnkFloatLit	
+mnkStrLit	mir/mirtrees.html#mnkStrLit	MirNodeKind.mnkStrLit	
+mnkAstLit	mir/mirtrees.html#mnkAstLit	MirNodeKind.mnkAstLit	
+mnkType	mir/mirtrees.html#mnkType	MirNodeKind.mnkType	
+mnkImmediate	mir/mirtrees.html#mnkImmediate	MirNodeKind.mnkImmediate	
+mnkMagic	mir/mirtrees.html#mnkMagic	MirNodeKind.mnkMagic	
+mnkResume	mir/mirtrees.html#mnkResume	MirNodeKind.mnkResume	
+mnkLeave	mir/mirtrees.html#mnkLeave	MirNodeKind.mnkLeave	
+mnkTargetList	mir/mirtrees.html#mnkTargetList	MirNodeKind.mnkTargetList	
+mnkDef	mir/mirtrees.html#mnkDef	MirNodeKind.mnkDef	
+mnkDefCursor	mir/mirtrees.html#mnkDefCursor	MirNodeKind.mnkDefCursor	
+mnkBind	mir/mirtrees.html#mnkBind	MirNodeKind.mnkBind	
+mnkBindMut	mir/mirtrees.html#mnkBindMut	MirNodeKind.mnkBindMut	
+mnkAsgn	mir/mirtrees.html#mnkAsgn	MirNodeKind.mnkAsgn	
+mnkInit	mir/mirtrees.html#mnkInit	MirNodeKind.mnkInit	
+mnkSwitch	mir/mirtrees.html#mnkSwitch	MirNodeKind.mnkSwitch	
+mnkPathNamed	mir/mirtrees.html#mnkPathNamed	MirNodeKind.mnkPathNamed	
+mnkPathPos	mir/mirtrees.html#mnkPathPos	MirNodeKind.mnkPathPos	
+mnkPathArray	mir/mirtrees.html#mnkPathArray	MirNodeKind.mnkPathArray	
+mnkPathVariant	mir/mirtrees.html#mnkPathVariant	MirNodeKind.mnkPathVariant	
+mnkPathConv	mir/mirtrees.html#mnkPathConv	MirNodeKind.mnkPathConv	
+mnkAddr	mir/mirtrees.html#mnkAddr	MirNodeKind.mnkAddr	
+mnkDeref	mir/mirtrees.html#mnkDeref	MirNodeKind.mnkDeref	
+mnkView	mir/mirtrees.html#mnkView	MirNodeKind.mnkView	
+mnkMutView	mir/mirtrees.html#mnkMutView	MirNodeKind.mnkMutView	
+mnkDerefView	mir/mirtrees.html#mnkDerefView	MirNodeKind.mnkDerefView	
+mnkStdConv	mir/mirtrees.html#mnkStdConv	MirNodeKind.mnkStdConv	
+mnkConv	mir/mirtrees.html#mnkConv	MirNodeKind.mnkConv	
+mnkCast	mir/mirtrees.html#mnkCast	MirNodeKind.mnkCast	
+mnkToSlice	mir/mirtrees.html#mnkToSlice	MirNodeKind.mnkToSlice	
+mnkToMutSlice	mir/mirtrees.html#mnkToMutSlice	MirNodeKind.mnkToMutSlice	
+mnkCall	mir/mirtrees.html#mnkCall	MirNodeKind.mnkCall	
+mnkCheckedCall	mir/mirtrees.html#mnkCheckedCall	MirNodeKind.mnkCheckedCall	
+mnkNeg	mir/mirtrees.html#mnkNeg	MirNodeKind.mnkNeg	
+mnkAdd	mir/mirtrees.html#mnkAdd	MirNodeKind.mnkAdd	
+mnkSub	mir/mirtrees.html#mnkSub	MirNodeKind.mnkSub	
+mnkMul	mir/mirtrees.html#mnkMul	MirNodeKind.mnkMul	
+mnkDiv	mir/mirtrees.html#mnkDiv	MirNodeKind.mnkDiv	
+mnkModI	mir/mirtrees.html#mnkModI	MirNodeKind.mnkModI	
+mnkRaise	mir/mirtrees.html#mnkRaise	MirNodeKind.mnkRaise	
+mnkSetConstr	mir/mirtrees.html#mnkSetConstr	MirNodeKind.mnkSetConstr	
+mnkRange	mir/mirtrees.html#mnkRange	MirNodeKind.mnkRange	
+mnkArrayConstr	mir/mirtrees.html#mnkArrayConstr	MirNodeKind.mnkArrayConstr	
+mnkSeqConstr	mir/mirtrees.html#mnkSeqConstr	MirNodeKind.mnkSeqConstr	
+mnkTupleConstr	mir/mirtrees.html#mnkTupleConstr	MirNodeKind.mnkTupleConstr	
+mnkClosureConstr	mir/mirtrees.html#mnkClosureConstr	MirNodeKind.mnkClosureConstr	
+mnkObjConstr	mir/mirtrees.html#mnkObjConstr	MirNodeKind.mnkObjConstr	
+mnkRefConstr	mir/mirtrees.html#mnkRefConstr	MirNodeKind.mnkRefConstr	
+mnkBinding	mir/mirtrees.html#mnkBinding	MirNodeKind.mnkBinding	
+mnkCopy	mir/mirtrees.html#mnkCopy	MirNodeKind.mnkCopy	
+mnkMove	mir/mirtrees.html#mnkMove	MirNodeKind.mnkMove	
+mnkSink	mir/mirtrees.html#mnkSink	MirNodeKind.mnkSink	
+mnkArg	mir/mirtrees.html#mnkArg	MirNodeKind.mnkArg	
+mnkName	mir/mirtrees.html#mnkName	MirNodeKind.mnkName	
+mnkConsume	mir/mirtrees.html#mnkConsume	MirNodeKind.mnkConsume	
+mnkVoid	mir/mirtrees.html#mnkVoid	MirNodeKind.mnkVoid	
+mnkScope	mir/mirtrees.html#mnkScope	MirNodeKind.mnkScope	
+mnkEndScope	mir/mirtrees.html#mnkEndScope	MirNodeKind.mnkEndScope	
+mnkGoto	mir/mirtrees.html#mnkGoto	MirNodeKind.mnkGoto	
+mnkIf	mir/mirtrees.html#mnkIf	MirNodeKind.mnkIf	
+mnkCase	mir/mirtrees.html#mnkCase	MirNodeKind.mnkCase	
+mnkBranch	mir/mirtrees.html#mnkBranch	MirNodeKind.mnkBranch	
+mnkLoop	mir/mirtrees.html#mnkLoop	MirNodeKind.mnkLoop	
+mnkJoin	mir/mirtrees.html#mnkJoin	MirNodeKind.mnkJoin	
+mnkLoopJoin	mir/mirtrees.html#mnkLoopJoin	MirNodeKind.mnkLoopJoin	
+mnkExcept	mir/mirtrees.html#mnkExcept	MirNodeKind.mnkExcept	
+mnkFinally	mir/mirtrees.html#mnkFinally	MirNodeKind.mnkFinally	
+mnkContinue	mir/mirtrees.html#mnkContinue	MirNodeKind.mnkContinue	
+mnkEndStruct	mir/mirtrees.html#mnkEndStruct	MirNodeKind.mnkEndStruct	
+mnkDestroy	mir/mirtrees.html#mnkDestroy	MirNodeKind.mnkDestroy	
+mnkAsm	mir/mirtrees.html#mnkAsm	MirNodeKind.mnkAsm	
+mnkEmit	mir/mirtrees.html#mnkEmit	MirNodeKind.mnkEmit	
+MirNodeKind	mir/mirtrees.html#MirNodeKind	mirtrees: MirNodeKind	
+ekNone	mir/mirtrees.html#ekNone	EffectKind.ekNone	
+ekMutate	mir/mirtrees.html#ekMutate	EffectKind.ekMutate	
+ekReassign	mir/mirtrees.html#ekReassign	EffectKind.ekReassign	
+ekKill	mir/mirtrees.html#ekKill	EffectKind.ekKill	
+ekInvalidate	mir/mirtrees.html#ekInvalidate	EffectKind.ekInvalidate	
+EffectKind	mir/mirtrees.html#EffectKind	mirtrees: EffectKind	
+MirNode	mir/mirtrees.html#MirNode	mirtrees: MirNode	
+MirTree	mir/mirtrees.html#MirTree	mirtrees: MirTree	
+MirNodeSeq	mir/mirtrees.html#MirNodeSeq	mirtrees: MirNodeSeq	
+NodeIndex	mir/mirtrees.html#NodeIndex	mirtrees: NodeIndex	
+NodePosition	mir/mirtrees.html#NodePosition	mirtrees: NodePosition	
+OpValue	mir/mirtrees.html#OpValue	mirtrees: OpValue	
+AllNodeKinds	mir/mirtrees.html#AllNodeKinds	mirtrees: AllNodeKinds	
+DefNodes	mir/mirtrees.html#DefNodes	mirtrees: DefNodes	
+AtomNodes	mir/mirtrees.html#AtomNodes	mirtrees: AtomNodes	
+SubTreeNodes	mir/mirtrees.html#SubTreeNodes	mirtrees: SubTreeNodes	
+SingleOperandNodes	mir/mirtrees.html#SingleOperandNodes	mirtrees: SingleOperandNodes	
+ArgumentNodes	mir/mirtrees.html#ArgumentNodes	mirtrees: ArgumentNodes	
+ModifierNodes	mir/mirtrees.html#ModifierNodes	mirtrees: ModifierNodes	
+LabelNodes	mir/mirtrees.html#LabelNodes	mirtrees: LabelNodes	
+LiteralDataNodes	mir/mirtrees.html#LiteralDataNodes	mirtrees: LiteralDataNodes	
+ConstrTreeNodes	mir/mirtrees.html#ConstrTreeNodes	mirtrees: ConstrTreeNodes	
+StmtNodes	mir/mirtrees.html#StmtNodes	mirtrees: StmtNodes	
+Atoms	mir/mirtrees.html#Atoms	mirtrees: Atoms	
+UnaryOps	mir/mirtrees.html#UnaryOps	mirtrees: UnaryOps	
+BinaryOps	mir/mirtrees.html#BinaryOps	mirtrees: BinaryOps	
+LvalueExprKinds	mir/mirtrees.html#LvalueExprKinds	mirtrees: LvalueExprKinds	
+RvalueExprKinds	mir/mirtrees.html#RvalueExprKinds	mirtrees: RvalueExprKinds	
+ExprKinds	mir/mirtrees.html#ExprKinds	mirtrees: ExprKinds	
+CallKinds	mir/mirtrees.html#CallKinds	mirtrees: CallKinds	
+`==`	mir/mirtrees.html#==,SourceId,SourceId	mirtrees: `==`(a, b: SourceId): bool	
+`==`	mir/mirtrees.html#==,LocalId,LocalId	mirtrees: `==`(a, b: LocalId): bool	
+`==`	mir/mirtrees.html#==,LabelId,LabelId	mirtrees: `==`(a, b: LabelId): bool	
+`==`	mir/mirtrees.html#==,ConstId,ConstId	mirtrees: `==`(a, b: ConstId): bool	
+`==`	mir/mirtrees.html#==,GlobalId,GlobalId	mirtrees: `==`(a, b: GlobalId): bool	
+`==`	mir/mirtrees.html#==,ProcedureId,ProcedureId	mirtrees: `==`(a, b: ProcedureId): bool	
+`==`	mir/mirtrees.html#==,DataId,DataId	mirtrees: `==`(a, b: DataId): bool	
+`==`	mir/mirtrees.html#==,NumberId,NumberId	mirtrees: `==`(a, b: NumberId): bool	
+`==`	mir/mirtrees.html#==,StringId,StringId	mirtrees: `==`(a, b: StringId): bool	
+`==`	mir/mirtrees.html#==,AstId,AstId	mirtrees: `==`(a, b: AstId): bool	
+`==`	mir/mirtrees.html#==,TypeId,TypeId	mirtrees: `==`(a, b: TypeId): bool	
+isAnon	mir/mirtrees.html#isAnon,ConstId	mirtrees: isAnon(id: ConstId): bool	
+extract	mir/mirtrees.html#extract,ConstId	mirtrees: extract(id: ConstId): DataId	
+toConstId	mir/mirtrees.html#toConstId,DataId	mirtrees: toConstId(id: DataId): ConstId	
+`-`	mir/mirtrees.html#-.t,NodePosition,int	mirtrees: `-`(a: NodePosition; b: int): NodePosition	
+`+`	mir/mirtrees.html#+.t,NodePosition,int	mirtrees: `+`(a: NodePosition; b: int): NodePosition	
+dec	mir/mirtrees.html#dec.t,NodePosition	mirtrees: dec(a: var NodePosition)	
+inc	mir/mirtrees.html#inc.t,NodePosition	mirtrees: inc(a: var NodePosition)	
+`&lt;`	mir/mirtrees.html#<,NodePosition,NodePosition	mirtrees: `&lt;`(a, b: NodePosition): bool	
+`&lt;=`	mir/mirtrees.html#<=,NodePosition,NodePosition	mirtrees: `&lt;=`(a, b: NodePosition): bool	
+`==`	mir/mirtrees.html#==,NodePosition,NodePosition	mirtrees: `==`(a, b: NodePosition): bool	
+`in`	mir/mirtrees.html#in,NodePosition,MirTree	mirtrees: `in`(p: NodePosition; tree: MirTree): bool	
+`[]`	mir/mirtrees.html#[].t,MirTree,	mirtrees: `[]`(tree: MirTree; i: NodePosition | OpValue): untyped	
+parent	mir/mirtrees.html#parent,MirTree,NodePosition	mirtrees: parent(tree: MirTree; n: NodePosition): NodePosition	
+sibling	mir/mirtrees.html#sibling,MirTree,NodePosition	mirtrees: sibling(tree: MirTree; n: NodePosition): NodePosition	
+previous	mir/mirtrees.html#previous,MirTree,NodePosition	mirtrees: previous(tree: MirTree; n: NodePosition): NodePosition	
+computeSpan	mir/mirtrees.html#computeSpan,MirTree,NodePosition	mirtrees: computeSpan(tree: MirTree; n: NodePosition): Slice[NodePosition]	
+child	mir/mirtrees.html#child,MirTree,NodePosition,Natural	mirtrees: child(tree: MirTree; n: NodePosition; index: Natural): NodePosition	
+operand	mir/mirtrees.html#operand,MirTree,NodePosition,Natural	mirtrees: operand(tree: MirTree; n: NodePosition; i: Natural): OpValue	
+`[]`	mir/mirtrees.html#[],MirTree,NodePosition,Natural	mirtrees: `[]`(tree: MirTree; n: NodePosition; index: Natural): lent MirNode	
+`[]`	mir/mirtrees.html#[],MirTree,OpValue,Natural	mirtrees: `[]`(tree: MirTree; n: OpValue; index: Natural): lent MirNode	
+last	mir/mirtrees.html#last,MirTree,NodePosition	mirtrees: last(tree: MirTree; n: NodePosition): NodePosition	
+findParent	mir/mirtrees.html#findParent,MirTree,NodePosition,MirNodeKind	mirtrees: findParent(tree: MirTree; start: NodePosition; kind: MirNodeKind): NodePosition	
+len	mir/mirtrees.html#len,MirTree,NodePosition	mirtrees: len(tree: MirTree; n: NodePosition): int	
+numArgs	mir/mirtrees.html#numArgs,MirTree,NodePosition	mirtrees: numArgs(tree: MirTree; n: NodePosition): int	
+operand	mir/mirtrees.html#operand,MirTree,	mirtrees: operand(tree: MirTree; op: OpValue | NodePosition): OpValue	
+argument	mir/mirtrees.html#argument,MirTree,NodePosition,Natural	mirtrees: argument(tree: MirTree; n: NodePosition; i: Natural): OpValue	
+skip	mir/mirtrees.html#skip,MirTree,OpValue,MirNodeKind	mirtrees: skip(tree: MirTree; n: OpValue; kind: MirNodeKind): OpValue	
+pairs	mir/mirtrees.html#pairs.i,MirTree	mirtrees: pairs(tree: MirTree): (NodePosition, lent MirNode)	
+subNodes	mir/mirtrees.html#subNodes.i,MirTree,NodePosition,int	mirtrees: subNodes(tree: MirTree; n: NodePosition; start = 0): NodePosition	
+arguments	mir/mirtrees.html#arguments.i,MirTree,NodePosition	mirtrees: arguments(tree: MirTree; n: NodePosition): (ArgKinds, EffectKind, OpValue)	
+findDef	mir/mirtrees.html#findDef,MirTree,NodePosition	mirtrees: findDef(tree: MirTree; n: NodePosition): NodePosition	
+lpairs	mir/mirtrees.html#lpairs.i,seq[T]	mirtrees: lpairs[T](x: seq[T]): (int, lent T)	
+callee	mir/mirtrees.html#callee,MirTree,NodePosition	mirtrees: callee(tree: MirTree; n: NodePosition): NodePosition	
+mutatesGlobal	mir/mirtrees.html#mutatesGlobal,MirTree,NodePosition	mirtrees: mutatesGlobal(tree: MirTree; n: NodePosition): bool	
+effect	mir/mirtrees.html#effect,MirTree,NodePosition	mirtrees: effect(tree: MirTree; n: NodePosition): EffectKind	
+field	mir/mirtrees.html#field,MirTree,NodePosition	mirtrees: field(tree: MirTree; n: NodePosition): int32	

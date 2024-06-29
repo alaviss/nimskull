@@ -1,0 +1,93 @@
+zip	text_layouter.html#zip.i,seq[T1],seq[T2],seq[T3],seq[T4],seq[T5]	text_layouter: zip[T1, T2, T3, T4, T5](s1: seq[T1]; s2: seq[T2]; s3: seq[T3]; s4: seq[T4];\n                        s5: seq[T5]): tuple[v1: T1, v2: T2, v3: T3, v4: T4,\n    v5: T5]	
+rmpairs	text_layouter.html#rmpairs.i,seq[T]	text_layouter: rmpairs[T](s: var seq[T]): (int, var T)	
+LytStrId	text_layouter.html#LytStrId	text_layouter: LytStrId	
+EmptyLytStrId	text_layouter.html#EmptyLytStrId	text_layouter: EmptyLytStrId	
+`==`	text_layouter.html#==,LytStrId,LytStrId	text_layouter: `==`(i1, i2: LytStrId): bool	
+isNil	text_layouter.html#isNil,LytStrId	text_layouter: isNil(i: LytStrId): bool	
+`$`	text_layouter.html#$,LytStrId	text_layouter: `$`(id: LytStrId): string	
+toIndex	text_layouter.html#toIndex,LytStrId	text_layouter: toIndex(id: LytStrId): int	
+toLytStrId	text_layouter.html#toLytStrId,int	text_layouter: toLytStrId(idx: int): LytStrId	
+LytStrIdMask	text_layouter.html#LytStrIdMask	text_layouter: LytStrIdMask	
+`==`	text_layouter.html#==,LytStrIdMask,LytStrIdMask	text_layouter: `==`(m1`gensym3, m2`gensym3: LytStrIdMask): bool	
+getMask	text_layouter.html#getMask,LytStrId	text_layouter: getMask(id`gensym3: LytStrId): LytStrIdMask	
+popMask	text_layouter.html#popMask,LytStrId	text_layouter: popMask(id`gensym3: LytStrId): LytStrId	
+setMask	text_layouter.html#setMask,LytStrId,LytStrIdMask	text_layouter: setMask(id`gensym3: var LytStrId; mask`gensym3: LytStrIdMask)	
+layEvStr	text_layouter.html#layEvStr	LytEventKind.layEvStr	
+layEvNewline	text_layouter.html#layEvNewline	LytEventKind.layEvNewline	
+layEvSpaces	text_layouter.html#layEvSpaces	LytEventKind.layEvSpaces	
+LytEventKind	text_layouter.html#LytEventKind	text_layouter: LytEventKind	
+LytEvent	text_layouter.html#LytEvent	text_layouter: LytEvent	
+Layout	text_layouter.html#Layout	text_layouter: Layout	
+bkText	text_layouter.html#bkText	LytBlockKind.bkText	
+bkLine	text_layouter.html#bkLine	LytBlockKind.bkLine	
+bkChoice	text_layouter.html#bkChoice	LytBlockKind.bkChoice	
+bkStack	text_layouter.html#bkStack	LytBlockKind.bkStack	
+bkWrap	text_layouter.html#bkWrap	LytBlockKind.bkWrap	
+bkVerb	text_layouter.html#bkVerb	LytBlockKind.bkVerb	
+bkEmpty	text_layouter.html#bkEmpty	LytBlockKind.bkEmpty	
+LytBlockKind	text_layouter.html#LytBlockKind	text_layouter: LytBlockKind	
+LytStr	text_layouter.html#LytStr	text_layouter: LytStr	
+LytStrSpan	text_layouter.html#LytStrSpan	text_layouter: LytStrSpan	
+LytBlock	text_layouter.html#LytBlock	text_layouter: LytBlock	
+LytOptions	text_layouter.html#LytOptions	text_layouter: LytOptions	
+OutConsole	text_layouter.html#OutConsole	text_layouter: OutConsole	
+LytSpacesId	text_layouter.html#LytSpacesId	text_layouter: LytSpacesId	
+EmptyLytStr	text_layouter.html#EmptyLytStr	text_layouter: EmptyLytStr	
+isSpaces	text_layouter.html#isSpaces,LytStr	text_layouter: isSpaces(s: LytStr): bool	
+isEmpty	text_layouter.html#isEmpty,LytStr	text_layouter: isEmpty(s: LytStr): bool	
+lytStrIdx	text_layouter.html#lytStrIdx,int,int	text_layouter: lytStrIdx(idx: int; len: int): LytStr	
+lytStrSpan	text_layouter.html#lytStrSpan,LytStr	text_layouter: lytStrSpan(str: LytStr): LytStrSpan	
+lytStrSpan	text_layouter.html#lytStrSpan,openArray[LytStr]	text_layouter: lytStrSpan(strs: openArray[LytStr]): LytStrSpan	
+treeRepr	text_layouter.html#treeRepr,Layout,proc(LytStr),int	text_layouter: treeRepr(self: Layout; getStr: proc (s: LytStr): string = nil; level: int = 0): string	
+treeRepr	text_layouter.html#treeRepr,LytSolution,proc(LytStr),int	text_layouter: treeRepr(self: LytSolution; getStr: proc (s: LytStr): string = nil;\n         level: int = 0): string	
+`$`	text_layouter.html#$,LayoutElement	text_layouter: `$`(le: LayoutElement): string	
+`$`	text_layouter.html#$,LytSolution	text_layouter: `$`(sln: LytSolution): string	
+`$`	text_layouter.html#$,Option[LytSolution]	text_layouter: `$`(sln: Option[LytSolution]): string	
+`$`	text_layouter.html#$,LytBlock	text_layouter: `$`(blc: LytBlock): string	
+treeRepr	text_layouter.html#treeRepr,LytBlock,proc(LytStr)	text_layouter: treeRepr(inBl: LytBlock; getStr: proc (str: LytStr): string = nil): string	
+len	text_layouter.html#len,LytBlock	text_layouter: len(blc: LytBlock): int	
+`[]`	text_layouter.html#[],LytBlock,int	text_layouter: `[]`(blc: LytBlock; idx: int): LytBlock	
+`[]`	text_layouter.html#[],LytBlock,int_2	text_layouter: `[]`(blc: var LytBlock; idx: int): var LytBlock	
+items	text_layouter.html#items.i,LytBlock	text_layouter: items(blc: LytBlock): LytBlock	
+pairs	text_layouter.html#pairs.i,LytBlock	text_layouter: pairs(blc: LytBlock): (int, LytBlock)	
+mitems	text_layouter.html#mitems.i,LytBlock	text_layouter: mitems(blc: var LytBlock): var LytBlock	
+mpairs	text_layouter.html#mpairs.i,LytBlock	text_layouter: mpairs(blc: var LytBlock): (int, var LytBlock)	
+initBlock	text_layouter.html#initBlock,LytBlockKind,int	text_layouter: initBlock(kind: LytBlockKind; breakMult: int = 1): LytBlock	
+initEmptyBlock	text_layouter.html#initEmptyBlock	text_layouter: initEmptyBlock(): LytBlock	
+filterEmpty	text_layouter.html#filterEmpty,openArray[LytBlock]	text_layouter: filterEmpty(blocks: openArray[LytBlock]): seq[LytBlock]	
+initTextBlock	text_layouter.html#initTextBlock,LytStrSpan,int,bool	text_layouter: initTextBlock(text: LytStrSpan; breakMult: int = 1; breaking: bool = false): LytBlock	
+initTextBlock	text_layouter.html#initTextBlock,LytStr,int,bool	text_layouter: initTextBlock(text: LytStr; breakMult: int = 1; breaking: bool = false): LytBlock	
+isEmpty	text_layouter.html#isEmpty,LytBlock	text_layouter: isEmpty(bl: LytBlock): bool	
+findSingle	text_layouter.html#findSingle.t,typed,typed	text_layouter: findSingle(elems: typed; targetKind: typed): untyped	
+convertBlock	text_layouter.html#convertBlock,LytBlock,LytBlockKind	text_layouter: convertBlock(bk: LytBlock; newKind: LytBlockKind): LytBlock	
+flatten	text_layouter.html#flatten,LytBlock,set[LytBlockKind]	text_layouter: flatten(bl: LytBlock; kind: set[LytBlockKind]): LytBlock	
+initChoiceBlock	text_layouter.html#initChoiceBlock,openArray[LytBlock],int	text_layouter: initChoiceBlock(elems: openArray[LytBlock]; breakMult: int = 1): LytBlock	
+initLineBlock	text_layouter.html#initLineBlock,openArray[LytBlock],int	text_layouter: initLineBlock(elems: openArray[LytBlock]; breakMult: int = 1): LytBlock	
+initIndentBlock	text_layouter.html#initIndentBlock,LytBlock,int,int	text_layouter: initIndentBlock(blc: LytBlock; indent: int; breakMult: int = 1): LytBlock	
+initStackBlock	text_layouter.html#initStackBlock,openArray[LytBlock],int	text_layouter: initStackBlock(elems: openArray[LytBlock]; breakMult: int = 1): LytBlock	
+initWrapBlock	text_layouter.html#initWrapBlock,openArray[LytBlock],LytStr,int	text_layouter: initWrapBlock(elems: openArray[LytBlock]; sep: LytStr; breakMult: int = 1): LytBlock	
+initVerbBlock	text_layouter.html#initVerbBlock,openArray[LytStrSpan],bool,bool,int	text_layouter: initVerbBlock(textLines: openArray[LytStrSpan]; breaking: bool = true;\n              firstNl: bool = false; breakMult: int = 1): LytBlock	
+add	text_layouter.html#add,LytBlock,varargs[LytBlock]	text_layouter: add(target: var LytBlock; other: varargs[LytBlock])	
+initSeparated	text_layouter.html#initSeparated,seq[LytBlock],bool,LytBlock	text_layouter: initSeparated(blocks: seq[LytBlock]; vertical: bool; sep: LytBlock): LytBlock	
+initVSeparated	text_layouter.html#initVSeparated,seq[LytBlock],LytBlock	text_layouter: initVSeparated(blocks: seq[LytBlock]; sep: LytBlock): LytBlock	
+initHSeparated	text_layouter.html#initHSeparated,seq[LytBlock],LytBlock	text_layouter: initHSeparated(blocks: seq[LytBlock]; sep: LytBlock): LytBlock	
+doOptLayout	text_layouter.html#doOptLayout,LytBlock,Option[LytSolution],LytOptions	text_layouter: doOptLayout(self: var LytBlock; rest: var Option[LytSolution]; opts: LytOptions): Option[\n    LytSolution]	
+initLytOptions	text_layouter.html#initLytOptions	text_layouter: initLytOptions(): LytOptions	
+join	text_layouter.html#join,LytBlock,LytBlock,bool	text_layouter: join(blocks: LytBlock; sep: LytBlock; vertLines: bool = true): LytBlock	
+join	text_layouter.html#join,seq[LytBlock],LytBlock,LytBlockKind	text_layouter: join(blocks: seq[LytBlock]; sep: LytBlock; direction: LytBlockKind): LytBlock	
+addItBlock	text_layouter.html#addItBlock.t,LytBlock,typed,untyped,LytBlock	text_layouter: addItBlock(res: LytBlock; item: typed; expr: untyped; join: LytBlock): untyped	
+joinItBlock	text_layouter.html#joinItBlock.t,LytBlockKind,typed,untyped,LytBlock	text_layouter: joinItBlock(direction: LytBlockKind; item: typed; expr: untyped; join: LytBlock): untyped	
+joinItLine	text_layouter.html#joinItLine.t,typed,untyped,LytBlock	text_layouter: joinItLine(item: typed; expr: untyped; join: LytBlock): untyped	
+expectValid	text_layouter.html#expectValid,LytBlock,string	text_layouter: expectValid(bl: LytBlock; msg: string = &quot;&quot;)	
+toLayouts	text_layouter.html#toLayouts,LytBlock,LytOptions	text_layouter: toLayouts(bl: LytBlock; opts: LytOptions): seq[Layout]	
+toLayout	text_layouter.html#toLayout,LytBlock,LytOptions	text_layouter: toLayout(bl: LytBlock; opts: LytOptions): Layout	
+formatEvents	text_layouter.html#formatEvents.i,Layout	text_layouter: formatEvents(lyt: Layout): LytEvent	
+lytSpaces	text_layouter.html#lytSpaces,int	text_layouter: lytSpaces(count: int = 1): LytStr	
+alignLeft	text_layouter.html#alignLeft,sinkLytStrSpan,int	text_layouter: alignLeft(span: sink LytStrSpan; target: int): LytStrSpan	
+lAlignLeft	text_layouter.html#lAlignLeft	LytAlignDirection.lAlignLeft	
+lAlignRight	text_layouter.html#lAlignRight	LytAlignDirection.lAlignRight	
+lAlignCenter	text_layouter.html#lAlignCenter	LytAlignDirection.lAlignCenter	
+LytAlignDirection	text_layouter.html#LytAlignDirection	text_layouter: LytAlignDirection	
+initAlignedGrid	text_layouter.html#initAlignedGrid,seq[seq[LytBlock]],openArray[tuple[int,int,LytAlignDirection]]	text_layouter: initAlignedGrid(blocks: seq[seq[LytBlock]]; aligns: openArray[\n    tuple[leftPad, rightPad: int, direction: LytAlignDirection]]): LytBlock	
+initAlignedGrid	text_layouter.html#initAlignedGrid,seq[seq[LytBlock]],openArray[LytAlignDirection]	text_layouter: initAlignedGrid(blocks: seq[seq[LytBlock]]; aligns: openArray[LytAlignDirection]): LytBlock	
+initBlockFormatDSL	text_layouter.html#initBlockFormatDSL.t	text_layouter: initBlockFormatDSL()	

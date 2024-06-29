@@ -1,0 +1,25 @@
+BackendConfig	backend/backends.html#BackendConfig	backends: BackendConfig	
+DiscoveryData	backend/backends.html#DiscoveryData	backends: DiscoveryData	
+bekDiscovered	backend/backends.html#bekDiscovered	BackendEventKind.bekDiscovered	
+bekModule	backend/backends.html#bekModule	BackendEventKind.bekModule	
+bekConstant	backend/backends.html#bekConstant	BackendEventKind.bekConstant	
+bekPartial	backend/backends.html#bekPartial	BackendEventKind.bekPartial	
+bekProcedure	backend/backends.html#bekProcedure	BackendEventKind.bekProcedure	
+bekImported	backend/backends.html#bekImported	BackendEventKind.bekImported	
+BackendEventKind	backend/backends.html#BackendEventKind	backends: BackendEventKind	
+BackendEvent	backend/backends.html#BackendEvent	backends: BackendEvent	
+moduleId	backend/backends.html#moduleId,PIdObj	backends: moduleId(o: PIdObj): int32	
+generateMain	backend/backends.html#generateMain,ModuleGraph,ModuleList,PNode	backends: generateMain(graph: ModuleGraph; modules: ModuleList; result: PNode)	
+generateTeardown	backend/backends.html#generateTeardown,ModuleGraph,ModuleList,PNode	backends: generateTeardown(graph: ModuleGraph; modules: ModuleList; result: PNode)	
+generateThreadTeardown	backend/backends.html#generateThreadTeardown,ModuleGraph,ModuleList,PNode	backends: generateThreadTeardown(graph: ModuleGraph; modules: ModuleList; result: PNode)	
+generateMainProcedure	backend/backends.html#generateMainProcedure,ModuleGraph,IdGenerator,ModuleList	backends: generateMainProcedure(graph: ModuleGraph; idgen: IdGenerator;\n                      modules: ModuleList): PSym	
+isEmpty	backend/backends.html#isEmpty,MirTree	backends: isEmpty(tree: MirTree): bool	
+isEmpty	backend/backends.html#isEmpty,MirBody	backends: isEmpty(f: MirBody): bool	
+deps	backend/backends.html#deps.i,MirTree	backends: deps(tree: MirTree): lent MirNode	
+preprocess	backend/backends.html#preprocess,WorkQueue,ModuleGraph,IdGenerator,MirEnv,ProcedureId,FileIndex	backends: preprocess(queue: var WorkQueue; graph: ModuleGraph; idgen: IdGenerator;\n           env: MirEnv; id: ProcedureId; module: FileIndex)	
+translate	backend/backends.html#translate,ProcedureId,PNode,ModuleGraph,BackendConfig,IdGenerator,MirEnv	backends: translate(id: ProcedureId; body: PNode; graph: ModuleGraph;\n          config: BackendConfig; idgen: IdGenerator; env: var MirEnv): MirBody	
+generateIR	backend/backends.html#generateIR,ModuleGraph,IdGenerator,MirEnv,PSym,sinkMirBody	backends: generateIR(graph: ModuleGraph; idgen: IdGenerator; env: var MirEnv; owner: PSym;\n           body: sink MirBody): Body	
+discoverFrom	backend/backends.html#discoverFrom,MirEnv,PNode	backends: discoverFrom(env: var MirEnv; decl: PNode)	
+process	backend/backends.html#process.i,ModuleGraph,ModuleList,MirEnv,DiscoveryData,BackendConfig	backends: process(graph: ModuleGraph; modules: var ModuleList; env: var MirEnv;\n        discovery: var DiscoveryData; conf: BackendConfig): BackendEvent	
+setModuleOverride	backend/backends.html#setModuleOverride,DiscoveryData,ProcedureId,FileIndex	backends: setModuleOverride(discovery: var DiscoveryData; id: ProcedureId;\n                  module: FileIndex)	
+discover	backend/backends.html#discover.i,MirEnv,EnvCheckpoint	backends: discover(env: var MirEnv; progress: EnvCheckpoint): tuple[s: PSym, n: MirNode]	

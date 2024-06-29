@@ -1,0 +1,22 @@
+TypeEnv	mir/mirtypes.html#TypeEnv	mirtypes: TypeEnv	
+VoidType	mir/mirtypes.html#VoidType	mirtypes: VoidType	
+BoolType	mir/mirtypes.html#BoolType	mirtypes: BoolType	
+CharType	mir/mirtypes.html#CharType	mirtypes: CharType	
+Int8Type	mir/mirtypes.html#Int8Type	mirtypes: Int8Type	
+Int16Type	mir/mirtypes.html#Int16Type	mirtypes: Int16Type	
+Int32Type	mir/mirtypes.html#Int32Type	mirtypes: Int32Type	
+Int64Type	mir/mirtypes.html#Int64Type	mirtypes: Int64Type	
+UInt8Type	mir/mirtypes.html#UInt8Type	mirtypes: UInt8Type	
+UInt16Type	mir/mirtypes.html#UInt16Type	mirtypes: UInt16Type	
+UInt32Type	mir/mirtypes.html#UInt32Type	mirtypes: UInt32Type	
+UInt64Type	mir/mirtypes.html#UInt64Type	mirtypes: UInt64Type	
+Float32Type	mir/mirtypes.html#Float32Type	mirtypes: Float32Type	
+Float64Type	mir/mirtypes.html#Float64Type	mirtypes: Float64Type	
+StringType	mir/mirtypes.html#StringType	mirtypes: StringType	
+CstringType	mir/mirtypes.html#CstringType	mirtypes: CstringType	
+PointerType	mir/mirtypes.html#PointerType	mirtypes: PointerType	
+initTypeEnv	mir/mirtypes.html#initTypeEnv,ModuleGraph	mirtypes: initTypeEnv(graph: ModuleGraph): TypeEnv	
+add	mir/mirtypes.html#add,TypeEnv,PType	mirtypes: add(env: var TypeEnv; t: PType): TypeId	
+`[]`	mir/mirtypes.html#[],TypeEnv,TypeId	mirtypes: `[]`(env: TypeEnv; id: TypeId): lent PType	
+sizeType	mir/mirtypes.html#sizeType,TypeEnv	mirtypes: sizeType(env: TypeEnv): TypeId	
+usizeType	mir/mirtypes.html#usizeType,TypeEnv	mirtypes: usizeType(env: TypeEnv): TypeId	

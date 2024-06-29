@@ -1,0 +1,14 @@
+vtrUnrelated	vm/vmtypes.html#vtrUnrelated	VmTypeRel.vtrUnrelated	
+vtrSame	vm/vmtypes.html#vtrSame	VmTypeRel.vtrSame	
+vtrSub	vm/vmtypes.html#vtrSub	VmTypeRel.vtrSub	
+vtrSuper	vm/vmtypes.html#vtrSuper	VmTypeRel.vtrSuper	
+VmTypeRel	vm/vmtypes.html#VmTypeRel	vmtypes: VmTypeRel	
+elemType	vm/vmtypes.html#elemType,PVmType	vmtypes: elemType(typ: PVmType): PVmType	
+alignedSize	vm/vmtypes.html#alignedSize,PVmType	vmtypes: alignedSize(t: PVmType): uint	
+totalFieldCount	vm/vmtypes.html#totalFieldCount,PVmType	vmtypes: totalFieldCount(t: PVmType): int	
+toFieldPos	vm/vmtypes.html#toFieldPos,PVmType,FieldIndex	vmtypes: toFieldPos(t: PVmType; i: FieldIndex): FieldPosition	
+toFieldIndex	vm/vmtypes.html#toFieldIndex,PVmType,FieldPosition	vmtypes: toFieldIndex(t: PVmType; p: FieldPosition): FieldIndex	
+getFieldAndOwner	vm/vmtypes.html#getFieldAndOwner,PVmType,FieldPosition	vmtypes: getFieldAndOwner(t: PVmType; p: FieldPosition): (PVmType, FieldIndex)	
+findDiscrBranchEntry	vm/vmtypes.html#findDiscrBranchEntry,PVmType,FieldIndex	vmtypes: findDiscrBranchEntry(t: PVmType; idx: FieldIndex): uint32	
+objTypeRel	vm/vmtypes.html#objTypeRel,PVmType,PVmType,bool	vmtypes: objTypeRel(a, b: PVmType; swapped: bool): VmTypeRel	
+getTypeRel	vm/vmtypes.html#getTypeRel,PVmType,PVmType	vmtypes: getTypeRel(a, b: PVmType): VmTypeRel	

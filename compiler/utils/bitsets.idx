@@ -1,0 +1,15 @@
+TBitSet	utils/bitsets.html#TBitSet	bitsets: TBitSet	
+TBitSetView	utils/bitsets.html#TBitSetView	bitsets: TBitSetView	
+ElemSize	utils/bitsets.html#ElemSize	bitsets: ElemSize	
+bitSetIn	utils/bitsets.html#bitSetIn,TBitSetView,BiggestInt	bitsets: bitSetIn(x: TBitSetView; e: BiggestInt): bool	
+bitSetIncl	utils/bitsets.html#bitSetIncl,TBitSetView,BiggestInt	bitsets: bitSetIncl(x: var TBitSetView; elem: BiggestInt)	
+bitSetExcl	utils/bitsets.html#bitSetExcl,TBitSetView,BiggestInt	bitsets: bitSetExcl(x: var TBitSetView; elem: BiggestInt)	
+bitSetInclRange	utils/bitsets.html#bitSetInclRange,TBitSetView,Slice[BiggestInt]	bitsets: bitSetInclRange(x: var TBitSetView; s: Slice[BiggestInt])	
+bitSetInit	utils/bitsets.html#bitSetInit,TBitSet,int	bitsets: bitSetInit(b: var TBitSet; length: int)	
+bitSetUnion	utils/bitsets.html#bitSetUnion,TBitSetView,TBitSetView	bitsets: bitSetUnion(x: var TBitSetView; y: TBitSetView)	
+bitSetDiff	utils/bitsets.html#bitSetDiff,TBitSetView,TBitSetView	bitsets: bitSetDiff(x: var TBitSetView; y: TBitSetView)	
+bitSetSymDiff	utils/bitsets.html#bitSetSymDiff,TBitSetView,TBitSetView	bitsets: bitSetSymDiff(x: var TBitSetView; y: TBitSetView)	
+bitSetIntersect	utils/bitsets.html#bitSetIntersect,TBitSetView,TBitSetView	bitsets: bitSetIntersect(x: var TBitSetView; y: TBitSetView)	
+bitSetEquals	utils/bitsets.html#bitSetEquals,TBitSetView,TBitSetView	bitsets: bitSetEquals(x, y: TBitSetView): bool	
+bitSetContains	utils/bitsets.html#bitSetContains,TBitSetView,TBitSetView	bitsets: bitSetContains(x, y: TBitSetView): bool	
+bitSetCard	utils/bitsets.html#bitSetCard,TBitSetView	bitsets: bitSetCard(x: TBitSetView): BiggestInt	

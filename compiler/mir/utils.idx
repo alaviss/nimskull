@@ -1,0 +1,4 @@
+treeRepr	mir/utils.html#treeRepr,MirTree	utils: treeRepr(tree: MirTree; pos = NodePosition(0)): string	
+exprToStr	mir/utils.html#exprToStr,MirTree,NodePosition,ptr.MirEnv,ptr.MirBody	utils: exprToStr(tree: MirTree; n: NodePosition; env: ptr MirEnv = nil;\n          body: ptr MirBody = nil): string	
+stmtToStr	mir/utils.html#stmtToStr,MirTree,NodePosition,ptr.MirEnv,ptr.MirBody	utils: stmtToStr(tree: MirTree; n: NodePosition; env: ptr MirEnv = nil;\n          body: ptr MirBody = nil): string	
+render	mir/utils.html#render,MirTree,ptr.MirEnv,ptr.MirBody	utils: render(tree: MirTree; env: ptr MirEnv = nil; body: ptr MirBody = nil): string	

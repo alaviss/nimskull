@@ -1,0 +1,68 @@
+Value	mir/mirconstr.html#Value	mirconstr: Value	
+Fragment	mir/mirconstr.html#Fragment	mirconstr: Fragment	
+Context	mir/mirconstr.html#Context	mirconstr: Context	
+MirBuilder	mir/mirconstr.html#MirBuilder	mirconstr: MirBuilder	
+typ	mir/mirconstr.html#typ,Value	mirconstr: typ(val: Value): TypeId	
+procNode	mir/mirconstr.html#procNode,ProcedureId	mirconstr: procNode(id: ProcedureId): MirNode	
+typeLit	mir/mirconstr.html#typeLit,TypeId	mirconstr: typeLit(t: TypeId): Value	
+literal	mir/mirconstr.html#literal,range[],NumberId,TypeId	mirconstr: literal(kind: range[mnkIntLit .. mnkFloatLit]; n: NumberId; typ: TypeId): Value	
+literal	mir/mirconstr.html#literal,StringId,TypeId	mirconstr: literal(str: StringId; typ: TypeId): Value	
+literal	mir/mirconstr.html#literal,AstId,TypeId	mirconstr: literal(ast: AstId; typ: TypeId): Value	
+temp	mir/mirconstr.html#temp,TypeId,LocalId	mirconstr: temp(typ: TypeId; id: LocalId): Value	
+alias	mir/mirconstr.html#alias,TypeId,LocalId	mirconstr: alias(typ: TypeId; id: LocalId): Value	
+toValue	mir/mirconstr.html#toValue,ConstId,TypeId	mirconstr: toValue(id: ConstId; typ: TypeId): Value	
+toValue	mir/mirconstr.html#toValue,GlobalId,TypeId	mirconstr: toValue(id: GlobalId; typ: TypeId): Value	
+toValue	mir/mirconstr.html#toValue,ProcedureId,TypeId	mirconstr: toValue(id: ProcedureId; typ: TypeId): Value	
+toValue	mir/mirconstr.html#toValue,range[],LocalId,TypeId	mirconstr: toValue(kind: range[mnkParam .. mnkLocal]; id: LocalId; typ: TypeId): Value	
+len	mir/mirconstr.html#len,MirBuffer	mirconstr: len(b: MirBuffer): int	
+hasUnassigned	mir/mirconstr.html#hasUnassigned,MirBuilder	mirconstr: hasUnassigned(bu: MirBuilder): bool	
+staging	mir/mirconstr.html#staging,MirBuilder	mirconstr: staging(bu: var MirBuilder): var MirNodeSeq	
+len	mir/mirconstr.html#len,Fragment	mirconstr: len(f: Fragment): int	
+popSingle	mir/mirconstr.html#popSingle,MirBuilder,Fragment	mirconstr: popSingle(bu: var MirBuilder; f: Fragment): Value	
+push	mir/mirconstr.html#push.t,MirBuilder,untyped	mirconstr: push(bu: var MirBuilder; body: untyped): Fragment	
+pop	mir/mirconstr.html#pop,MirBuilder,Fragment	mirconstr: pop(bu: var MirBuilder; f: Fragment)	
+withFront	mir/mirconstr.html#withFront.t,MirBuilder,untyped	mirconstr: withFront(bu: var MirBuilder; body: untyped)	
+buildStmt	mir/mirconstr.html#buildStmt.t,MirBuilder,untyped	mirconstr: buildStmt(bu: var MirBuilder; body: untyped)	
+buildIf	mir/mirconstr.html#buildIf.t,MirBuilder,untyped,untyped	mirconstr: buildIf(bu: var MirBuilder; cond, body: untyped)	
+buildStmt	mir/mirconstr.html#buildStmt.t,MirBuilder,MirNodeKind,untyped	mirconstr: buildStmt(bu: var MirBuilder; k: MirNodeKind; body: untyped)	
+pos	mir/mirconstr.html#pos.t,Fragment	mirconstr: pos(f: Fragment): NodePosition	
+initBuilder	mir/mirconstr.html#initBuilder,SourceId,sinkMirNodeSeq	mirconstr: initBuilder(id: SourceId; buf: sink MirNodeSeq = @[]): MirBuilder	
+setSource	mir/mirconstr.html#setSource,MirBuilder,SourceId	mirconstr: setSource(bu: var MirBuilder; id: SourceId)	
+addLocal	mir/mirconstr.html#addLocal,MirBuilder,sinkLocal	mirconstr: addLocal(bu: var MirBuilder; data: sink Local): LocalId	
+add	mir/mirconstr.html#add,MirBuilder,sinkMirNode	mirconstr: add(bu: var MirBuilder; n: sink MirNode)	
+add	mir/mirconstr.html#add,MirBuilder,SourceId,sinkMirNode	mirconstr: add(bu: var MirBuilder; id: SourceId; n: sink MirNode)	
+emitFrom	mir/mirconstr.html#emitFrom,MirBuilder,MirTree,NodePosition	mirconstr: emitFrom(bu: var MirBuilder; tree: MirTree; n: NodePosition)	
+start	mir/mirconstr.html#start,MirBuilder,sinkMirNode	mirconstr: start(bu: var MirBuilder; n: sink MirNode): Context	
+finish	mir/mirconstr.html#finish,MirBuilder,Context	mirconstr: finish(bu: var MirBuilder; saved: Context)	
+subTree	mir/mirconstr.html#subTree.t,MirBuilder,MirNode,untyped	mirconstr: subTree(bu: var MirBuilder; n: MirNode; body: untyped)	
+subTree	mir/mirconstr.html#subTree.t,MirBuilder,MirNodeKind,untyped	mirconstr: subTree(bu: var MirBuilder; k: MirNodeKind; body: untyped)	
+stmtList	mir/mirconstr.html#stmtList.t,MirBuilder,untyped	mirconstr: stmtList(bu: var MirBuilder; body: untyped)	
+scope	mir/mirconstr.html#scope.t,MirBuilder,untyped	mirconstr: scope(bu: var MirBuilder; body: untyped)	
+allocTemp	mir/mirconstr.html#allocTemp.t,MirBuilder,TypeId	mirconstr: allocTemp(bu: var MirBuilder; t: TypeId; alias = false): Value	
+allocLabel	mir/mirconstr.html#allocLabel,MirBuilder	mirconstr: allocLabel(bu: var MirBuilder): LabelId	
+use	mir/mirconstr.html#use,MirBuilder,sinkValue	mirconstr: use(bu: var MirBuilder; val: sink Value)	
+wrapTemp	mir/mirconstr.html#wrapTemp.t,MirBuilder,TypeId,untyped	mirconstr: wrapTemp(bu: var MirBuilder; t: TypeId; body: untyped): Value	
+wrapAlias	mir/mirconstr.html#wrapAlias.t,MirBuilder,TypeId,untyped	mirconstr: wrapAlias(bu: var MirBuilder; t: TypeId; body: untyped): Value	
+wrapMutAlias	mir/mirconstr.html#wrapMutAlias.t,MirBuilder,TypeId,untyped	mirconstr: wrapMutAlias(bu: var MirBuilder; t: TypeId; body: untyped): Value	
+rawBuildCall	mir/mirconstr.html#rawBuildCall.t,MirBuilder,MirNodeKind,TypeId,bool,untyped	mirconstr: rawBuildCall(bu: var MirBuilder; k: MirNodeKind; t: TypeId; sideEffects: bool;\n             body: untyped)	
+buildMagicCall	mir/mirconstr.html#buildMagicCall.t,MirBuilder,TMagic,TypeId,untyped	mirconstr: buildMagicCall(bu: var MirBuilder; m: TMagic; t: TypeId; body: untyped)	
+buildCall	mir/mirconstr.html#buildCall.t,MirBuilder,ProcedureId,TypeId,untyped	mirconstr: buildCall(bu: var MirBuilder; prc: ProcedureId; t: TypeId; body: untyped)	
+emitByVal	mir/mirconstr.html#emitByVal,MirBuilder,Value	mirconstr: emitByVal(bu: var MirBuilder; y: Value)	
+emitByName	mir/mirconstr.html#emitByName.t,MirBuilder,EffectKind,untyped	mirconstr: emitByName(bu: var MirBuilder; e: EffectKind; body: untyped)	
+emitByName	mir/mirconstr.html#emitByName,MirBuilder,Value,EffectKind	mirconstr: emitByName(bu: var MirBuilder; val: Value; e: EffectKind)	
+move	mir/mirconstr.html#move,MirBuilder,Value	mirconstr: move(bu: var MirBuilder; val: Value)	
+asgn	mir/mirconstr.html#asgn,MirBuilder,Value,Value	mirconstr: asgn(buf: var MirBuilder; a, b: Value)	
+asgnMove	mir/mirconstr.html#asgnMove,MirBuilder,Value,Value	mirconstr: asgnMove(bu: var MirBuilder; a, b: Value)	
+join	mir/mirconstr.html#join,MirBuilder,LabelId	mirconstr: join(bu: var MirBuilder; label: LabelId)	
+goto	mir/mirconstr.html#goto,MirBuilder,LabelId	mirconstr: goto(bu: var MirBuilder; label: LabelId)	
+pathNamed	mir/mirconstr.html#pathNamed.t,MirBuilder,TypeId,int32,untyped	mirconstr: pathNamed(bu: var MirBuilder; t: TypeId; f: int32; body: untyped)	
+pathVariant	mir/mirconstr.html#pathVariant.t,MirBuilder,TypeId,int32,untyped	mirconstr: pathVariant(bu: var MirBuilder; t: TypeId; f: int32; body: untyped)	
+pathPos	mir/mirconstr.html#pathPos.t,MirBuilder,TypeId,uint32,untyped	mirconstr: pathPos(bu: var MirBuilder; t: TypeId; p: uint32; body: untyped)	
+buildBlock	mir/mirconstr.html#buildBlock.t,MirBuilder,LabelId,untyped	mirconstr: buildBlock(bu: var MirBuilder; id: LabelId; body: untyped)	
+inline	mir/mirconstr.html#inline,MirBuilder,MirTree,NodePosition	mirconstr: inline(bu: var MirBuilder; tree: MirTree; fr: NodePosition): Value	
+bindImmutable	mir/mirconstr.html#bindImmutable,MirBuilder,MirTree,NodePosition	mirconstr: bindImmutable(bu: var MirBuilder; tree: MirTree; lval: NodePosition): Value	
+bindMut	mir/mirconstr.html#bindMut,MirBuilder,MirTree,NodePosition	mirconstr: bindMut(bu: var MirBuilder; tree: MirTree; lval: NodePosition): Value	
+materialize	mir/mirconstr.html#materialize,MirBuilder,Value	mirconstr: materialize(bu: var MirBuilder; loc: Value): Value	
+materializeMove	mir/mirconstr.html#materializeMove,MirBuilder,Value	mirconstr: materializeMove(bu: var MirBuilder; loc: Value): Value	
+finish	mir/mirconstr.html#finish,sinkMirBuilder	mirconstr: finish(bu: sink MirBuilder): auto	
+finish	mir/mirconstr.html#finish,sinkMirBuilder,sinkStore[LocalId,Local]	mirconstr: finish(bu: sink MirBuilder; locals: sink Store[LocalId, Local]): auto	

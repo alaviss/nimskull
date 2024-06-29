@@ -1,0 +1,15 @@
+lastSon	backend/compat.html#lastSon,CgNode	compat: lastSon(n: CgNode): CgNode	
+skipConv	backend/compat.html#skipConv,CgNode	compat: skipConv(n: CgNode): CgNode	
+getInt	backend/compat.html#getInt,CgNode	compat: getInt(n: CgNode): Int128	
+getOrdValue	backend/compat.html#getOrdValue,CgNode	compat: getOrdValue(n: CgNode): Int128	
+getCalleeMagic	backend/compat.html#getCalleeMagic,MirEnv,CgNode	compat: getCalleeMagic(env: MirEnv; callee: CgNode): TMagic	
+getMagic	backend/compat.html#getMagic,MirEnv,CgNode	compat: getMagic(env: MirEnv; op: CgNode): TMagic	
+isDiscriminantField	backend/compat.html#isDiscriminantField,CgNode	compat: isDiscriminantField(n: CgNode): bool	
+isOfBranch	backend/compat.html#isOfBranch,CgNode	compat: isOfBranch(n: CgNode): bool	
+isDeepConstExpr	backend/compat.html#isDeepConstExpr,CgNode	compat: isDeepConstExpr(n: CgNode): bool	
+toBitSet	backend/compat.html#toBitSet,ConfigRef,CgNode	compat: toBitSet(conf: ConfigRef; s: CgNode): TBitSet	
+newSymNode	backend/compat.html#newSymNode,MirEnv,PSym	compat: newSymNode(env: MirEnv; s: PSym): CgNode	
+translate	backend/compat.html#translate,MirTree,MirEnv	compat: translate(t: MirTree; env: MirEnv): CgNode	
+pick	backend/compat.html#pick,CgNode,T,T	compat: pick[T](n: CgNode; forInt, forFloat: T): T	
+numArgs	backend/compat.html#numArgs,CgNode	compat: numArgs(n: CgNode): int	
+callLen	backend/compat.html#callLen,CgNode	compat: callLen(n: CgNode): int	

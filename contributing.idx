@@ -1,0 +1,32 @@
+Contributing	contributing.html
+Getting Started	contributing.html#getting-started	 Getting Started	
+Change Approval	contributing.html#change-approval	 Change Approval	
+Anatomy of a Pull Request	contributing.html#anatomy-of-a-pull-request	 Anatomy of a Pull Request	
+Commit Message	contributing.html#anatomy-of-a-pull-request-commit-message	  Commit Message	
+How to Write a Good Commit Message	contributing.html#commit-message-how-to-write-a-good-commit-message	   How to Write a Good Commit Message	
+Is my Commit Message is Acceptable?	contributing.html#commit-message-is-my-commit-message-is-acceptableqmark	   Is my Commit Message is Acceptable?	
+Getting Fancy with Commit Messages	contributing.html#commit-message-getting-fancy-with-commit-messages	   Getting Fancy with Commit Messages	
+What to Avoid	contributing.html#commit-message-what-to-avoid	   What to Avoid	
+Additional considerations	contributing.html#commit-message-additional-considerations	   Additional considerations	
+Continuous Integration (CI)	contributing.html#anatomy-of-a-pull-request-continuous-integration-ci	  Continuous Integration (CI)	
+Debugging CI failures, flaky tests, etc	contributing.html#continuous-integration-ci-debugging-ci-failures-flaky-tests-etc	   Debugging CI failures, flaky tests, etc	
+Change Specific Guidance	contributing.html#change-specific-guidance	 Change Specific Guidance	
+&quot;Breaking&quot; Changes	contributing.html#change-specific-guidance-breaking-changes	  &quot;Breaking&quot; Changes	
+Compiler/language spec bugfixes	contributing.html#change-specific-guidance-compilerslashlanguage-spec-bugfixes	  Compiler/language spec bugfixes	
+Evolving the stdlib	contributing.html#change-specific-guidance-evolving-the-stdlib	  Evolving the stdlib	
+Testing	contributing.html#testing	 Testing	
+Writing Tests	contributing.html#testing-writing-tests	  Writing Tests	
+Running Tests	contributing.html#testing-running-tests	  Running Tests	
+Comparing tests	contributing.html#testing-comparing-tests	  Comparing tests	
+Useful Test Patterns	contributing.html#testing-useful-test-patterns	  Useful Test Patterns	
+Documenting	contributing.html#documenting	 Documenting	
+General Guidelines	contributing.html#documenting-general-guidelines	  General Guidelines	
+Documentation Style Guidelines	contributing.html#documenting-documentation-style-guidelines	  Documentation Style Guidelines	
+Module-level documentation	contributing.html#documentation-style-guidelines-moduleminuslevel-documentation	   Module-level documentation	
+Procs, Templates, Macros, Converters, and Iterators	contributing.html#documentation-style-guidelines-procs-templates-macros-converters-and-iterators	   Procs, Templates, Macros, Converters, and Iterators	
+Types	contributing.html#documentation-style-guidelines-types	   Types	
+Var, Let, and Const	contributing.html#documentation-style-guidelines-var-let-and-const	   Var, Let, and Const	
+Starter Contribution Areas	contributing.html#starter-contribution-areas	 Starter Contribution Areas	
+Writing or improving tests	contributing.html#starter-contribution-areas-writing-or-improving-tests	  Writing or improving tests	
+Improving Language specification	contributing.html#starter-contribution-areas-improving-language-specification	  Improving Language specification	
+Cleaning up Existing Tests	contributing.html#starter-contribution-areas-cleaning-up-existing-tests	  Cleaning up Existing Tests	

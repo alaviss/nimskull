@@ -1,0 +1,31 @@
+nonAtomicType	atomics.html#nonAtomicType.t,typedesc[Trivial]	atomics: nonAtomicType(T: typedesc[Trivial]): untyped	
+MemoryOrder	atomics.html#MemoryOrder	atomics: MemoryOrder	
+AtomicFlag	atomics.html#AtomicFlag	atomics: AtomicFlag	
+Atomic	atomics.html#Atomic	atomics: Atomic	
+testAndSet	atomics.html#testAndSet,AtomicFlag,MemoryOrder	atomics: testAndSet(location: var AtomicFlag;\n           order: MemoryOrder = moSequentiallyConsistent): bool	
+clear	atomics.html#clear,AtomicFlag,MemoryOrder	atomics: clear(location: var AtomicFlag; order: MemoryOrder = moSequentiallyConsistent)	
+fence	atomics.html#fence,MemoryOrder	atomics: fence(order: MemoryOrder)	
+signalFence	atomics.html#signalFence,MemoryOrder	atomics: signalFence(order: MemoryOrder)	
+load	atomics.html#load,Atomic[T],MemoryOrder	atomics: load[T: Trivial](location: var Atomic[T];\n                 order: MemoryOrder = moSequentiallyConsistent): T	
+store	atomics.html#store,Atomic[T],T,MemoryOrder	atomics: store[T: Trivial](location: var Atomic[T]; desired: T;\n                  order: MemoryOrder = moSequentiallyConsistent)	
+exchange	atomics.html#exchange,Atomic[T],T,MemoryOrder	atomics: exchange[T: Trivial](location: var Atomic[T]; desired: T;\n                     order: MemoryOrder = moSequentiallyConsistent): T	
+compareExchange	atomics.html#compareExchange,Atomic[T],T,T,MemoryOrder,MemoryOrder	atomics: compareExchange[T: Trivial](location: var Atomic[T]; expected: var T;\n                            desired: T; success, failure: MemoryOrder): bool	
+compareExchange	atomics.html#compareExchange,Atomic[T],T,T,MemoryOrder	atomics: compareExchange[T: Trivial](location: var Atomic[T]; expected: var T;\n                            desired: T;\n                            order: MemoryOrder = moSequentiallyConsistent): bool	
+compareExchangeWeak	atomics.html#compareExchangeWeak,Atomic[T],T,T,MemoryOrder,MemoryOrder	atomics: compareExchangeWeak[T: Trivial](location: var Atomic[T]; expected: var T;\n                                desired: T; success, failure: MemoryOrder): bool	
+compareExchangeWeak	atomics.html#compareExchangeWeak,Atomic[T],T,T,MemoryOrder	atomics: compareExchangeWeak[T: Trivial](location: var Atomic[T]; expected: var T;\n                                desired: T;\n                                order: MemoryOrder = moSequentiallyConsistent): bool	
+fetchAdd	atomics.html#fetchAdd,Atomic[T],T,MemoryOrder	atomics: fetchAdd[T: SomeInteger](location: var Atomic[T]; value: T;\n                         order: MemoryOrder = moSequentiallyConsistent): T	
+fetchSub	atomics.html#fetchSub,Atomic[T],T,MemoryOrder	atomics: fetchSub[T: SomeInteger](location: var Atomic[T]; value: T;\n                         order: MemoryOrder = moSequentiallyConsistent): T	
+fetchAnd	atomics.html#fetchAnd,Atomic[T],T,MemoryOrder	atomics: fetchAnd[T: SomeInteger](location: var Atomic[T]; value: T;\n                         order: MemoryOrder = moSequentiallyConsistent): T	
+fetchOr	atomics.html#fetchOr,Atomic[T],T,MemoryOrder	atomics: fetchOr[T: SomeInteger](location: var Atomic[T]; value: T;\n                        order: MemoryOrder = moSequentiallyConsistent): T	
+fetchXor	atomics.html#fetchXor,Atomic[T],T,MemoryOrder	atomics: fetchXor[T: SomeInteger](location: var Atomic[T]; value: T;\n                         order: MemoryOrder = moSequentiallyConsistent): T	
+load	atomics.html#load,Atomic[T],MemoryOrder_2	atomics: load[T: not Trivial](location: var Atomic[T];\n                     order: MemoryOrder = moSequentiallyConsistent): T	
+store	atomics.html#store,Atomic[T],T,MemoryOrder_2	atomics: store[T: not Trivial](location: var Atomic[T]; desired: T;\n                      order: MemoryOrder = moSequentiallyConsistent)	
+exchange	atomics.html#exchange,Atomic[T],T,MemoryOrder_2	atomics: exchange[T: not Trivial](location: var Atomic[T]; desired: T;\n                         order: MemoryOrder = moSequentiallyConsistent): T	
+compareExchange	atomics.html#compareExchange,Atomic[T],T,T,MemoryOrder,MemoryOrder_2	atomics: compareExchange[T: not Trivial](location: var Atomic[T]; expected: var T;\n                                desired: T; success, failure: MemoryOrder): bool	
+compareExchangeWeak	atomics.html#compareExchangeWeak,Atomic[T],T,T,MemoryOrder,MemoryOrder_2	atomics: compareExchangeWeak[T: not Trivial](location: var Atomic[T]; expected: var T;\n                                    desired: T; success, failure: MemoryOrder): bool	
+compareExchange	atomics.html#compareExchange,Atomic[T],T,T,MemoryOrder_2	atomics: compareExchange[T: not Trivial](location: var Atomic[T]; expected: var T;\n                                desired: T;\n                                order: MemoryOrder = moSequentiallyConsistent): bool	
+compareExchangeWeak	atomics.html#compareExchangeWeak,Atomic[T],T,T,MemoryOrder_2	atomics: compareExchangeWeak[T: not Trivial](location: var Atomic[T]; expected: var T;\n                                    desired: T; order: MemoryOrder = moSequentiallyConsistent): bool	
+atomicInc	atomics.html#atomicInc,Atomic[T],T	atomics: atomicInc[T: SomeInteger](location: var Atomic[T]; value: T = 1)	
+atomicDec	atomics.html#atomicDec,Atomic[T],T	atomics: atomicDec[T: SomeInteger](location: var Atomic[T]; value: T = 1)	
+`+=`	atomics.html#+=,Atomic[T],T	atomics: `+=`[T: SomeInteger](location: var Atomic[T]; value: T)	
+`-=`	atomics.html#-=,Atomic[T],T	atomics: `-=`[T: SomeInteger](location: var Atomic[T]; value: T)	
