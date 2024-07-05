@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows:
       - Publish built artifacts
+      - Build and publish release
     types:
       - completed
 
@@ -41,39 +42,98 @@ jobs:
         with:
           nimskull-version: "*" # Grab the latest nimskull-version
 
-      - name: Compile release_manifest
-        run: nim c -d:release -o:release_manifest tools/release_manifest.nim
+      - name: Compile required tools
+        run: |
+          nim c -d:release -o:bin/release_manifest tools/release_manifest.nim
+          nim c -d:release -o:bin/versiontool tools/versiontool.nim
+          echo "$PWD/bin" >> "$GITHUB_PATH"
 
       - id: versions
-        name: Grab latest release version
+        name: Grab latest release versions
         run: |
-          # Stolen from asdf-nimskull
-          sort_versions() {
-            sed 'h; s/[+-]/./g; s/$/.z/; G; s/\n/ /' |
-              LC_ALL=C sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4 -k 5,5n | awk '{print $2}'
-          }
-
           all_tags=$(gh release list --json tagName --jq '.[] | .tagName')
-          latest=$(sort_versions <<<"$all_tags" | tail -n 1)
+          sorted=$(versiontool sort <<<"$all_tags")
+          latest=$(head -n 1 <<<"$sorted")
+          stable=$(grep -v - <<<"$sorted" || true)
 
+          if [[ -n "$stable" ]]; then
+            echo "Stable versions:"
+            echo "$stable"
+          fi
           echo "Latest devel is: $latest"
+
+          delim=EOF-$(uuidgen -r)
+          if [[ -n "$stable" ]]; then
+            cat <<EOF >> "$GITHUB_OUTPUT"
+          stable<<$delim
+          $stable
+          $delim
+          EOF
+            echo "stable-hash=$(sha256sum - <<<"$stable" | cut -f1 -d' ')" >> "$GITHUB_OUTPUT"
+          fi
           echo "devel=$latest" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
 
+      - if: steps.versions.outputs.stable
+        id: stable-docs-cache
+        name: Cache stable docs
+        uses: actions/cache@v4
+        with:
+          path: stable-docs
+          key: stable-docs-${{ steps.versions.outputs.stable-hash }}
+          restore-keys: stable-docs-
+
+      - if: steps.versions.outputs.stable && steps.stable-docs-cache.outputs.cache-hit != 'true'
+        name: Construct stable docs
+        run: |
+          mkdir -p stable-docs
+          for version in $STABLE_VERSIONS; do
+            echo "Constructing docs for version $version"
+            if [[ -d "$version" ]]; then
+              echo "Docs for $version already exists, skipping..."
+            else
+              mkdir -p "stable-docs/$version"
+
+              # Get the name of the binary archive for the documentation target
+              release_archive=$(gh release download "$version" -p manifest.json -O - | release_manifest -f /dev/stdin get "$DOC_TARGET")
+              # Download the release artifact and extract docs
+              gh release download "$version" -p "$release_archive" -O "$RUNNER_TEMP/$release_archive"
+              tar -C "stable-docs/$version" \
+                --strip-components=3 \
+                --wildcards \
+                -xf "$RUNNER_TEMP/$release_archive" \
+                "*/doc/html"
+            fi
+          done
+          echo -n "$STABLE_VERSIONS" >> stable-docs/versions.txt
+        env:
+          STABLE_VERSIONS: ${{ steps.versions.outputs.stable }}
+          GH_TOKEN: ${{ github.token }}
+
       - name: Construct devel docs
         run: |
-          tmpdir=$(mktemp -dp "$RUNNER_TEMP" devel.XXXXXXXXXX)
-          # Get the name of the binary archive for the documentation target
-          release_archive=$(gh release download "$DEVEL" -p manifest.json -O - | ./release_manifest -f /dev/stdin get "$DOC_TARGET")
-          # Download the latest release binary
-          gh release download "$DEVEL" -p "$release_archive" -O "$tmpdir/$release_archive"
-          # Extract and remove the top-level directory
-          tar -C "$tmpdir" -xf "$tmpdir/$release_archive" --strip-components=1
+          # Use stable-docs as seed if available
+          # NOTE: we must not modify stable-docs here since it will be cached
+          # after the job finishes
+          if [[ -d stable-docs ]]; then
+            cp -rT stable-docs built-docs
+          fi
 
-          mkdir -p built-docs
-          cp -rT "$tmpdir/doc/html" built-docs/devel
-          cp -rT "$tmpdir/doc/html" built-docs
+          mkdir -p built-docs/devel
+          # Get the name of the binary archive for the documentation target
+          release_archive=$(gh release download "$DEVEL" -p manifest.json -O - | release_manifest -f /dev/stdin get "$DOC_TARGET")
+          # Download the release artifact and extract docs
+          gh release download "$DEVEL" -p "$release_archive" -O "$RUNNER_TEMP/$release_archive"
+          tar -C "built-docs/devel" \
+            --strip-components=3 \
+            --wildcards \
+            -xf "$RUNNER_TEMP/$release_archive" \
+            "*/doc/html"
+
+          # Make devel docs available without a version prefix
+          cp -rT built-docs/devel built-docs
+          echo "devel" >> built-docs/versions.txt
         env:
           GH_TOKEN: ${{ github.token }}
           DEVEL: ${{ steps.versions.outputs.devel }}
