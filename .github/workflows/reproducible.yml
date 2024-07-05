@@ -10,6 +10,11 @@ on:
   # This is for passing required checks
   pull_request:
   merge_group:
+  workflow_call:
+
+concurrency:
+  group: reproducible-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   reprotest:
