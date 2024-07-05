@@ -27,6 +27,9 @@ on:
   merge_group:
     # Test all additions to merge queue
 
+  workflow_call:
+    # Allow the workflow to be reused elsewhere
+
 # Run every script actions in bash
 defaults:
   run:
