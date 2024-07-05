@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows:
       - Publish built artifacts
+      - Build and publish release
     types:
       - completed
 
@@ -45,7 +46,7 @@ jobs:
         run: nim c -d:release -o:release_manifest tools/release_manifest.nim
 
       - id: versions
-        name: Grab latest release version
+        name: Grab latest release versions
         run: |
           # Stolen from asdf-nimskull
           sort_versions() {
@@ -54,11 +55,61 @@ jobs:
           }
 
           all_tags=$(gh release list --json tagName --jq '.[] | .tagName')
-          latest=$(sort_versions <<<"$all_tags" | tail -n 1)
+          sorted=$(sort_versions <<<"$all_tags")
+          latest=$(tail -n 1 <<<"$sorted")
+          stable=$(grep -v - <<<"$sorted" || true)
 
+          if [[ -n "$stable" ]]; then
+            echo "Stable versions:"
+            echo "$stable"
+          fi
           echo "Latest devel is: $latest"
+
+          delim=EOF-$(uuidgen -r)
+          if [[ -n "$stable" ]]; then
+            {
+              echo "stable<<$delim"
+              echo "$stable"
+              echo "$delim"
+            } >> "$GITHUB_OUTPUT"
+            echo "stable-hash=$(sha256sum - <<<"$stable" | cut -f1 -d' ')" >> "$GITHUB_OUTPUT"
+          fi
           echo "devel=$latest" >> "$GITHUB_OUTPUT"
         env:
+          GH_TOKEN: ${{ github.token }}
+
+      - if: steps.versions.outputs.stable
+        id: stable-docs-cache
+        name: Cache stable docs
+        uses: actions/cache@v4
+        with:
+          path: stable-docs
+          key: stable-docs-${{ steps.versions.outputs.stable-hash }}
+          restore-keys: stable-docs-
+
+      - if: steps.versions.outputs.stable && steps.stable-docs-cache.outputs.cache-hit != 'true'
+        name: Construct stable docs
+        run: |
+          mkdir -p stable-docs
+          for version in $STABLE_VERSIONS; do
+            echo "Constructing docs for version $version"
+            if [[ -d "$version" ]]; then
+              echo "Docs for $version already exists, skipping..."
+            else
+              tmpdir=$(mktemp -dp "$RUNNER_TEMP" "$version.XXXXXXXXXX")
+              # Get the name of the binary archive for the documentation target
+              release_archive=$(gh release download "$version" -p manifest.json -O - | ./release_manifest -f /dev/stdin get "$DOC_TARGET")
+              # Download the release binary
+              gh release download "$DEVEL" -p "$release_archive" -O "$tmpdir/$release_archive"
+              # Extract and remove the top-level directory
+              tar -C "$tmpdir" -xf "$tmpdir/$release_archive" --strip-components=1
+
+              cp -rT "$tmpdir/doc/html" "stable-docs/$version"
+            fi
+          done
+          echo "$STABLE_VERSIONS" >> stable-docs/versions.txt
+        env:
+          STABLE_VERSIONS: ${{ steps.versions.outputs.stable }}
           GH_TOKEN: ${{ github.token }}
 
       - name: Construct devel docs
@@ -71,9 +122,14 @@ jobs:
           # Extract and remove the top-level directory
           tar -C "$tmpdir" -xf "$tmpdir/$release_archive" --strip-components=1
 
-          mkdir -p built-docs
+          if [[ -d stable-docs ]]; then
+            cp -rT stable-docs built-docs
+          else
+            mkdir -p built-docs
+          fi
           cp -rT "$tmpdir/doc/html" built-docs/devel
           cp -rT "$tmpdir/doc/html" built-docs
+          echo "devel" >> built-docs/versions.txt
         env:
           GH_TOKEN: ${{ github.token }}
           DEVEL: ${{ steps.versions.outputs.devel }}

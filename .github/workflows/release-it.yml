@@ -1,0 +1,89 @@
+name: Make a release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: The version to release as. Empty for the same version as in `compiler/version.txt`.
+        type: string
+        required: false
+        default: ""
+
+      next-version:
+        description: The version number to use after the current version. Must be in `x.y.z` format. Special values `major`, `minor` and `patch` can be used to bump a specific version component.
+        type: string
+        required: true
+        default: patch
+
+jobs:
+  release:
+    name: Tag and bump release
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: token
+        name: Create GitHub App Token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.CHORE_APP_ID }}
+          private-key: ${{ secrets.CHORE_APP_KEY }}
+
+      - name: Configure committer
+        run: |
+          user_id=$(gh api "/users/$APP_SLUG[bot]" --jq .id)
+          commit_email="$user_id+$APP_SLUG[bot]@users.noreply.github.com"
+          git config --global user.name "$APP_SLUG[bot]"
+          git config --global user.email "$commit_email"
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          APP_SLUG: ${{ steps.token.outputs.app-slug }}
+
+      - name: Setup latest compiler
+        uses: nim-works/setup-nimskull@0.1.2
+        with:
+          nimskull-version: "*" # Grab the latest nimskull-version
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: tree:0
+          token: ${{ steps.token.outputs.token }}
+
+      - name: Build versiontool
+        run: nim c -d:release -o:"$RUNNER_TEMP/versiontool" tools/versiontool.nim
+
+      - name: Perform bump
+        run: |
+          if [[ -n $RELEASE_AS && $(<compiler/version.txt) != "$RELEASE_AS" ]]; then
+            "$RUNNER_TEMP/versiontool" next --as:"$RELEASE_AS"
+            git commit -am "compiler/version: set to $RELEASE_AS [ci skip]"
+          fi
+          release_version=$(<compiler/version.txt)
+          git tag -am "nimskull $release_version" "$release_version"
+
+          case "$NEXT_RELEASE" in
+          major)
+            "$RUNNER_TEMP/versiontool" next --major
+            ;;
+          minor)
+            "$RUNNER_TEMP/versiontool" next --minor
+            ;;
+          patch)
+            "$RUNNER_TEMP/versiontool" next --patch
+            ;;
+          "")
+            echo "error::Missing required input: next-version"
+            ;;
+          *)
+            "$RUNNER_TEMP/versiontool" next --as:"$NEXT_RELEASE"
+            ;;
+          esac
+          next_version=$(<compiler/version.txt)
+          git commit -am "compiler/version: bump to $next_version [ci skip]"
+
+          echo "Pushing refs and tags"
+          git push --follow-tags
+        env:
+          RELEASE_AS: ${{ inputs.version }}
+          NEXT_RELEASE: ${{ inputs.next-version }}

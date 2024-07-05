@@ -4,6 +4,14 @@ on:
     branches:
       - devel
 
+  workflow_call:
+    inputs:
+      run_id:
+        required: false
+        type: string
+        description: The run ID with artifacts to be published
+        default: ${{ github.run_id }}
+
 # Run every script actions in bash
 defaults:
   run:
@@ -35,24 +43,32 @@ jobs:
       - name: Obtain latest successful run id
         id: finder
         run: |
-          run_id=$(gh run list \
-            -c "$COMMIT" \
-            -w "$WORKFLOW" \
-            -s "$CONCLUSION" \
-            --limit 1 \
-            --json databaseId \
-            --jq '.[].databaseId')
+          run_id=
+          if [[ -n $INPUT_RUNID ]]; then
+            echo "Using input run id"
+            run_id=$INPUT_RUNID
+          else
+            echo "Querying latest run id for $COMMIT"
+            run_id=$(gh run list \
+              -c "$COMMIT" \
+              -w "$WORKFLOW" \
+              -s "$CONCLUSION" \
+              --limit 1 \
+              --json databaseId \
+              --jq '.[].databaseId')
+          fi
           if [[ -z $run_id ]]; then
             echo "::error::Could not find any CI run for commit $COMMIT"
             exit 1
           fi
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
         env:
-          COMMIT: ${{ github.event.after }}
+          COMMIT: ${{ github.sha }}
           WORKFLOW: ci.yml
           CONCLUSION: success
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          INPUT_RUNID: ${{ inputs.run_id }}
 
       # Download the latest instance of artifacts from a build done previously
       - name: Download generated source archive
@@ -98,17 +114,22 @@ jobs:
           $toUpload
           $delimiter
           EOF
-          echo "version=$(./release_manifest version)" >> $GITHUB_OUTPUT
+          version=$(./release_manifest version)
+          prerelease=true
+          [[ $version == *-* ]] || prerelease=false
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "prerelease=$prerelease" >> $GITHUB_OUTPUT
         working-directory: release-staging
 
-      - name: Create pre-release
+      - id: release
+        name: Create pre-release
         uses: softprops/action-gh-release@v2.0.6
         with:
-          prerelease: true
+          prerelease: ${{ steps.release-files.outputs.prerelease }}
           files: ${{ steps.release-files.outputs.result }}
           tag_name: ${{ steps.release-files.outputs.version }}
           fail_on_unmatched_files: true
-          target_commitish: ${{ github.event.after }}
+          target_commitish: ${{ github.sha }}
 
       - id: changelog
         name: Create release changelog

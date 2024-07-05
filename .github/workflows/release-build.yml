@@ -1,0 +1,25 @@
+name: Build and publish release
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+      - "!*-*"
+
+jobs:
+  build:
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      actions: write
+
+  reproducible:
+    uses: ./.github/workflows/reproducible.yml
+    permissions:
+      actions: write
+
+  publish:
+    needs: [build]
+    uses: ./.github/workflows/publisher.yml
+    permissions:
+      actions: read
+      contents: write

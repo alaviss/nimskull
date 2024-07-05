@@ -27,12 +27,26 @@ on:
   merge_group:
     # Test all additions to merge queue
 
+  workflow_call:
+    # Allow the workflow to be reused elsewhere
+
 # Run every script actions in bash
 defaults:
   run:
     shell: bash
 
 jobs:
+  cancel:
+    if: github.event_name == 'merge_group'
+    name: Cancel previous runs (Merge Queue)
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: write
+
+    steps:
+      - uses: pierreraffa/cancel-previous-runs-action@1.11
+
   pre_run:
     name: Provide additional context for the workflow
     runs-on: ubuntu-latest
@@ -42,24 +56,10 @@ jobs:
       shared_builder: ${{ steps.matrix.outputs.shared }}
 
     steps:
-      - id: run_cond
-        uses: fkirc/skip-duplicate-actions@v5.3.1
-        with:
-          # Cancel CI on outdated commits
-          cancel_others: true
-          # Don't skip when a duplicated run (ie. from a PR) is done.
-          #
-          # Only CI in upstream has docs publishing rights.
-          skip_after_successful_duplicate: false
-          # Do not skip on push, dispatched or cron
-          do_not_skip: '["push", "workflow_dispatch", "schedule"]'
-
       - id: skip_result
         name: Whether to skip checks
         run: |
-          if [[ '${{ steps.run_cond.outputs.should_skip }}' == true ]]; then
-            echo "result=true" >> $GITHUB_OUTPUT
-          elif [[ '${{ github.event.pull_request.draft }}' == true ]]; then
+          if [[ '${{ github.event.pull_request.draft }}' == true ]]; then
             echo "Pull request is in draft state, skipping"
             echo "result=true" >> $GITHUB_OUTPUT
           else
