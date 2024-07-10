@@ -87,4 +87,4 @@
   "pr_template": "* #{{TITLE}} by @#{{AUTHOR}} in #{{URL}}",
   "sort": "DSC",
   "base_branches": ["devel"]
-}
+
