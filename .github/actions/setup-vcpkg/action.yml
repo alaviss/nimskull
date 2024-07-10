@@ -58,5 +58,10 @@ runs:
         AINPUT_HOST_TRIPLET: ${{ inputs.host-triplet }}
         AINPUT_OVERLAY_TRIPLETS: ${{ inputs.overlay-triplets }}
 
-    - run: ./vcpkg/bootstrap-vcpkg.sh
+    - if: runner.os == 'Windows'
+      run: .\vcpkg\bootstrap-vcpkg.bat
+      shell: pwsh
+
+    - if: runner.os != 'Windows'
+      run: ./vcpkg/bootstrap-vcpkg.sh
       shell: bash
