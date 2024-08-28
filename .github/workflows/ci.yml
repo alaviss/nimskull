@@ -227,6 +227,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew update
+          brew install openssl
 
       - name: Install MinGW (Windows)
         if: runner.os == 'Windows'
