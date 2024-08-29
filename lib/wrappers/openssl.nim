@@ -61,7 +61,7 @@ elif useWinVersion:
 
   from std/winlean import SocketHandle
 else:
-  const versions = "(.3|.1.1)"
+  const versions = "(.3|.1.1|)"
 
   when defined(macosx):
     const

@@ -158,9 +158,15 @@ jobs:
         run: |
           sdkpath=$(xcrun --sdk macosx14.0 --show-sdk-path)
           echo "SDKROOT=$sdkpath" >> "$GITHUB_ENV"
+          echo "DYLD_FALLBACK_LIBRARY_PATH=${DYLD_FALLBACK_LIBRARY_PATH+"$DYLD_FALLBACK_LIBRARY_PATH":}/opt/homebrew/lib" >> "$GITHUB_ENV"
 
       - name: Build release binaries
         run: ./koch.py all-strict
+
+      - name: Debug OpenSSL (macOS M1)
+        if: runner.os == 'macOS' && runner.arch == 'ARM64'
+        run: |
+          bin/nim r debugme.nim
 
       - name: Upload workspace to artifacts
         uses: ./.github/actions/upload-compiler
@@ -227,7 +233,6 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew update
-          brew install openssl
 
       - name: Install MinGW (Windows)
         if: runner.os == 'Windows'
