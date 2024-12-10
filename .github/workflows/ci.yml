@@ -1,4 +1,4 @@
-name: Build and test
+name: CI
 on:
   push:
     # Empty configuration means use default (ie. test all branches)
@@ -66,20 +66,16 @@ jobs:
           # The schema is:
           # [
           #   {
-          #     name: String,  ## The name of the target being tested
-          #     runner: String ## The runner to use of this target
-          #     shared_builder?: Bool ## Whether this target should be used to
-          #                           ## build artifacts shared between
-          #                           ## platforms. Only one target may have
-          #                           ## this attribute.
+          #     name: String,      ## The name of the target being tested
+          #     runner: String,    ## The runner to use of this target
+          #     batch-count?: Int, ## Number of parallel test batches
           #   }
           # ]
           cat << "EOF" > matrix.json
           [
             {
               "name": "Linux",
-              "runner": "ubuntu-20.04",
-              "shared_builder": true
+              "runner": "ubuntu-20.04"
             },
             {
               "name": "macOS",
@@ -91,17 +87,16 @@ jobs:
             },
             {
               "name": "Windows",
-              "runner": "windows-2022"
+              "runner": "windows-2022",
+              "batch-count": 3
             }
           ]
           EOF
 
           # Use jq to compact the matrix into one line to be used as the result
           echo "result=$(jq -c . matrix.json)" >> $GITHUB_OUTPUT
-          # Isolate the shared builder into its own thing as well
-          echo "shared=$(jq -c '.[] | select(.shared_builder)' matrix.json)" >> $GITHUB_OUTPUT
 
-  binaries:
+  test:
     needs: [pre_run]
     if: needs.pre_run.outputs.skip != 'true'
 
@@ -111,199 +106,18 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
 
-    name: Build release binaries (${{ matrix.target.name }})
-    runs-on: ${{ matrix.target.runner }}
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          filter: tree:0
-
-      - name: Enable annotations
-        run: echo "::add-matcher::.github/nim-problem-matcher.json"
-
-      - name: Install MinGW (Windows)
-        if: runner.os == 'Windows'
-        uses: ./.github/actions/setup-mingw
-
-      - name: Setup vcpkg (Windows)
-        if: runner.os == 'Windows'
-        uses: ./.github/actions/setup-vcpkg
-        with:
-          triplet: x64-mingw-dynamic-release
-          host-triplet: x64-mingw-dynamic-release
-          revision: 2024.01.12
-          overlay-triplets: ${{ github.workspace }}/tools/vcpkg/triplets
-
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        run: vcpkg install pcre sqlite3
-
-      - name: Set Xcode version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: "15.0.1"
-
-      - name: Set macOS SDK version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        run: |
-          sdkpath=$(xcrun --sdk macosx14.0 --show-sdk-path)
-          echo "SDKROOT=$sdkpath" >> "$GITHUB_ENV"
-
-      - name: Build release binaries
-        run: ./koch.py all-strict
-
-      - name: Upload workspace to artifacts
-        uses: ./.github/actions/upload-compiler
-
-  test:
-    needs: [pre_run, binaries]
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
-        # This controls the testament "batch" feature.
-        #
-        # If any additional batches are added, increment `total_batch` as well.
-        #
-        # This feature allow us to parallelize testing.
-        batch: [0, 1]
-        # This tells testament how many batches are used. Have to be placed in
-        # an array due to how Github Actions process matrices.
-        total_batch: [2]
-
-    name: "Test the compiler and stdlib (${{ matrix.target.name }}, batch #${{ matrix.batch }})"
-    runs-on: ${{ matrix.target.runner }}
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          filter: tree:0
-
-      - uses: ./.github/actions/download-compiler
-
-      - name: Install NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: "16"
-
-      - name: Install dependencies (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          deps=(
-            # Required by ARC/ORC memory leak tests (only enabled on linux x64)
-            libc6-dbg
-            valgrind
-          )
-
-          sudo apt-get update
-          sudo apt-get install "${deps[@]}"
-
-      - name: Set Xcode version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: "15.0.1"
-
-      - name: Set macOS SDK version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        run: |
-          sdkpath=$(xcrun --sdk macosx14.0 --show-sdk-path)
-          echo "SDKROOT=$sdkpath" >> "$GITHUB_ENV"
-
-      - name: Install dependencies (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew update
-
-          # Downgrade to OpenSSL 3.0
-          brew unlink openssl
-          brew install openssl@3.0
-          brew link --overwrite openssl@3.0
-
-      - name: Add Homebrew libraries to search path
-        if: runner.os == 'macOS'
-        run: echo "DYLD_FALLBACK_LIBRARY_PATH=$(brew --prefix)/lib" >> "$GITHUB_ENV"
-
-      - name: Install MinGW (Windows)
-        if: runner.os == 'Windows'
-        uses: ./.github/actions/setup-mingw
-
-      - name: Add DLLs to PATH (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          $binPath = Join-Path $PWD "vcpkg" "installed" "x64-mingw-dynamic-release" "bin"
-          $binPath | Out-File -Append $env:GITHUB_PATH
-        shell: pwsh
-
-      - name: Run tester
-        run: ./koch.py test --batch:"$TEST_BATCH" --tryFailing all
-        env:
-          TEST_BATCH: ${{ matrix.batch }}_${{ matrix.total_batch }}
-
-      - name: Print all test errors
-        if: failure()
-        run: bin/nim r tools/ci_testresults
-
-  tooling:
-    needs: [pre_run, binaries]
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
-
-    name: Build and test tooling (${{ matrix.target.name }})
-    runs-on: ${{ matrix.target.runner }}
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          filter: tree:0
-
-      - name: Install MinGW (Windows)
-        if: runner.os == 'Windows'
-        uses: ./.github/actions/setup-mingw
-
-      - name: Add DLLs to PATH (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          $binPath = Join-Path $PWD "vcpkg" "installed" "x64-mingw-dynamic-release" "bin"
-          $binPath | Out-File -Append $env:GITHUB_PATH
-        shell: pwsh
-
-      - name: Set Xcode version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: "15.0.1"
-
-      - name: Set macOS SDK version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        run: |
-          sdkpath=$(xcrun --sdk macosx14.0 --show-sdk-path)
-          echo "SDKROOT=$sdkpath" >> "$GITHUB_ENV"
-
-      - uses: ./.github/actions/download-compiler
-
-      - name: Enable annotations
-        run: echo "::add-matcher::.github/nim-problem-matcher.json"
-
-      - name: Test tooling
-        run: ./koch.py testTools
+    name: Build and test (${{ matrix.target.name }})
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      runner: ${{ matrix.target.runner }}
+      batch-count: ${{ matrix.target.batch-count || 1 }}
 
   source:
-    needs: [pre_run, binaries]
+    needs: [pre_run]
+    if: needs.pre_run.outputs.skip != 'true'
 
     name: Build source archive
-    runs-on: ${{ fromJson(needs.pre_run.outputs.shared_builder).runner }}
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v4
@@ -311,10 +125,11 @@ jobs:
           fetch-depth: 0
           filter: tree:0
 
-      - uses: ./.github/actions/download-compiler
-
       - name: Enable annotations
         run: echo "::add-matcher::.github/nim-problem-matcher.json"
+
+      - name: Build compiler
+        run: ./koch.py boot -d:danger
 
       - name: Generate csources
         run: ./koch.py csource -d:danger
@@ -342,7 +157,22 @@ jobs:
             ${{ steps.archive.outputs.metadata }}
           if-no-files-found: error
 
-  source_binaries:
+  package-git:
+    needs: [pre_run]
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
+
+    name: Package from Git (${{ matrix.target.name }})
+    uses: ./.github/workflows/package.yml
+    with:
+      runner: ${{ matrix.target.runner }}
+      output-name-format: release binaries {0} {1}
+
+  package-source:
     needs: [pre_run, source]
 
     strategy:
@@ -351,225 +181,24 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
 
-    name: Build release artifacts from source archive (${{ matrix.target.name }})
-    runs-on: ${{ matrix.target.runner }}
+    name: Package from archive (${{ matrix.target.name }})
+    uses: ./.github/workflows/package.yml
+    with:
+      runner: ${{ matrix.target.runner }}
+      source-archive: source archive
+      output-name-format: binaries from source archive {0} {1}
 
-    steps:
-      - name: Get actions
-        uses: actions/checkout@v4
-        with:
-          path: git-src
-          sparse-checkout: .github/actions
-
-      - name: Install MinGW (Windows)
-        if: runner.os == 'Windows'
-        uses: ./git-src/.github/actions/setup-mingw
-
-      - name: Set Xcode version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: "15.0.1"
-
-      - name: Set macOS SDK version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        run: |
-          sdkpath=$(xcrun --sdk macosx14.0 --show-sdk-path)
-          echo "SDKROOT=$sdkpath" >> "$GITHUB_ENV"
-
-      - name: Download source archive
-        uses: actions/download-artifact@v4
-        with:
-          name: source archive
-          path: source-archive
-
-      - name: Unpack source archive
-        run: |
-          archive=source-archive/$(jq -r .name source-archive/source.json)
-          # Pipe from zstd to tar because macOS' tar does not support unpacking zstd
-          zstd -c -d "$archive" | tar -xf - --strip-components 1
-
-      - name: Setup vcpkg (Windows)
-        if: runner.os == 'Windows'
-        uses: ./git-src/.github/actions/setup-vcpkg
-        with:
-          triplet: x64-mingw-dynamic-release
-          host-triplet: x64-mingw-dynamic-release
-          revision: 2024.01.12
-          overlay-triplets: ${{ github.workspace }}/tools/vcpkg/triplets
-
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        run: vcpkg install pcre sqlite3
-
-      - name: Add DLLs to PATH (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          $binPath = Join-Path $PWD "vcpkg" "installed" "x64-mingw-dynamic-release" "bin"
-          $binPath | Out-File -Append $env:GITHUB_PATH
-        shell: pwsh
-
-      - name: Install DLLs to package (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          $binPath = Join-Path $PWD "vcpkg" "installed" "x64-mingw-dynamic-release" "bin"
-          $binPath | Out-File -Append $env:GITHUB_PATH
-          Copy-Item (Join-Path $binPath "libpcre.dll") -Destination bin
-        shell: pwsh
-
-      - name: Build release binaries
-        run: ./koch.py all
-
-      # Note: keep synchronized with package job
-      - name: Build docs
-        run: |
-          ./koch.py doc \
-            --git.url:"https://github.com/$GITHUB_REPOSITORY" \
-            --git.commit:"$GITHUB_SHA" \
-            --git.devel:devel
-
-          # Remove leftover nimskullcache
-          rm -rf doc/html/nimskullcache
-
-      - id: package
-        name: Create release package
-        run: |
-          releasecmd=unixrelease
-          if [[ "$RUNNER_OS" == Windows ]]; then
-            releasecmd=winrelease
-          fi
-          ./koch.py "$releasecmd"
-
-          archive=build/archive/$(jq -r .name build/archive/archive.json)
-          # Rename the archive manifest to avoid collision with other artifacts
-          os=$(jq -r .os build/archive/archive.json)
-          cpu=$(jq -r .cpu build/archive/archive.json)
-          metadata=build/archive/${os}_${cpu}.json
-          mv build/archive/archive.json "$metadata"
-
-          # Let the uploader know what to upload
-          echo "archive=$archive" >> $GITHUB_OUTPUT
-          echo "metadata=$metadata" >> $GITHUB_OUTPUT
-
-      - name: Upload release package to artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: binaries from source archive ${{ matrix.target.name }}
-          path: |
-            ${{ steps.package.outputs.archive }}
-            ${{ steps.package.outputs.metadata }}
-          if-no-files-found: error
-
-  package:
-    needs: [pre_run, binaries]
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        target: ${{ fromJson(needs.pre_run.outputs.target_matrix) }}
-
-    name: Build docs and release artifacts (${{ matrix.target.name }})
-    runs-on: ${{ matrix.target.runner }}
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          filter: tree:0
-
-      - uses: ./.github/actions/download-compiler
-
-      - name: Enable annotations
-        run: echo "::add-matcher::.github/nim-problem-matcher.json"
-
-      - name: Install MinGW (Windows)
-        if: runner.os == 'Windows'
-        uses: ./.github/actions/setup-mingw
-
-      - name: Add DLLs to PATH (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          $binPath = Join-Path $PWD "vcpkg" "installed" "x64-mingw-dynamic-release" "bin"
-          $binPath | Out-File -Append $env:GITHUB_PATH
-        shell: pwsh
-
-      - name: Install DLLs to package (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          $binPath = Join-Path $PWD "vcpkg" "installed" "x64-mingw-dynamic-release" "bin"
-          $binPath | Out-File -Append $env:GITHUB_PATH
-          Copy-Item (Join-Path $binPath "libpcre.dll") -Destination bin
-        shell: pwsh
-
-      - name: Set Xcode version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: "15.0.1"
-
-      - name: Set macOS SDK version (macOS M1)
-        if: runner.os == 'macOS' && runner.arch == 'ARM64'
-        run: |
-          sdkpath=$(xcrun --sdk macosx14.0 --show-sdk-path)
-          echo "SDKROOT=$sdkpath" >> "$GITHUB_ENV"
-
-      # Note: keep synchronized with source_binaries job
-      - name: Build docs
-        run: |
-          ./koch.py doc \
-            --git.url:"https://github.com/$GITHUB_REPOSITORY" \
-            --git.commit:"$GITHUB_SHA" \
-            --git.devel:devel
-
-          # Remove leftover nimskullcache
-          rm -rf doc/html/nimskullcache
-
-      - id: package
-        name: Create release package
-        run: |
-          releasecmd=unixrelease
-          if [[ "$RUNNER_OS" == Windows ]]; then
-            releasecmd=winrelease
-          fi
-          ./koch.py "$releasecmd"
-
-          archive=build/archive/$(jq -r .name build/archive/archive.json)
-          # Rename the archive manifest to avoid collision with other artifacts
-          os=$(jq -r .os build/archive/archive.json)
-          cpu=$(jq -r .cpu build/archive/archive.json)
-          metadata=build/archive/${os}_${cpu}.json
-          mv build/archive/archive.json "$metadata"
-
-          # Let the uploader know what to upload
-          echo "archive=$archive" >> $GITHUB_OUTPUT
-          echo "metadata=$metadata" >> $GITHUB_OUTPUT
-
-      - name: Upload release package to artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: release binaries ${{ matrix.target.name }}
-          path: |
-            ${{ steps.package.outputs.archive }}
-            ${{ steps.package.outputs.metadata }}
-          if-no-files-found: error
-
-  test_package:
-    needs: [pre_run, package, source_binaries]
+  test-package:
+    needs: [pre_run, package-git, package-source]
 
     name: Test release artifacts
-    runs-on: ${{ fromJSON(needs.pre_run.outputs.shared_builder).runner }}
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           filter: tree:0
-
-      - uses: ./.github/actions/download-compiler
-
-      - name: Enable annotations
-        run: echo "::add-matcher::.github/nim-problem-matcher.json"
 
       - name: Download binaries built from source archive
         uses: actions/download-artifact@v4
@@ -592,36 +221,44 @@ jobs:
           name: source archive
           path: source-archive
 
-      - name: Install tools
+      - name: Binaries from git and source archive should be the same
         run: |
-          sudo apt-get update
-          sudo apt-get install -yqq --no-install-recommends diffoscope
+          podman run \
+            --rm \
+            --workdir /src \
+            -v "$(pwd):/src" \
+            --user 0:0 \
+            registry.salsa.debian.org/reproducible-builds/diffoscope:latest \
+            --progress \
+            --html=build/diffoscope.html \
+            --exclude-directory-metadata=yes \
+            release-binary/ \
+            binary-from-source/
 
-      - id: diff
-        name: Binaries from git and source archive should be the same
-        run: |
-          output_html=$RUNNER_TEMP/diffoscope.html
-          run_diff() {
-            # Exclude directory metadata as we only care about the files themselves
-            diffoscope \
-              --html="$output_html" \
-              --exclude-directory-metadata=yes \
-              release-binary/ binary-from-source/
-          }
-          if ! run_diff; then
-            echo "::error::There are differences when building from source archive compared to building from git, check the output uploaded to artifacts for more details"
-            echo "result=$output_html" >> $GITHUB_OUTPUT
-            exit 1
-          else
-            echo "Success! Binaries built from git and source archive are the same"
-          fi
-
-      - name: Upload difference test result on failure
-        if: failure() && steps.diff.outputs.result != ''
+      - name: Upload diffoscope output on failure
+        id: diffoscope-output
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: differences between binary from source archive and git
-          path: ${{ steps.diff.outputs.result }}
+          name: differences between git and source binaries
+          path: build/diffoscope.html
+
+      - name: Write summary on failure
+        if: failure() && steps.diffoscope-output.outputs.artifact-url != ''
+        run: |
+          cat <<EOF >> "$GITHUB_STEP_SUMMARY"
+          ### Binaries from git and source archive are not the same!
+
+          The report can be downloaded [here]($DIFFOSCOPE_OUTPUT_URL)
+          EOF
+        env:
+          DIFFOSCOPE_OUTPUT_URL: ${{ steps.diffoscope-output.outputs.artifact-url }}
+
+      - name: Enable annotations
+        run: echo "::add-matcher::.github/nim-problem-matcher.json"
+
+      - name: Build compiler
+        run: ./koch.py boot -d:danger
 
       - name: Verify archive manifests
         run: |
@@ -646,14 +283,9 @@ jobs:
   passed:
     name: All check passed
     needs:
-      - binaries
       - test
-      - tooling
-      - source
-      - source_binaries
-      - package
-      - test_package
-    if: always()
+      - test-package
+    if: cancelled() || failure()
     runs-on: ubuntu-latest
 
     steps:
