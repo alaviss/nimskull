@@ -86,6 +86,10 @@ jobs:
               "runner": "macos-14"
             },
             {
+              "name": "Linux (AArch64)",
+              "runner": "ubuntu-22.04-arm"
+            },
+            {
               "name": "Windows",
               "runner": "windows-2022",
               "batch-count": 3
