@@ -1946,6 +1946,12 @@ proc dial*(address: string, port: Port,
       continue
     domain = domainOpt.unsafeGet()
     lastFd = fdPerDomain[ord(domain)]
+    debugEcho "trying domain: ", domain, " address: ", getAddrString(it.ai_addr)
+    if success:
+      debugEcho "already successful, skipping"
+      it = it.ai_next
+      continue
+
     if lastFd == osInvalidSocket:
       lastFd = createNativeSocket(domain, sockType, protocol)
       if lastFd == osInvalidSocket:
@@ -1959,8 +1965,8 @@ proc dial*(address: string, port: Port,
       fdPerDomain[ord(domain)] = lastFd
     if connect(lastFd, it.ai_addr, it.ai_addrlen.SockLen) == 0'i32:
       success = true
-      break
     lastError = osLastError()
+    debugEcho "failed, error code: ", lastError
     it = it.ai_next
   freeaddrinfo(aiList)
   closeUnusedFds(ord(domain))
