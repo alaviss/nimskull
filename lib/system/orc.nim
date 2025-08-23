@@ -108,7 +108,7 @@ proc free(s: Cell; desc: PNimTypeV2) {.inline.} =
     else:
       cstderr.rawWrite "has dispose!\n"
 
-  nimRawDispose(p, desc.align)
+  nimRawDispose(p, desc.size, desc.align)
 
 template orcAssert(cond, msg) =
   when logOrc:

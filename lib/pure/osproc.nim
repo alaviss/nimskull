@@ -944,25 +944,63 @@ elif not defined(useNimRtl):
   proc isExitStatus(status: cint): bool =
     WIFEXITED(status) or WIFSIGNALED(status)
 
-  proc envToCStringArray(t: StringTableRef): cstringArray =
-    result = cast[cstringArray](alloc0((t.len + 1) * sizeof(cstring)))
-    var i = 0
+  const
+    CStringArrayPageSize = 16 * 1024 # 16KiB pages
+
+  type
+    ManagedCStringArray = object
+      # XXX: Move this into a module, it's pretty useful
+      buffers: seq[seq[char]]
+        ## A list of pages, in order to keep pointers stable.
+      pointers: seq[cstring]
+        ## The list of head pointers, all are borrowed from `buffer`. Once a
+        ## final `nil` is inserted, the managed array is locked.
+
+  proc newManagedCStringArray(data: openArray[string]): ManagedCStringArray =
+    var totalBytes = 0
+    for str in data.items:
+      totalBytes.inc str.len + 1
+
+    result.buffers.add newSeqOfCap[char](max(totalBytes, CStringArrayPageSize))
+    for str in data.items:
+      let writeIdx = result.buffers[0].len
+      result.buffers[0].add str
+      result.buffers[0].add char(0)
+      result.pointers.add addr result.buffers[0][writeIdx]
+
+  proc add(a: var ManagedCStringArray, str: openArray[char]) =
+    assert a.pointers.len == 0 or a.pointers[a.pointers.high] != nil
+
+    let activeBuffer = a.buffers.high
+    # If we are out of space in the current page, allocate a new one
+    if str.len >= CStringArrayPageSize - a.buffers[activeBuffer].len:
+      var newPage = newSeqOfCap[char](max(str.len + 1, CStringArrayPageSize))
+      newPage.add str
+      newPage.add char(0)
+      a.buffers.add newPage
+      let activeBuffer = a.buffers.high
+      a.pointers.add addr a.buffers[activeBuffer][0]
+    else:
+      let writeIdx = a.buffers[activeBuffer].len
+      a.buffers[activeBuffer].add str
+      a.buffers[activeBuffer].add char(0)
+      a.pointers.add addr a.buffers[activeBuffer][writeIdx]
+
+  proc finalize(a: var ManagedCStringArray): cstringArray =
+    assert a.pointers.len == 0 or a.pointers[a.pointers.high] != nil
+
+    a.pointers.add nil
+    cast[cstringArray](addr a.pointers[0])
+
+  proc envToCStringArray(t: StringTableRef): ManagedCStringArray =
     for key, val in pairs(t):
       var x = key & "=" & val
-      result[i] = cast[cstring](alloc(x.len+1))
-      copyMem(result[i], addr(x[0]), x.len+1)
-      inc(i)
+      result.add x
 
-  proc envToCStringArray(): cstringArray =
-    var counter = 0
-    for key, val in envPairs(): inc counter
-    result = cast[cstringArray](alloc0((counter + 1) * sizeof(cstring)))
-    var i = 0
+  proc envToCStringArray(): ManagedCStringArray =
     for key, val in envPairs():
       var x = key & "=" & val
-      result[i] = cast[cstring](alloc(x.len+1))
-      copyMem(result[i], addr(x[0]), x.len+1)
-      inc(i)
+      result.add x
 
   type
     StartProcessData = object
@@ -1018,18 +1056,15 @@ elif not defined(useNimRtl):
 
     var pid: Pid
 
-    var sysArgs = allocCStringArray(sysArgsRaw)
-    defer: deallocCStringArray(sysArgs)
+    var sysArgs = newManagedCStringArray(sysArgsRaw)
 
     var sysEnv = if env == nil:
         envToCStringArray()
       else:
         envToCStringArray(env)
 
-    defer: deallocCStringArray(sysEnv)
-
-    data.sysArgs = sysArgs
-    data.sysEnv = sysEnv
+    data.sysArgs = sysArgs.finalize()
+    data.sysEnv = sysEnv.finalize()
     data.pStdin = pStdin
     data.pStdout = pStdout
     data.pStderr = pStderr

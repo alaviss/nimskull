@@ -1757,7 +1757,6 @@ when not isNimVmTarget:
 
   {.pop.}
 
-
 when defined(nimV2):
   include system/arc
 
@@ -2209,23 +2208,93 @@ when not defined(js):
 
 
 when not defined(js) and declared(alloc0) and declared(dealloc):
+  type
+    CStringArrayHeader = object
+      ## Header of a cstringArray allocated by `allocCStringArray`.
+      payload: ptr CStringArrayPayloadHeader
+        ## Memory block of the payload. We keep a copy here to make sure it
+        ## could be deallocated even if the C side removes the first pointer.
+      capacity: Natural
+        ## The number of entries + 1 for NULL-termination.
+
+    CStringArrayPayloadHeader = object
+      ## Header of the backing memory payload
+      capacity: Natural
+        ## The capacity of the char data block
+
   proc allocCStringArray*(a: openArray[string]): cstringArray =
     ## Creates a NULL terminated cstringArray from `a`. The result has to
     ## be freed with `deallocCStringArray` after it's not needed anymore.
-    result = cast[cstringArray](alloc0((a.len+1) * sizeof(cstring)))
+    var payloadCapacity = 0
+    for str in a.items:
+      payloadCapacity.inc str.len + 1
 
-    let x = cast[ptr UncheckedArray[string]](a)
-    for i in 0 .. a.high:
-      result[i] = cast[cstring](alloc0(x[i].len+1))
-      copyMem(result[i], addr(x[i][0]), x[i].len)
+    let
+      arrayCapacity = Natural a.len + 1
+      (arrayLayout, dataOffset) = layoutOf(CStringArrayHeader)
+        .extend(
+          layoutOf(cstring)
+            .repeat(arrayCapacity)
+            .layout
+        )
+    let base = cast[ptr CStringArrayHeader](alloc(arrayLayout))
+    base[] = CStringArrayHeader(capacity: arrayCapacity)
+    result = cast[cstringArray](cast[int](base) + dataOffset)
+
+    # Only allocate a payload if a.len > 0, otherwise the allocation
+    # would be zero-sized, which is an error.
+    if a.len > 0:
+      let
+        (payloadLayout, bufferOffset) = layoutOf(CStringArrayPayloadHeader)
+          .extend(
+            layoutOf(char)
+              .repeat(payloadCapacity)
+              .layout
+          )
+        payload = cast[ptr CStringArrayPayloadHeader](alloc(payloadLayout))
+        buffer = cast[ptr UncheckedArray[char]](cast[int](payload) + bufferOffset)
+      payload[] = CStringArrayPayloadHeader(capacity: payloadCapacity)
+
+      var writeIdx = 0
+      for i in 0 .. a.high:
+        copyMem(addr buffer[writeIdx], addr a[i][0], a[i].len)
+        buffer[writeIdx + a[i].len] = '\0'
+        writeIdx.inc a[i].len + 1
+
+        result[i] = cast[cstring](addr buffer[writeIdx])
+    result[a.len] = nil
 
   proc deallocCStringArray*(a: cstringArray) =
-    ## Frees a NULL terminated cstringArray.
-    var i = 0
-    while a[i] != nil:
-      dealloc(a[i])
-      inc(i)
-    dealloc(a)
+    ## Frees a NULL terminated cstringArray. The array must have been allocated
+    ## using `allocCStringArray`.
+    ##
+    ## This will free the entire backing memory block, invalidating all
+    ## pointers regardless of whether they were removed from the array.
+    if a == nil:
+      return
+
+    let
+      base = cast[ptr CStringArrayHeader](cast[int](a) - sizeof(CStringArrayHeader))
+      arrayLayout = layoutOf(CStringArrayHeader)
+        .extend(
+          layoutOf(cstring)
+            .repeat(base.capacity)
+            .layout
+        )
+        .layout
+
+    if base.payload != nil:
+      let payloadLayout = layoutOf(CStringArrayPayloadHeader)
+        .extend(
+          layoutOf(char)
+            .repeat(base.payload.capacity)
+            .layout
+        )
+        .layout
+
+      dealloc base.payload, payloadLayout
+
+    dealloc a, arrayLayout
 
 when not defined(js) and hasThreadSupport and hostOS != "standalone":
   include "system/threads"
@@ -2325,6 +2394,27 @@ when notJSnotNims and hasAlloc:
 
 when notJSnotNims and hasThreadSupport and hostOS != "standalone":
   include "system/channels_builtin"
+
+# FIXME: Figure out a location for this
+proc allocLayout(size: Natural, alignment: Positive): AllocLayout =
+  ## Returns an allocation layout from `size` and `alignment`, given that
+  ## the following requirements are met:
+  ##
+  ## * `align` must be a power-of-two and not be zero.
+  ## * `size` rounded up to the nearest multiple of `align` must be
+  ##   smaller or equal to `high(Natural)`.
+  ##
+  ## A `Defect` will be raised if requirements are not met.
+  when compileOption("rangeChecks"):
+    if alignment == 0 or (alignment and alignment - 1) != 0:
+      sysFatal(RangeDefect, "Alignment is not a power of two or is zero")
+
+    let maxAlignedSize = Natural high(Natural).uint + 1 - alignment.uint
+    if size > maxAlignedSize:
+      sysFatal(RangeDefect, static("Rounded up size is larger than " & $high(Natural)))
+
+  AllocLayout(size: size, alignment: alignment)
+
 
 
 when notJSnotNims and hostOS != "standalone":

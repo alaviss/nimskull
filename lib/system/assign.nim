@@ -153,7 +153,7 @@ proc genericReset(dest: pointer, mt: PNimType) =
     frees(s[])
     zeroMem(dest, mt.size)
   of tySequence:
-    frees(cast[ptr NimSeqV2Reimpl](dest)[])
+    frees(cast[ptr NimSeqV2Reimpl](dest)[], mt.base.size, mt.base.align)
     zeroMem(dest, mt.size)
   of tyTuple:
     genericResetAux(dest, mt.node)

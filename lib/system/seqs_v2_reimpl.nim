@@ -16,9 +16,11 @@ type
     len: int
     p: ptr NimSeqPayloadReimpl
 
-template frees(s: NimSeqV2Reimpl) =
+template frees(s: NimSeqV2Reimpl, elemSize, elemAlign: int) =
   if s.p != nil and (s.p.cap and strlitFlag) != strlitFlag:
-    when compileOption("threads"):
-      deallocShared(s.p)
-    else:
-      dealloc(s.p)
+    let
+      elemLayout = allocLayoutUnchecked(elemSize, elemAlign)
+      layout = layoutOf(NimSeqPayloadReimpl)
+        .extend(elemLayout.repeat(s.p.cap).layout)
+        .layout
+    dealloc(s.p, layout)

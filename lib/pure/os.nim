@@ -1873,24 +1873,24 @@ proc copyFile*(source, dest: string, options = {cfSymlinkFollow}) {.rtl,
         if status2 != 0: raiseOSError(osLastError(), $(source, dest))
       else:
         # generic version of copyFile which works for any platform:
-        const bufSize = 8000 # better for memory manager
+        const bufLayout = layoutOf(byte).repeat(8000).layout # better for memory manager
         var d, s: File
         if not open(s, source):raiseOSError(osLastError(), source)
         if not open(d, dest, fmWrite):
           close(s)
           raiseOSError(osLastError(), dest)
-        var buf = alloc(bufSize)
+        var buf = alloc(bufLayout)
         while true:
-          var bytesread = readBuffer(s, buf, bufSize)
+          var bytesread = readBuffer(s, buf, bufLayout.size)
           if bytesread > 0:
             var byteswritten = writeBuffer(d, buf, bytesread)
             if bytesread != byteswritten:
-              dealloc(buf)
+              dealloc(buf, bufLayout)
               close(s)
               close(d)
               raiseOSError(osLastError(), dest)
-          if bytesread != bufSize: break
-        dealloc(buf)
+          if bytesread != bufLayout.size: break
+        dealloc(buf, bufLayout)
         close(s)
         flushFile(d)
         close(d)
@@ -3402,9 +3402,11 @@ proc sameFileContent*(path1, path2: string): bool {.rtl, extern: "nos$1",
   if not open(b, path2):
     close(a)
     return false
-  let bufSize = getFileInfo(a).blockSize
-  var bufA = alloc(bufSize)
-  var bufB = alloc(bufSize)
+  let
+    bufSize = getFileInfo(a).blockSize
+    bufLayout = layoutOf(byte).repeat(bufSize).layout
+  var bufA = alloc(bufLayout)
+  var bufB = alloc(bufLayout)
   while true:
     var readA = readBuffer(a, bufA, bufSize)
     var readB = readBuffer(b, bufB, bufSize)
@@ -3417,8 +3419,8 @@ proc sameFileContent*(path1, path2: string): bool {.rtl, extern: "nos$1",
     result = equalMem(bufA, bufB, readA)
     if not result: break
     if readA != bufSize: break # end of file
-  dealloc(bufA)
-  dealloc(bufB)
+  dealloc(bufA, bufLayout)
+  dealloc(bufB, bufLayout)
   close(a)
   close(b)
 

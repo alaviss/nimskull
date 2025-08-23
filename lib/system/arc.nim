@@ -95,12 +95,15 @@ else:
     x.rc shr rcShift
 
 proc nimNewObj(size, alignment: int): pointer {.compilerRtl.} =
-  let hdrSize = align(sizeof(RefHeader), alignment)
-  let s = size + hdrSize
+  let
+    # Size and alignment is supplied by the compiler, so assume that they are
+    # correct
+    baseLayout = allocLayoutUnchecked(size, alignment)
+    (refLayout, dataOffset) = layoutOf(RefHeader).extend(baseLayout)
   when defined(nimscript):
     discard
   else:
-    result = alignedAlloc0(s, alignment) +! hdrSize
+    result = alloc0(refLayout) +! dataOffset
   when defined(nimArcDebug) or defined(nimArcIds):
     head(result).refId = gRefId
     discard atomicInc gRefId
@@ -113,12 +116,15 @@ proc nimNewObj(size, alignment: int): pointer {.compilerRtl.} =
 proc nimNewObjUninit(size, alignment: int): pointer {.compilerRtl.} =
   # Same as 'newNewObj' but do not initialize the memory to zero.
   # The codegen proved for us that this is not necessary.
-  let hdrSize = align(sizeof(RefHeader), alignment)
-  let s = size + hdrSize
+  let
+    # Size and alignment is supplied by the compiler, so assume that they are
+    # correct
+    baseLayout = allocLayoutUnchecked(size, alignment)
+    (refLayout, dataOffset) = layoutOf(RefHeader).extend(baseLayout)
   when defined(nimscript):
     discard
   else:
-    result = cast[ptr RefHeader](alignedAlloc(s, alignment) +! hdrSize)
+    result = alloc(refLayout) +! dataOffset
   head(result).rc = 0
   when defined(gcOrc):
     head(result).rootIdx = 0
@@ -164,7 +170,7 @@ when not defined(nimscript) and defined(nimArcDebug):
     else:
       result = 0
 
-proc nimRawDispose(p: pointer, alignment: int) {.compilerRtl.} =
+proc nimRawDispose(p: pointer, size, alignment: int) {.compilerRtl.} =
   when not defined(nimscript):
     when traceCollector:
       cprintf("[Freed] %p\n", p -! sizeof(RefHeader))
@@ -173,8 +179,10 @@ proc nimRawDispose(p: pointer, alignment: int) {.compilerRtl.} =
       if freedCells.data == nil: init(freedCells)
       freedCells.incl head(p)
     else:
-      let hdrSize = align(sizeof(RefHeader), alignment)
-      alignedDealloc(p -! hdrSize, alignment)
+      let
+        baseLayout = allocLayoutUnchecked(size, alignment)
+        (refLayout, dataOffset) = layoutOf(RefHeader).extend(baseLayout)
+      dealloc(p -! dataOffset, refLayout)
 
 template `=dispose`*[T](x: owned(ref T)) = nimRawDispose(cast[pointer](x), T.alignOf)
 #proc dispose*(x: pointer) = nimRawDispose(x)
@@ -190,7 +198,7 @@ proc nimDestroyAndDispose(p: pointer) {.compilerRtl, raises: [].} =
       cstderr.rawWrite "bah, nil\n"
     else:
       cstderr.rawWrite "has destructor!\n"
-  nimRawDispose(p, rti.align)
+  nimRawDispose(p, rti.size, rti.align)
 
 when defined(gcOrc):
   when defined(nimThinout):

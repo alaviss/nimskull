@@ -18,35 +18,26 @@ type
 
 proc add[T](s: var CellSeq[T], c: T; t: PNimTypeV2) {.inline.} =
   if s.len >= s.cap:
-    s.cap = s.cap * 3 div 2
-    when compileOption("threads"):
-      var d = cast[CellArray[T]](allocShared(uint(s.cap * sizeof(CellTuple[T]))))
-    else:
-      var d = cast[CellArray[T]](alloc(s.cap * sizeof(CellTuple[T])))
-    copyMem(d, s.d, s.len * sizeof(CellTuple[T]))
-    when compileOption("threads"):
-      deallocShared(s.d)
-    else:
-      dealloc(s.d)
-    s.d = d
-    # XXX: realloc?
+    let
+      newCap = s.cap * 3 div 2
+      oldLayout = layoutOf(CellTuple[T]).repeat(s.cap).layout
+      newLayout = layoutOf(CellTuple[T]).repeat(newCap).layout
+    s.d = cast[CellArray[T]](realloc(s.d, oldLayout, newLayout))
+    s.cap = newCap
+
   s.d[s.len] = (c, t)
   inc(s.len)
 
 proc init[T](s: var CellSeq[T], cap: int = 1024) =
   s.len = 0
   s.cap = cap
-  when compileOption("threads"):
-    s.d = cast[CellArray[T]](allocShared(uint(s.cap * sizeof(CellTuple[T]))))
-  else:
-    s.d = cast[CellArray[T]](alloc(s.cap * sizeof(CellTuple[T])))
+  let layout = layoutOf(CellTuple[T]).repeat(s.cap).layout
+  s.d = cast[CellArray[T]](alloc(layout))
 
 proc deinit[T](s: var CellSeq[T]) =
   if s.d != nil:
-    when compileOption("threads"):
-      deallocShared(s.d)
-    else:
-      dealloc(s.d)
+    let layout = layoutOf(CellTuple[T]).repeat(s.cap).layout
+    dealloc(s.d, layout)
     s.d = nil
   s.len = 0
   s.cap = 0

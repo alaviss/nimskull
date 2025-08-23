@@ -35,13 +35,14 @@ type
 
 const nimSeqVersion {.core.} = 2
 
-# XXX make code memory safe for overflows in '*'
-
 proc newSeqPayload(cap, elemSize, elemAlign: int): pointer {.compilerRtl, raises: [].} =
   # we have to use type erasure here as Nim does not support generic
   # compilerProcs. Oh well, this will all be inlined anyway.
   if cap > 0:
-    var p = cast[ptr NimSeqPayloadBase](alignedAlloc(align(sizeof(NimSeqPayloadBase), elemAlign) + cap * elemSize, elemAlign))
+    let
+      dataLayout = allocLayoutUnchecked(elemSize, elemAlign).repeat(cap).layout
+      payloadLayout = layoutOf(NimSeqPayloadBase).extend(dataLayout).layout
+    var p = cast[ptr NimSeqPayloadBase](alloc(payloadLayout))
     p.cap = cap
     result = p
   else:
@@ -56,7 +57,6 @@ template `-!`(p: pointer, s: int): pointer =
 proc prepareSeqAdd(len: int; p: pointer; addlen, elemSize, elemAlign: int): pointer {.
     noSideEffect, raises: [], compilerRtl.} =
   {.noSideEffect.}:
-    let headerSize = align(sizeof(NimSeqPayloadBase), elemAlign)
     if addlen <= 0:
       result = p
     elif p == nil:
@@ -65,17 +65,27 @@ proc prepareSeqAdd(len: int; p: pointer; addlen, elemSize, elemAlign: int): poin
       # Note: this means we cannot support things that have internal pointers as
       # they get reallocated here. This needs to be documented clearly.
       var p = cast[ptr NimSeqPayloadBase](p)
-      let oldCap = p.cap and not strlitFlag
-      let newCap = max(resize(oldCap), len+addlen)
+      let
+        oldCap = p.cap and not strlitFlag
+        newCap = max(resize(oldCap), len+addlen)
+        headerLayout = layoutOf(NimSeqPayloadBase)
+          .alignTo(elemAlign)
+          .padToAlignment()
+        elemLayout = allocLayoutUnchecked(elemSize, elemAlign)
+        newDataLayout = elemLayout.repeat(newCap).layout
+        (newPayloadLayout, dataOffset) = headerLayout.extend(newDataLayout)
+
       if (p.cap and strlitFlag) == strlitFlag:
-        var q = cast[ptr NimSeqPayloadBase](alignedAlloc(headerSize + elemSize * newCap, elemAlign))
-        copyMem(q +! headerSize, p +! headerSize, len * elemSize)
+        var q = cast[ptr NimSeqPayloadBase](alloc(newPayloadLayout))
+        copyMem(q +! dataOffset, p +! dataOffset, len * elemSize)
         q.cap = newCap
         result = q
       else:
-        let oldSize = headerSize + elemSize * oldCap
-        let newSize = headerSize + elemSize * newCap
-        var q = cast[ptr NimSeqPayloadBase](alignedRealloc(p, oldSize, newSize, elemAlign))
+        let
+          oldDataLayout = elemLayout.repeat(oldCap).layout
+          # Skip offset since it stays the same
+          (oldPayloadLayout, _) = headerLayout.extend(oldDataLayout)
+        var q = cast[ptr NimSeqPayloadBase](realloc(p, oldPayloadLayout, newPayloadLayout))
         q.cap = newCap
         result = q
 

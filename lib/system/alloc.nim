@@ -869,29 +869,11 @@ proc alloc(allocator: var MemRegion, size: Natural): pointer {.gcsafe.} =
   result = rawAlloc(allocator, size)
   track("alloc", result, size)
 
-proc alloc0(allocator: var MemRegion, size: Natural): pointer =
-  result = alloc(allocator, size)
-  zeroMem(result, size)
-
 proc dealloc(allocator: var MemRegion, p: pointer) =
   sysAssert(p != nil, "dealloc: p is nil")
   sysAssert(isAccessible(allocator, p), "is not accessible")
   rawDealloc(allocator, p)
   track("dealloc", p, 0)
-
-proc realloc(allocator: var MemRegion, p: pointer, newsize: Natural): pointer =
-  if newsize > 0:
-    result = alloc(allocator, newsize)
-    if p != nil:
-      copyMem(result, p, min(ptrSize(p), newsize))
-      dealloc(allocator, p)
-  elif p != nil:
-    dealloc(allocator, p)
-
-proc realloc0(allocator: var MemRegion, p: pointer, oldsize, newsize: Natural): pointer =
-  result = realloc(allocator, p, newsize)
-  if newsize > oldsize:
-    zeroMem(cast[pointer](cast[uint](result) + uint(oldsize)), newsize - oldsize)
 
 proc deallocOsPages(a: var MemRegion) =
   # we free every 'ordinarily' allocated page by iterating over the page bits:
@@ -922,138 +904,110 @@ when defined(nimTypeNames):
 
 # ---------------------- thread memory region -------------------------------
 
-template instantiateForRegion(allocator: untyped) {.dirty.} =
-  {.push stackTrace: off.}
+var allocator: MemRegion
+when hasThreadSupport:
+  var heapLock: SysLock
+  initSysLock(heapLock)
 
-  when defined(nimFulldebug):
-    proc interiorAllocatedPtr*(p: pointer): pointer =
-      result = interiorAllocatedPtr(allocator, p)
+{.push stackTrace: off.}
 
-    proc isAllocatedPtr*(p: pointer): bool =
-      let p = cast[pointer](cast[ByteAddress](p)-%ByteAddress(sizeof(Cell)))
-      result = isAllocatedPtr(allocator, p)
+when defined(nimFulldebug):
+  proc interiorAllocatedPtr*(p: pointer): pointer =
+    result = interiorAllocatedPtr(allocator, p)
 
-  proc deallocOsPages = deallocOsPages(allocator)
+  proc isAllocatedPtr*(p: pointer): bool =
+    let p = cast[pointer](cast[ByteAddress](p)-%ByteAddress(sizeof(Cell)))
+    result = isAllocatedPtr(allocator, p)
 
-  proc allocImpl(size: Natural): pointer =
-    result = alloc(allocator, size)
+proc deallocOsPages = deallocOsPages(allocator)
 
-  proc alloc0Impl(size: Natural): pointer =
-    result = alloc0(allocator, size)
+template lockedHeap(body: untyped): untyped =
+  when hasThreadSupport:
+    acquireSys(heapLock)
+    try:
+      body
+    finally:
+      releaseSys(heapLock)
+  else:
+    body
 
-  proc deallocImpl(p: pointer) =
+template `+!`(p: pointer, s: SomeInteger): pointer =
+  cast[pointer](cast[int](p) +% int(s))
+
+template `&!`(p: pointer, s: SomeInteger): pointer =
+  cast[pointer](cast[uint](p) and uint(s))
+
+template `-!`(p: pointer, s: SomeInteger): pointer =
+  cast[pointer](cast[int](p) -% int(s))
+
+proc allocImpl(layout: AllocLayout): pointer =
+  if layout.alignment <= MemAlign:
+    lockedHeap:
+      result = alloc(allocator, layout.size)
+  else:
+    let
+      # Target memory layout: [padding | baseptr | data]
+      #
+      # All data blocks are aligned at MemAlign (16) minimum, thus we only
+      # have to pad the difference between default alignment and target.
+      #
+      # Also include some space to store the pointer to the origin block.
+      # A full pointer can be stored for free since we will always have at least
+      # 15 bytes of padding for any alignment larger than MemAlign.
+      padding = layout.alignment - MemAlign - 1 + sizeof(pointer)
+      mask = layout.alignment - 1
+      size = padding + layout.size
+    let base = lockedHeap: alloc(allocator, size)
+    result = cast[pointer]((cast[int](base) + mask) and not mask)
+    cast[ptr pointer](result -! sizeof(pointer))[] = base
+
+proc alloc0Impl(layout: AllocLayout): pointer =
+  result = alloc(layout)
+  zeroMem(result, layout.size)
+
+proc deallocImpl(p: pointer, layout: AllocLayout) =
+  let base =
+    if layout.alignment <= MemAlign:
+      p
+    else:
+      # See allocImpl for more information about aligned pointer layout
+      cast[ptr pointer](p -! sizeof(pointer))[]
+
+  lockedHeap:
     dealloc(allocator, p)
 
-  proc reallocImpl(p: pointer, newSize: Natural): pointer =
-    result = realloc(allocator, p, newSize)
+proc reallocImpl(p: pointer, oldLayout, newLayout: AllocLayout): pointer =
+  result = alloc(newLayout)
+  copyMem(result, p, min(oldLayout.size, newLayout.size))
+  dealloc(p, oldLayout)
 
-  proc realloc0Impl(p: pointer, oldSize, newSize: Natural): pointer =
-    result = realloc(allocator, p, newSize)
-    if newSize > oldSize:
-      zeroMem(cast[pointer](cast[int](result) + oldSize), newSize - oldSize)
+proc realloc0Impl(p: pointer, oldLayout, newLayout: AllocLayout): pointer =
+  result = realloc(p, oldLayout, newLayout)
+  if newLayout.size > oldLayout.size:
+    zeroMem(result +! oldLayout.size, newLayout.size - oldLayout.size)
 
-  when false:
-    proc countFreeMem(): int =
-      # only used for assertions
-      var it = allocator.freeChunksList
-      while it != nil:
-        inc(result, it.size)
-        it = it.next
+when false:
+  proc countFreeMem(): int =
+    # only used for assertions
+    var it = allocator.freeChunksList
+    while it != nil:
+      inc(result, it.size)
+      it = it.next
 
-  when hasThreadSupport:
-    var sharedHeap: MemRegion
-    var heapLock: SysLock
-    initSysLock(heapLock)
+proc getFreeMem(): int =
+  #sysAssert(result == countFreeMem())
+  lockedHeap: allocator.freeMem
 
-  proc getFreeMem(): int =
-    #sysAssert(result == countFreeMem())
-    when hasThreadSupport:
-      acquireSys(heapLock)
-      result = sharedHeap.freeMem
-      releaseSys(heapLock)
-    else:
-      result = allocator.freeMem
+proc getTotalMem(): int =
+  lockedHeap: allocator.currMem
 
-  proc getTotalMem(): int =
-    when hasThreadSupport:
-      acquireSys(heapLock)
-      result = sharedHeap.currMem
-      releaseSys(heapLock)
-    else:
-      result = allocator.currMem
+proc getOccupiedMem(): int =
+  lockedHeap: allocator.occ
 
-  proc getOccupiedMem(): int =
-    when hasThreadSupport:
-      acquireSys(heapLock)
-      result = sharedHeap.occ
-      releaseSys(heapLock)
-    else:
-      result = allocator.occ #getTotalMem() - getFreeMem()
+proc getMaxMem*(): int =
+  lockedHeap: getMaxMem(allocator)
 
-  proc getMaxMem*(): int =
-    when hasThreadSupport:
-      acquireSys(heapLock)
-      result = getMaxMem(sharedHeap)
-      releaseSys(heapLock)
-    else:
-      result = getMaxMem(allocator)
-
-  when defined(nimTypeNames):
-    proc getMemCounters*(): (int, int) = getMemCounters(allocator)
-
-  # -------------------- shared heap region ----------------------------------
-
-  proc allocSharedImpl(size: Natural): pointer =
-    when hasThreadSupport:
-      acquireSys(heapLock)
-      result = alloc(sharedHeap, size)
-      releaseSys(heapLock)
-    else:
-      result = allocImpl(size)
-
-  proc allocShared0Impl(size: Natural): pointer =
-    result = allocSharedImpl(size)
-    zeroMem(result, size)
-
-  proc deallocSharedImpl(p: pointer) =
-    when hasThreadSupport:
-      acquireSys(heapLock)
-      dealloc(sharedHeap, p)
-      releaseSys(heapLock)
-    else:
-      deallocImpl(p)
-
-  proc reallocSharedImpl(p: pointer, newSize: Natural): pointer =
-    when hasThreadSupport:
-      acquireSys(heapLock)
-      result = realloc(sharedHeap, p, newSize)
-      releaseSys(heapLock)
-    else:
-      result = reallocImpl(p, newSize)
-
-  proc reallocShared0Impl(p: pointer, oldSize, newSize: Natural): pointer =
-    when hasThreadSupport:
-      acquireSys(heapLock)
-      result = realloc0(sharedHeap, p, oldSize, newSize)
-      releaseSys(heapLock)
-    else:
-      result = realloc0Impl(p, oldSize, newSize)
-
-  when hasThreadSupport:
-    template sharedMemStatsShared(v: int) =
-      acquireSys(heapLock)
-      result = v
-      releaseSys(heapLock)
-
-    proc getFreeSharedMem(): int =
-      sharedMemStatsShared(sharedHeap.freeMem)
-
-    proc getTotalSharedMem(): int =
-      sharedMemStatsShared(sharedHeap.currMem)
-
-    proc getOccupiedSharedMem(): int =
-      sharedMemStatsShared(sharedHeap.occ)
-      #sharedMemStatsShared(sharedHeap.currMem - sharedHeap.freeMem)
-  {.pop.}
+when defined(nimTypeNames):
+  proc getMemCounters*(): (int, int) = getMemCounters(allocator)
 
 {.pop.}

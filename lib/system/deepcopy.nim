@@ -16,8 +16,18 @@ type
     data: array[TableSize, (pointer, pointer)]
 
 template hashPtr(key: pointer): int = cast[int](key) shr 8
+template ptrTableLayout(cap): AllocLayout =
+  layoutOf(int)
+    .repeat(2)
+    .layout
+    .extend(layoutOf(pointer).repeat(2 * cap).layout)
+    .layout
 template allocPtrTable: untyped =
-  cast[PtrTable](alloc0(sizeof(int)*2 + sizeof(pointer)*2*cap))
+  cast[PtrTable](alloc0(ptrTableLayout cap))
+
+proc deinit(t: PtrTable) =
+  if t != nil:
+    dealloc(t, ptrTableLayout(t.max + 1))
 
 proc rehash(t: PtrTable): PtrTable =
   let cap = (t.max+1) * 2
@@ -30,15 +40,13 @@ proc rehash(t: PtrTable): PtrTable =
       var h = hashPtr(k)
       while result.data[h and result.max][0] != nil: inc h
       result.data[h and result.max] = t.data[i]
-  dealloc t
+  deinit t
 
 proc initPtrTable(): PtrTable =
   const cap = 32
   result = allocPtrTable()
   result.counter = 0
   result.max = cap-1
-
-template deinit(t: PtrTable) = dealloc(t)
 
 proc get(t: PtrTable; key: pointer): pointer =
   var h = hashPtr(key)

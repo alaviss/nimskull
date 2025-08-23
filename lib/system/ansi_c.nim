@@ -145,14 +145,32 @@ proc c_sprintf*(buf, frmt: cstring): cint {.
   importc: "sprintf", header: "<stdio.h>", varargs, noSideEffect.}
   # we use it only in a way that cannot lead to security issues
 
+when defined(windows):
+  # Windows doesn't implement C11 aligned allocation.
+  #
+  # Ref: https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/malloc?view=msvc-170
+  type
+    c_max_align_t* = float64
+else:
+  type
+    c_max_align_t* {.importc: "max_align_t", header: "<stddef.h>",
+                     incompleteStruct.} = object
+
 proc c_malloc*(size: csize_t): pointer {.
   importc: "malloc", header: "<stdlib.h>".}
+proc c_aligned_alloc*(alignment, size: csize_t): pointer {.
+  importc: "aligned_alloc", header: "<stdlib.h>".}
 proc c_calloc*(nmemb, size: csize_t): pointer {.
   importc: "calloc", header: "<stdlib.h>".}
 proc c_free*(p: pointer) {.
   importc: "free", header: "<stdlib.h>".}
 proc c_realloc*(p: pointer, newsize: csize_t): pointer {.
   importc: "realloc", header: "<stdlib.h>".}
+when defined(windows):
+  proc c_aligned_malloc*(alignment, size: csize_t): pointer {.
+    importc: "_aligned_malloc", header: "<malloc.h>".}
+  proc c_aligned_free*(p: pointer) {.
+    importc: "_aligned_free", header: "<malloc.h>".}
 
 proc c_fwrite*(buf: pointer, size, n: csize_t, f: CFilePtr): cint {.
   importc: "fwrite", header: "<stdio.h>".}

@@ -42,7 +42,4 @@ when defined(useMalloc):
 else:
   include system / alloc
 
-  var allocator {.rtlThreadVar.}: MemRegion
-  instantiateForRegion(allocator)
-
 {.pop.}
