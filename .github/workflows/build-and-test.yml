@@ -69,7 +69,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: jwlawson/actions-setup-cmake@v2
         with:
-          cmake-version: '3.31.6'
+          cmake-version: "3.31.6"
 
       - name: Setup vcpkg (Windows)
         if: runner.os == 'Windows'
@@ -98,6 +98,20 @@ jobs:
 
       - name: Build release binaries
         run: ./koch.py all-strict
+
+      - if: runner.arch != 'ARM64'
+        name: Run thard_alignment
+        run: |
+          bin/nim c --nimcache:ha_cache --debugger:native --linedir:off --gc:arc -o:thard_alignment.exe tests/arc/thard_alignment.nim
+          cp thard_alignment.exe ha_cache/
+          ./thard_alignment.exe
+
+      - if: always() && runner.arch != 'ARM64'
+        name: Upload thard_alignment
+        uses: actions/upload-artifact@v5
+        with:
+          name: thard_alignment ${{ runner.os }} ${{ runner.arch }}
+          path: ha_cache/
 
       - name: Upload workspace to artifacts
         uses: ./.github/actions/upload-compiler
