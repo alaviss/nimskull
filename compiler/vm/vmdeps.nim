@@ -255,7 +255,11 @@ proc mapTypeToAstX(cache: IdentCache; t: PType; info: TLineInfo;
   of tySequence: result = mapTypeToBracket("seq", mSeq, t, info)
   of tyProc:
     if inst:
-      result = newNodeX(nkProcTy)
+      result =
+        if tfIterator in t.flags:
+          newNodeX(nkIteratorTy)
+        else:
+          newNodeX(nkProcTy)
       var fp = newNodeX(nkFormalParams)
       if t[0] == nil:
         fp.add newNodeI(nkEmpty, info)
@@ -267,7 +271,11 @@ proc mapTypeToAstX(cache: IdentCache; t: PType; info: TLineInfo;
       result.add if t.n[0].len > 0: t.n[0][pragmasEffects].copyTree
                  else: newNodeI(nkEmpty, info)
     else:
-      result = mapTypeToBracket("proc", mNone, t, info)
+      result =
+        if tfIterator in t.flags:
+          mapTypeToBracket("iterator", mNone, t, info)
+        else:
+          mapTypeToBracket("proc", mNone, t, info)
   of tyOpenArray: result = mapTypeToBracket("openArray", mOpenArray, t, info)
   of tyRange:
     result = newNodeIT(nkBracketExpr, if t.n.isNil: info else: t.n.info, t)
