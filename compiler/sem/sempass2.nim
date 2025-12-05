@@ -1777,6 +1777,8 @@ proc trackProc*(c: PContext; s: PSym, body: PNode) =
   else:
     effects[tagEffects] = t.tags
 
+  effects[pragmasEffects] = p
+
   # ensure that user-provided hooks have no effects and don't raise
   if sfOverriden in s.flags:
     # if raising was explicitly disabled (i.e., via ``.raises: []``),
